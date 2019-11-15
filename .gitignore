@@ -1,0 +1,11 @@
+/build
+/output
+__pycache__
+.pytest_cache/
+.ipynb*
+.coverage
+*.egg-info/
+*.pyc
+*.o
+*.so
+NOTES.md
