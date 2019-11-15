@@ -15,31 +15,33 @@ interface FaceBounds {
 function CameraScreen() {
   const [permissionGranted, setPermissionGranted] = React.useState(false);
   const [faceDetectionEnabled, setFaceDetectionEnabled] = React.useState(false);
+  const [faceDetected, setFaceDetected] = React.useState(false);
   const [faceBounds, setFaceBounds] = React.useState<FaceBounds>(null);
   const [bgUri, setBgUri] = React.useState();
   const cameraRef = React.useRef<any>();
 
-  async function getBgPictureUri() {
-    if (!cameraRef.current) return '';
+  async function takeBgPicture() {
+    if (!cameraRef.current) return;
+
     const pic = await cameraRef.current.takePictureAsync({
-      quality: 0.05,
+      quality: 0.1,
       base64: true,
       exif: false,
     });
-    return pic.uri;
+    setBgUri(pic.uri);
+    takeBgPicture();
   }
 
   async function handleFaceDetect({ faces = [] }) {
     if (!faceDetectionEnabled || faces.length === 0) return;
 
-    try {
-      const face = faces[0];
-      const uri = await getBgPictureUri();
-      console.log('> URI', uri);
-      setBgUri(uri);
-      setFaceBounds(face.bounds);
-    } catch (error) {
-      console.log('> Err', error);
+    const face = faces[0];
+    setFaceBounds(face.bounds);
+
+    // Face detected for the first time
+    if (!faceDetected) {
+      takeBgPicture();
+      setFaceDetected(true);
     }
   }
 
@@ -64,13 +66,16 @@ function CameraScreen() {
     <Wrapper>
       {!!bgUri && (
         <Image
-          style={{ ...StyleSheet.absoluteFillObject }}
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            transform: [{ rotateY: '180deg' }],
+          }}
           source={{ uri: bgUri }}
         />
       )}
 
       <BlurView
-        tint="dark"
+        tint="default"
         intensity={faceBounds ? 100 : 0}
         style={StyleSheet.absoluteFillObject}
       >
@@ -82,7 +87,7 @@ function CameraScreen() {
               y={faceBounds ? faceBounds.origin.y : 0}
               w={faceBounds ? faceBounds.size.width : WINDOW_WIDTH}
               h={faceBounds ? faceBounds.size.height : WINDOW_HEIGHT}
-              style={{ borderRadius: faceBounds ? 99 : 0 }}
+              style={{ borderRadius: faceBounds ? 32 : 0 }}
             />
           }
         >
