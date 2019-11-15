@@ -1,22 +1,27 @@
 import React from 'react';
-import { Button } from 'react-native';
 import styled from 'styled-components/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-interface Props {
-  navigation: any;
-}
-function Start({ navigation }: Props) {
+import KeywordsScreen from './Keywords';
+import CameraScreen from './Camera';
+
+const StartStack = createStackNavigator();
+
+function StartScreen() {
   return (
-    <Wrapper>
-      <Button onPress={() => navigation.navigate('Main')} title="Start" />
-    </Wrapper>
+    <StartStack.Navigator initialRouteName="Keywords">
+      <StartStack.Screen
+        name="Keywords"
+        component={KeywordsScreen}
+        options={{ headerShown: false }}
+      />
+      <StartStack.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={{ headerShown: false }}
+      />
+    </StartStack.Navigator>
   );
 }
 
-const Wrapper = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
-export default Start;
+export default StartScreen;

@@ -21,7 +21,7 @@ const Noop = () => {
   );
 };
 
-function Main() {
+function MainScreen() {
   return (
     <Wrapper>
       <Tab.Navigator>
@@ -98,4 +98,4 @@ const Wrapper = styled.View`
   flex: 1;
 `;
 
-export default Main;
+export default MainScreen;
