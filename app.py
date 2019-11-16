@@ -1,4 +1,6 @@
 import os
+import base64
+from uuid import uuid4
 from flask import (
     Flask,
     jsonify,
@@ -13,14 +15,13 @@ from webargs.flaskparser import parser
 from webargs.core import ValidationError
 from webargs.flaskparser import use_args
 
+import utils
 import error_msgs
-import validation
 import feed_service
 import message_service
 from taskqueue import tasks
 from dal import user_dal
 from dal import feeditem_dal
-from dal import message_dal
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
 
@@ -42,12 +43,18 @@ def get_user_by_id(user_id):
 
     return jsonify(user), 200
 
+def store_base64_image(img_str: str) -> str:
+    imgdata = base64.b64decode(img_str)
+    filename = f'{utils.get_root_path()}/{UPLOAD_FOLDER}/{str(uuid4())}.jpg'
+    with open(filename, 'wb') as f:
+        f.write(imgdata)
+    return filename
 
 @app.route("/api/users", methods=["POST"])
-@use_args(validation.user_args)
 def create_user(r_json):
+    image = store_base64_image(r_json["image"])
     user = user_dal.add(
-        r_json["first_name"], r_json["last_name"], r_json["github_user"]
+        r_json["first_name"], r_json["last_name"], image, r_json["keywords"]
     )
 
     # generate feed for user as bg task
