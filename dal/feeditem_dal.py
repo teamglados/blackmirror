@@ -15,9 +15,15 @@ UPDATE_IMAGE = f"UPDATE {TABLE_NAME} set post_image = %s WHERE id=%s;"
 
 @with_dbc
 def add(
-    post_text: str, user_id: str, creator_id: str, parent_id: Optional[str] = None, dbc=PGInterface()
+    post_text: str,
+    user_id: str,
+    creator_id: str,
+    parent_id: Optional[str] = None,
+    dbc=PGInterface(),
 ) -> Dict[Any, Any]:
-    row = dbc.fetchone(ADD, params=(post_text, parent_id, user_id, creator_id), as_dict=True)
+    row = dbc.fetchone(
+        ADD, params=(post_text, parent_id, user_id, creator_id), as_dict=True
+    )
     if row:
         return dict(row)
     raise TypeError(NO_ID_RETURNED)
@@ -38,7 +44,9 @@ def get(feed_id: str, dbc=PGInterface()) -> Dict[Any, Any]:
 
 
 @with_dbc
-def update(feed_id: str, post_text: str, post_image: str, like_count: int, dbc=PGInterface()) -> None:
+def update(
+    feed_id: str, post_text: str, post_image: str, like_count: int, dbc=PGInterface()
+) -> None:
     params = (
         post_text,
         post_image,

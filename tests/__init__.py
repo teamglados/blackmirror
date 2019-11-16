@@ -92,17 +92,23 @@ class BMTestCase(unittest.TestCase):
         feed_item = self._add_feed_item(user_id, creator["id"], post_text=post_text)
 
         post_reply = "That's true, just love this event :)"
-        self._add_feed_item(user_id, user_id, post_text=post_reply, parent_id=feed_item["id"])
+        self._add_feed_item(
+            user_id, user_id, post_text=post_reply, parent_id=feed_item["id"]
+        )
 
         # Add second post
         post2_text = "Anybody want to play tennis?"
         feed2_item = self._add_feed_item(user_id, creator2["id"], post_text=post2_text)
 
         post_final = "Yep, next year again"
-        self._add_feed_item(user_id, creator["id"], post_text=post_final, parent_id=feed_item["id"])
+        self._add_feed_item(
+            user_id, creator["id"], post_text=post_final, parent_id=feed_item["id"]
+        )
 
         post2_final = "Not today but maybe next week?"
-        self._add_feed_item(user_id, user_id, post_text=post2_final, parent_id=feed2_item["id"])
+        self._add_feed_item(
+            user_id, user_id, post_text=post2_final, parent_id=feed2_item["id"]
+        )
 
     def _create_realistic_chat(self, user_id: str) -> None:
         friend = self._add_user()["id"]

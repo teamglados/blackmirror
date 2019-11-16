@@ -12,7 +12,9 @@ UPDATE_IMAGE = f"UPDATE {TABLE_NAME} set image = %s WHERE id=%s;"
 
 
 @with_dbc
-def add(content: str, user_id: str, creator_id: str, dbc=PGInterface()) -> Dict[Any, Any]:
+def add(
+    content: str, user_id: str, creator_id: str, dbc=PGInterface()
+) -> Dict[Any, Any]:
     row = dbc.fetchone(ADD, params=(content, user_id, creator_id), as_dict=True)
     if row:
         return dict(row)
