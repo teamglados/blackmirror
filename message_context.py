@@ -9,7 +9,7 @@ class MessageContext:
     def __init__(self, user_id: str):
         self.user_id = user_id
         try:
-            context_holder = message_dal.get(user_id)
+            context_holder = message_dal.get_by_user(user_id)
             self.context = context_holder["context"]
         except TypeError:
             self.context = None
