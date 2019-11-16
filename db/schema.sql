@@ -99,8 +99,8 @@ CREATE TABLE public.users (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     first_name text,
     last_name text,
-    github_user text,
     image text,
+    keywords text,
     timestamp_ms_created bigint DEFAULT (date_part('epoch'::text, now()) * (1000)::double precision) NOT NULL
 );
 
