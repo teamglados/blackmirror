@@ -10,19 +10,20 @@ from dal import user_dal
 from dal import github_dal
 
 GITHUB_STATS = {
-        "first_name": "Ville",
-        "last_name": "Toiviainen",
-        "bio": "Machine Learning Engineer at Intuition Machines",
-        "country": "Finland",
-        "is_pro_user": True,
-        "organizations": ["Glados"],
-        "profile_picture_url": "https://avatars3.githubusercontent.com/u/4243244",
-        "repositories": ["https://github.com/Villux/golden_goal"],
-        "used_languages": ["Python", "Jupyter Notebook"],
-        "stars": 110,
-        "followers": 11,
-        "following": 14
-    }
+    "first_name": "Ville",
+    "last_name": "Toiviainen",
+    "bio": "Machine Learning Engineer at Intuition Machines",
+    "country": "Finland",
+    "is_pro_user": True,
+    "organizations": ["Glados"],
+    "profile_picture_url": "https://avatars3.githubusercontent.com/u/4243244",
+    "repositories": ["https://github.com/Villux/golden_goal"],
+    "used_languages": ["Python", "Jupyter Notebook"],
+    "stars": 110,
+    "followers": 11,
+    "following": 14,
+}
+
 
 class BMTestCase(unittest.TestCase):
     def setUp(self):
@@ -36,10 +37,12 @@ class BMTestCase(unittest.TestCase):
 
         return user_dal.add(first_name, last_name, github_user, image_id)
 
-    def _add_github_user(self, username: str="Villux") -> None:
+    def _add_github_user(self, username: str = "Villux") -> None:
         github_dal.add(username)
 
-    def _update_githut_stats(self, username: str="Villux", data: Optional[Dict[Any, Any]]=None) -> None:
+    def _update_githut_stats(
+        self, username: str = "Villux", data: Optional[Dict[Any, Any]] = None
+    ) -> None:
         if not data:
             data = GITHUB_STATS
         github_dal.update(username, data)

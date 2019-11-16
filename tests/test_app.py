@@ -13,11 +13,9 @@ class ApiTest(BMTestCase):
         user_data = {
             "first_name": "Larry",
             "last_name": "Smith",
-            "github_user": "Villux"
+            "github_user": "Villux",
         }
         res = self.client.post(
-            "/api/users",
-            data=json.dumps(user_data),
-            content_type="application/json",
+            "/api/users", data=json.dumps(user_data), content_type="application/json",
         )
         self.assertEqual(res.json["first_name"], "Larry")

@@ -8,9 +8,14 @@ TABLE_NAME = "users"
 ADD = f"INSERT INTO {TABLE_NAME} (first_name, last_name, github_user, image_id) VALUES (%s, %s, %s, %s) RETURNING *;"
 GET = f"SELECT * FROM {TABLE_NAME} WHERE id=%s;"
 
+
 @with_dbc
-def add(first_name: str, last_name: str, github_user: str, image_id: str, dbc=PGInterface()) -> Dict[Any, Any]:
-    row = dbc.fetchone(ADD, params=(first_name, last_name, github_user, image_id), as_dict=True)
+def add(
+    first_name: str, last_name: str, github_user: str, image_id: str, dbc=PGInterface()
+) -> Dict[Any, Any]:
+    row = dbc.fetchone(
+        ADD, params=(first_name, last_name, github_user, image_id), as_dict=True
+    )
     if row:
         return dict(row)
     raise TypeError(NO_ID_RETURNED)

@@ -14,13 +14,7 @@ PGDBNAME = os.getenv("PGDATABASE", "postgres")
 SSLMODE = os.getenv("SSLMODE", "require")
 
 TCP = ThreadedConnectionPool(
-    1,
-    30,
-    host=PGHOST,
-    port=PGPORT,
-    user=PGUSER,
-    dbname=PGDBNAME,
-    sslmode=SSLMODE,
+    1, 30, host=PGHOST, port=PGPORT, user=PGUSER, dbname=PGDBNAME, sslmode=SSLMODE,
 )
 
 FETCHALL = 0

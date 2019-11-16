@@ -8,7 +8,6 @@ VIS_TIMEOUT = 60
 logger = get_logger("bmqueue")
 
 
-
 @bmqueue.task(vis_timeout=VIS_TIMEOUT, attempts=N_ATTEMPTS)
 def update_github_stats(username: str, **kwargs):
     # TODO the actual functionality
@@ -24,12 +23,7 @@ def update_github_stats(username: str, **kwargs):
         "used_languages": ["Python", "Jupyter Notebook"],
         "stars": 110,
         "followers": 11,
-        "following": 14
+        "following": 14,
     }
 
     return github_dal.update(username, scraped_data)
-
-
-
-
-
