@@ -46,7 +46,11 @@ function FeedItem({ data }: Props) {
             <MetaCircle bg="red" style={{ marginLeft: -4, zIndex: 0 }}>
               <FontAwesome name="heart" size={11} color="#fff" />
             </MetaCircle>
-            <MetaText>32</MetaText>
+            <MetaText>{data.likeCount}</MetaText>
+          </MetaItem>
+
+          <MetaItem>
+            <MetaText>{data.commentCount} comments</MetaText>
           </MetaItem>
         </MetaData>
 
@@ -130,10 +134,6 @@ const FeedImage = styled.Image`
   height: 300px;
 `;
 
-const MetaData = styled.View`
-  padding-bottom: 8px;
-`;
-
 const Footer = styled.View`
   padding: 16px;
 `;
@@ -159,8 +159,16 @@ const ActionText = styled.Text`
   margin-left: 4px;
 `;
 
+const MetaData = styled.View`
+  padding-bottom: 8px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const MetaItem = styled.View`
   flex-direction: row;
+  align-items: center;
 `;
 
 const MetaCircle = styled.View<{ bg: string }>`
