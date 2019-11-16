@@ -26,6 +26,7 @@ def get(message_id: str, dbc=PGInterface()) -> Dict[Any, Any]:
         return dict(row)
     raise TypeError(NO_VALUE_IN_DB)
 
+
 @with_dbc
 def get_conversation(creator_id: str, dbc=PGInterface()) -> List[Dict[Any, Any]]:
     rows = dbc.fetchall(GET_CONVERSATION, params=(creator_id,), as_dict=True)

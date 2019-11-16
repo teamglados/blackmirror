@@ -15,7 +15,8 @@ UPDATE_IMAGE = f"UPDATE {TABLE_NAME} set post_image = %s WHERE id=%s;"
 
 
 @with_dbc
-def add(post_text: str, user_id: str, parent_id: Optional[str] = None, dbc=PGInterface()
+def add(
+    post_text: str, user_id: str, parent_id: Optional[str] = None, dbc=PGInterface()
 ) -> Dict[Any, Any]:
     row = dbc.fetchone(ADD, params=(post_text, parent_id, user_id), as_dict=True)
     if row:
@@ -27,6 +28,7 @@ def add(post_text: str, user_id: str, parent_id: Optional[str] = None, dbc=PGInt
 def get_by_user(user_id: str, dbc=PGInterface()) -> List[Dict[Any, Any]]:
     rows = dbc.fetchall(GET_BY_USER, params=(user_id,), as_dict=True)
     return [dict(row) for row in rows]
+
 
 @with_dbc
 def get(feed_id: str, dbc=PGInterface()) -> Dict[Any, Any]:
@@ -44,9 +46,10 @@ def update(feed_id: str, data: Dict[Any, Any], dbc=PGInterface()) -> None:
         data["parent_id"],
         data["like_count"],
         int(round(time.time() * 1000)),
-        feed_id
+        feed_id,
     )
     dbc.execute(UPDATE, params=params)
+
 
 @with_dbc
 def update_image(feed_id: str, image: str, dbc=PGInterface()) -> None:
