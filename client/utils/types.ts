@@ -13,3 +13,16 @@ export interface FeedDataItem {
   commentCount: number;
   user: User;
 }
+
+export interface ProfileData {
+  _id: number;
+  name: string;
+  avatar: string; // Profile image
+  cover: string; // Cover image
+  bio: string;
+  currentJob: string;
+  currentStudy: string;
+  currentHometown: string;
+  friendCount: number;
+  friendPicks: User[];
+}

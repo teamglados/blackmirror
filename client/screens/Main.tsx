@@ -13,6 +13,7 @@ import {
 
 import ChatScreen from './Chat';
 import FeedScreen from './Feed';
+import ProfileScreen from './Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +28,7 @@ const Noop = () => {
 function MainScreen() {
   return (
     <Wrapper>
-      <Tab.Navigator>
+      <Tab.Navigator initialRouteName="Profile">
         <Tab.Screen
           name="Feed"
           component={FeedScreen}
@@ -50,7 +51,7 @@ function MainScreen() {
         />
         <Tab.Screen
           name="Profile"
-          component={Noop}
+          component={ProfileScreen}
           options={{
             tabBarLabel: null,
             tabBarIcon: ({ color }) => (
