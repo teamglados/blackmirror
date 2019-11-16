@@ -18,8 +18,11 @@ class ApiTest(BMTestCase):
             "last_name": "Smith",
             "image": "iVBORw0KGgoAAAANSUhEUgAAAAoAAAABCAYAAADn9T9+AAAAEElEQVR42mP8z/C/noEIAABgXwJ/paAXpgAAAABJRU5ErkJggg==",
             "keywords": {
-                "movies": ["Terminator"],
-                "hobbies": ["Football"]
+                "name": 'hobby',
+                "options": [
+                    'Cooking',
+                    'Cosplaying',
+                ],
             }
         }
         res = self.client.post(
@@ -29,24 +32,22 @@ class ApiTest(BMTestCase):
         mock_feed.execute.assert_called_once()
         mock_messages.execute.assert_called_once()
 
-    def test_get_feed(self):
-        user = self._add_user()
-        self._create_realistic_feed(user["id"])
-
-        res = self.client.get(f"/api/feed/{user['id']}")
-        self.assertEqual(res.status_code, 200)
-
-        feed_data = res.json
-        self.assertEqual(len(feed_data["feed"][0]["comments"]), 1)
-        self.assertEqual(len(feed_data["feed"][1]["comments"]), 2)
-
     def test_get_messages(self):
         user = self._add_user()
-        self._create_realistic_chat(user["id"])
+        self._add_message_context(user)
 
         res = self.client.get(f"/api/messages/{user['id']}")
         self.assertEqual(res.status_code, 200)
 
-        message_data = res.json
-        self.assertEqual(len(message_data["messages"]), 4)
-        self.assertEqual(len(message_data["users"]), 2)
+        self.assertTrue(len(res.json), 1)
+
+    # def test_get_messages(self):
+    #     user = self._add_user()
+    #     self._create_realistic_chat(user["id"])
+
+    #     res = self.client.get(f"/api/messages/{user['id']}")
+    #     self.assertEqual(res.status_code, 200)
+
+    #     message_data = res.json
+    #     self.assertEqual(len(message_data["messages"]), 4)
+    #     self.assertEqual(len(message_data["users"]), 2)
