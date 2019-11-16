@@ -33,7 +33,11 @@ const FeedStackGroup = () => {
   return (
     <FeedStack.Navigator>
       <FeedStack.Screen name="Feed" component={FeedScreen} />
-      <FeedStack.Screen name="FeedComments" component={CommentsScreen} />
+      <FeedStack.Screen
+        name="FeedComments"
+        component={CommentsScreen}
+        options={{ headerBackTitle: 'Back', headerTitle: 'Post comments' }}
+      />
     </FeedStack.Navigator>
   );
 };

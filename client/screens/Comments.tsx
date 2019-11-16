@@ -4,6 +4,8 @@ import styled from 'styled-components/native';
 import { FeedDataItem } from '../utils/types';
 import Text from '../components/common/Text';
 import CommentItem from '../components/CommentItem';
+import FeedItem from '../components/FeedItem';
+import { noop } from '../utils';
 
 function CommentsScreen({ route }) {
   const data: FeedDataItem = route.params.data;
@@ -11,6 +13,8 @@ function CommentsScreen({ route }) {
   return (
     <Wrapper>
       <Scroller>
+        <FeedItem data={data} onShowComments={noop} disableComments />
+
         <CommentsWrapper>
           <Text size={20} weight={700}>
             Comments

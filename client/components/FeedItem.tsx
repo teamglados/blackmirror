@@ -1,10 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
-import moment from 'moment';
 
 import {
-  Feather,
   AntDesign,
   EvilIcons,
   MaterialCommunityIcons,
@@ -13,27 +11,21 @@ import {
 
 import { FeedDataItem } from '../utils/types';
 import { WINDOW_WIDTH } from '../constants/display';
+import theme from '../constants/theme';
+import FeedItemHeader from './FeedItemHeader';
 
 interface Props {
   data: FeedDataItem;
   onShowComments: () => any;
+  disableComments?: boolean;
 }
 
-function FeedItem({ data, onShowComments }: Props) {
+function FeedItem({ data, onShowComments, disableComments }: Props) {
   return (
     <Wrapper>
-      <Header>
-        <Avatar>
-          <AvatarImage source={{ uri: data.user.avatar }} resizeMode="cover" />
-        </Avatar>
-
-        <HeaderDetails>
-          <UserName>{data.user.name}</UserName>
-          <ItemDate>{moment(data.createdAt).fromNow()}</ItemDate>
-        </HeaderDetails>
-
-        <Feather name="more-horizontal" size={24} color="#666" />
-      </Header>
+      <FeedItemHeaderWrapper>
+        <FeedItemHeader data={data} />
+      </FeedItemHeaderWrapper>
 
       <TextContent>{data.text}</TextContent>
 
@@ -42,18 +34,20 @@ function FeedItem({ data, onShowComments }: Props) {
       <Footer>
         <MetaData>
           <MetaItem>
-            <MetaCircle bg="blue" style={{ zIndex: 1 }}>
+            <MetaCircle bg={theme.primary.base} style={{ zIndex: 1 }}>
               <AntDesign name="like1" size={12} color="#fff" />
             </MetaCircle>
-            <MetaCircle bg="red" style={{ marginLeft: -4, zIndex: 0 }}>
+            <MetaCircle bg="#F4485F" style={{ marginLeft: -4, zIndex: 0 }}>
               <FontAwesome name="heart" size={11} color="#fff" />
             </MetaCircle>
             <MetaText>{data.likeCount}</MetaText>
           </MetaItem>
 
-          <MetaItem onPress={onShowComments}>
-            <MetaText>{data.comments.length} comments</MetaText>
-          </MetaItem>
+          {data.comments.length > 0 && !disableComments && (
+            <MetaItem onPress={onShowComments}>
+              <MetaText>{data.comments.length} comments</MetaText>
+            </MetaItem>
+          )}
         </MetaData>
 
         <Actions>
@@ -89,40 +83,9 @@ const Wrapper = styled.View`
   border-bottom-width: ${StyleSheet.hairlineWidth}px;
 `;
 
-const Header = styled.View`
+const FeedItemHeaderWrapper = styled.View`
   padding-left: 16px;
   padding-right: 16px;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const Avatar = styled.View`
-  width: 40px;
-  height: 40px;
-  margin-right: 12px;
-  border-radius: 99px;
-  overflow: hidden;
-`;
-
-const AvatarImage = styled.Image`
-  width: 40px;
-  height: 40px;
-`;
-
-const HeaderDetails = styled.View`
-  flex: 1;
-`;
-
-const UserName = styled.Text`
-  color: #222;
-  font-size: 16px;
-  font-weight: 500;
-`;
-
-const ItemDate = styled.Text`
-  color: #222;
-  font-size: 14px;
-  font-weight: 300;
 `;
 
 const TextContent = styled.Text`
