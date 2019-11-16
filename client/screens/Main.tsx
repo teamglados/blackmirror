@@ -11,6 +11,8 @@ import {
   Feather,
 } from '@expo/vector-icons';
 
+import ChatScreen from './Chat';
+
 const Tab = createBottomTabNavigator();
 
 const Noop = () => {
@@ -71,7 +73,7 @@ function MainScreen() {
         />
         <Tab.Screen
           name="Notifications"
-          component={Noop}
+          component={ChatScreen}
           options={{
             tabBarLabel: null,
             tabBarIcon: ({ color }) => (
