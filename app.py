@@ -17,6 +17,7 @@ import error_msgs
 import validation
 import feed_service
 import message_service
+from taskqueue import tasks
 from dal import user_dal
 from dal import feeditem_dal
 from dal import message_dal
@@ -39,7 +40,7 @@ def get_user_by_id(user_id):
     except TypeError as e:
         abort(404, description=f"{error_msgs.RESOURCE_NOT_FOUND} - {str(e)}")
 
-    return jsonify(user)
+    return jsonify(user), 200
 
 
 @app.route("/api/users", methods=["POST"])
@@ -48,7 +49,12 @@ def create_user(r_json):
     user = user_dal.add(
         r_json["first_name"], r_json["last_name"], r_json["github_user"]
     )
-    return jsonify(user), 201
+
+    # generate feed for user as bg task
+    tasks.create_feed.execute(user["id"])
+    # generate messages for user as bg task
+    tasks.create_messages.execute(user["id"])
+    return jsonify(user), 200
 
 
 def store_image(file, user_id: str) -> str:

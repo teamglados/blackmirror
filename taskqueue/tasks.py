@@ -1,4 +1,6 @@
 import os
+import feed_service
+import message_service
 from taskqueue import bmqueue
 from utils import get_logger
 from dal import github_dal
@@ -27,3 +29,12 @@ def update_github_stats(username: str, **kwargs):
     }
 
     return github_dal.update(username, scraped_data)
+
+
+@bmqueue.task(vis_timeout=VIS_TIMEOUT, attempts=N_ATTEMPTS)
+def create_feed(user_id: str, **kwargs):
+    return feed_service.create_mock_feed(user_id)
+
+@bmqueue.task(vis_timeout=VIS_TIMEOUT, attempts=N_ATTEMPTS)
+def create_messages(user_id: str, **kwargs):
+    return message_service.create_mock_message(user_id)
