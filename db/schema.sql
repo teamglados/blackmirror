@@ -38,6 +38,7 @@ CREATE TABLE public.feeditem (
     post_text text,
     post_image text,
     parent_id uuid,
+    creator_id uuid,
     timestamp_ms_created bigint DEFAULT (date_part('epoch'::text, now()) * (1000)::double precision) NOT NULL,
     timestamp_ms_updated bigint
 );

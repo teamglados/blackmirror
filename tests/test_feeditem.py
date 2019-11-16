@@ -1,4 +1,3 @@
-import time
 from tests import BMTestCase
 from dal import feeditem_dal
 
@@ -9,14 +8,16 @@ class GithubStatsDalTest(BMTestCase):
 
     def test_add(self):
         user = self._add_user()["id"]
-        feed_id = self._add_feed_item(user).get("id")
+        creator = self._add_user()["id"]
+        feed_id = self._add_feed_item(user, creator).get("id")
         feed_item = feeditem_dal.get(feed_id)
         self.assertEqual(feed_item["like_count"], 0)
 
     def test_update(self):
         user = self._add_user()["id"]
-        feed_item = self._add_feed_item(user)
-        self._update_feed_item(user, feed_item["id"], add_comments=1)
+        creator = self._add_user()["id"]
+        feed_item = self._add_feed_item(user, creator)
+        self._update_feed_item(user, feed_item["id"], creator, add_comments=1)
 
         feed_items = feeditem_dal.get_by_user(user)
         self.assertEqual(len(feed_items), 2)
@@ -26,7 +27,8 @@ class GithubStatsDalTest(BMTestCase):
 
     def test_update_image(self):
         user = self._add_user()["id"]
-        feed_item = self._add_feed_item(user)
+        creator = self._add_user()["id"]
+        feed_item = self._add_feed_item(user, creator)
         url = "http://test_url"
         feeditem_dal.update_image(feed_item["id"], url)
         feed_item = feeditem_dal.get(feed_item["id"])
