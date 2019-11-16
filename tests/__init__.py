@@ -33,9 +33,9 @@ class BMTestCase(unittest.TestCase):
         first_name = kwargs.get("first_name", "Mike")
         last_name = kwargs.get("last_name", "Smith")
         github_user = kwargs.get("github_user", "Villux")
-        image_id = kwargs.get("image_id")
+        image = kwargs.get("image")
 
-        return user_dal.add(first_name, last_name, github_user, image_id)
+        return user_dal.add(first_name, last_name, github_user, image)
 
     def _add_github_user(self, username: str = "Villux") -> None:
         github_dal.add(username)
