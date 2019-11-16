@@ -1,6 +1,5 @@
 import json
 import app
-import error_msgs
 from tests import BMTestCase
 
 

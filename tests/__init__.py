@@ -34,9 +34,8 @@ class BMTestCase(unittest.TestCase):
         first_name = kwargs.get("first_name", "Mike")
         last_name = kwargs.get("last_name", "Smith")
         github_user = kwargs.get("github_user", "Villux")
-        image = kwargs.get("image")
 
-        return user_dal.add(first_name, last_name, github_user, image)
+        return user_dal.add(first_name, last_name, github_user)
 
     def _add_github_user(self, username: str = "Villux") -> None:
         github_dal.add(username)
@@ -50,9 +49,8 @@ class BMTestCase(unittest.TestCase):
 
     def _add_feed_item(self, **kwargs):
         post_text = kwargs.get("post_text", "This is my first post!")
-        post_image = kwargs.get("post_image", "img/post_image.png")
         parent_id = kwargs.get("parent_id", None)
-        return feeditem_dal.add(post_text, post_image, parent_id)
+        return feeditem_dal.add(post_text, parent_id)
 
     def _update_feed_item(self, feed_id, **kwargs):
         for _ in range(kwargs.get("add_comments", 1)):

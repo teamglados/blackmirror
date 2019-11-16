@@ -21,3 +21,10 @@ class GithubStatsDalTest(BMTestCase):
 
         self.assertEqual(len([i for i in feed_items if not i["parent_id"]]), 1)
         self.assertEqual(len([i for i in feed_items if i["parent_id"]]), 1)
+
+    def test_update_image(self):
+        feed_item = self._add_feed_item()
+        url = "http://test_url"
+        feeditem_dal.update_image(feed_item["id"], url)
+        feed_item = feeditem_dal.get(feed_item["id"])
+        self.assertEqual(feed_item["post_image"], url)
