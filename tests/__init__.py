@@ -8,6 +8,7 @@ from typing import Dict, Any, Optional
 
 from dal import user_dal
 from dal import github_dal
+from dal import feeditem_dal
 
 GITHUB_STATS = {
     "first_name": "Ville",
@@ -46,3 +47,23 @@ class BMTestCase(unittest.TestCase):
         if not data:
             data = GITHUB_STATS
         github_dal.update(username, data)
+
+    def _add_feed_item(self, **kwargs):
+        post_text = kwargs.get("post_text", "This is my first post!")
+        post_image = kwargs.get("post_image", "img/post_image.png")
+        parent_id = kwargs.get("parent_id", None)
+        return feeditem_dal.add(post_text, post_image, parent_id)
+
+    def _update_feed_item(self, feed_id, **kwargs):
+        for _ in range(kwargs.get("add_comments", 1)):
+            self._add_feed_item(parent_id=feed_id)
+
+        data = {
+            "parent_id": kwargs.get("parent_id", None),
+            "post_text": kwargs.get("post_text", "This is my first post!"),
+            "post_image": kwargs.get("post_image", "img/post_image.png"),
+            "like_count": kwargs.get("like_count", 2)
+        }
+
+        feeditem_dal.update(feed_id, data)
+
