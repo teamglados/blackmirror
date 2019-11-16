@@ -60,9 +60,23 @@ CREATE TABLE public.github_stats (
     stars integer,
     followers integer,
     following integer,
-    image_id text,
+    image text,
     timestamp_ms_created bigint DEFAULT (date_part('epoch'::text, now()) * (1000)::double precision) NOT NULL,
     timestamp_ms_updated bigint
+);
+
+
+--
+-- Name: messages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.messages (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    content text,
+    user_id uuid,
+    image text,
+    creator_id uuid,
+    timestamp_ms_created bigint DEFAULT (date_part('epoch'::text, now()) * (1000)::double precision) NOT NULL
 );
 
 
@@ -106,6 +120,14 @@ ALTER TABLE ONLY public.github_stats
 
 
 --
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -133,4 +155,5 @@ ALTER TABLE ONLY public.users
 INSERT INTO public.schema_migrations (version) VALUES
     ('20191115210043'),
     ('20191116085243'),
-    ('20191116121611');
+    ('20191116121611'),
+    ('20191116144224');

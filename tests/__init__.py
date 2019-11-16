@@ -2,13 +2,15 @@ import os
 import json
 import time
 import unittest
+import random
 from unittest import mock
 from uuid import uuid4
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
 from dal import user_dal
 from dal import github_dal
 from dal import feeditem_dal
+from dal import message_dal
 
 GITHUB_STATS = {
     "first_name": "Ville",
@@ -65,3 +67,14 @@ class BMTestCase(unittest.TestCase):
 
         feeditem_dal.update(feed_id, data)
 
+    def _add_message(self, creator: str, user_id: str, **kwargs):
+        content = kwargs.get("content", "Hey, what's up?")
+        return message_dal.add(content, user_id, creator)
+
+    def _create_conversation(self, creator: str, user_ids: List[str]):
+        counter = 0
+        self._add_message(creator, creator, content=f"{counter}_{str(uuid4())}")
+        for _ in range(2):
+            for user in user_ids:
+                counter += 1
+                self._add_message(creator, user, content=f"{counter}_{str(uuid4())}")
