@@ -33,6 +33,7 @@ SET default_with_oids = false;
 
 CREATE TABLE public.feeditem (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    user_id uuid,
     like_count integer DEFAULT 0,
     post_text text,
     post_image text,
