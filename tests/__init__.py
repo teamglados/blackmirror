@@ -37,10 +37,13 @@ class BMTestCase(unittest.TestCase):
         first_name = kwargs.get("first_name", "Mike")
         last_name = kwargs.get("last_name", "Smith")
         image = kwargs.get("image", f"{utils.get_root_path()}/uploads/ville.jpeg")
-        keywords = kwargs.get("keywords", {
-            "movies": ["Terminator"],
-            "hobbies": ["Football"]
-        })
+        keywords = {
+            "name": 'hobby',
+            "options": [
+                'Cooking',
+                'Cosplaying',
+            ],
+        }
 
         return user_dal.add(first_name, last_name, image, keywords)
 
@@ -54,9 +57,7 @@ class BMTestCase(unittest.TestCase):
             data = GITHUB_STATS
         github_dal.update(username, data)
 
-    def _add_feed_item(self, user_id: str, creator_id: str, **kwargs):
-        post_text = kwargs.get("post_text", "This is my first post!")
-        parent_id = kwargs.get("parent_id", None)
+    def _add_feed_item(self, user_id: str, **kwargs):
         return feeditem_dal.add(post_text, user_id, creator_id, parent_id=parent_id)
 
     def _update_feed_item(self, user_id: str, feed_id: str, creator_id: str, **kwargs):
