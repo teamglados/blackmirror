@@ -17,6 +17,7 @@ import message_service
 from taskqueue import tasks
 from dal import user_dal
 from dal import feed_dal
+from dal import message_dal
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
 
@@ -79,5 +80,5 @@ def get_user_feed(user_id: str):
 
 @app.route("/api/messages/<user_id>", methods=["GET"])
 def get_user_messages(user_id: str):
-    messages = message_service.get_messages(user_id)
+    messages = message_dal.get_by_user(user_id)
     return jsonify(messages), 200
