@@ -45,10 +45,11 @@ def store_base64_image(img_str: str) -> str:
     return filename
 
 @app.route("/api/users", methods=["POST"])
-def create_user(r_json):
-    image = store_base64_image(r_json["image"])
+def create_user():
+    payload = request.json
+    image = store_base64_image(payload["image"])
     user = user_dal.add(
-        r_json["first_name"], r_json["last_name"], image, r_json["keywords"]
+        payload["first_name"], payload["last_name"], image, payload["keywords"]
     )
 
     # generate feed for user as bg task

@@ -16,7 +16,11 @@ class ApiTest(BMTestCase):
         user_data = {
             "first_name": "Larry",
             "last_name": "Smith",
-            "github_user": "Villux",
+            "image": "iVBORw0KGgoAAAANSUhEUgAAAAoAAAABCAYAAADn9T9+AAAAEElEQVR42mP8z/C/noEIAABgXwJ/paAXpgAAAABJRU5ErkJggg==",
+            "keywords": {
+                "movies": ["Terminator"],
+                "hobbies": ["Football"]
+            }
         }
         res = self.client.post(
             "/api/users", data=json.dumps(user_data), content_type="application/json",

@@ -6,7 +6,7 @@ CREATE TABLE users (
             first_name TEXT,
             last_name TEXT,
             image TEXT,
-            keywords JSONB,
+            keywords TEXT,
             timestamp_ms_created BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)
         );
 
