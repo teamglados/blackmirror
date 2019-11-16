@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, MaskedViewIOS } from 'react-native';
+import { Image, StyleSheet, MaskedViewIOS, SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 import * as FaceDetector from 'expo-face-detector';
 import * as Permissions from 'expo-permissions';
@@ -15,34 +15,27 @@ interface FaceBounds {
 function CameraScreen() {
   const [permissionGranted, setPermissionGranted] = React.useState(false);
   const [faceDetectionEnabled, setFaceDetectionEnabled] = React.useState(false);
-  const [faceDetected, setFaceDetected] = React.useState(false);
   const [faceBounds, setFaceBounds] = React.useState<FaceBounds>(null);
-  const [bgUri, setBgUri] = React.useState();
+  const [picUri, setPicUri] = React.useState();
   const cameraRef = React.useRef<any>();
 
-  async function takeBgPicture() {
+  async function takePicture() {
     if (!cameraRef.current) return;
 
     const pic = await cameraRef.current.takePictureAsync({
-      quality: 0.1,
+      quality: 0.5,
       base64: true,
       exif: false,
     });
-    setBgUri(pic.uri);
-    takeBgPicture();
+
+    setPicUri(pic.uri);
   }
 
   async function handleFaceDetect({ faces = [] }) {
-    if (!faceDetectionEnabled || faces.length === 0) return;
+    if (!faceDetectionEnabled || picUri || faces.length === 0) return;
 
     const face = faces[0];
     setFaceBounds(face.bounds);
-
-    // Face detected for the first time
-    if (!faceDetected) {
-      takeBgPicture();
-      setFaceDetected(true);
-    }
   }
 
   React.useEffect(() => {
@@ -62,15 +55,17 @@ function CameraScreen() {
     return <PermissionPlaceholder />;
   }
 
+  const enableMask = !!picUri && !!faceBounds;
+
   return (
     <Wrapper>
-      {!!bgUri && (
+      {!!picUri && (
         <Image
           style={{
             ...StyleSheet.absoluteFillObject,
             transform: [{ rotateY: '180deg' }],
           }}
-          source={{ uri: bgUri }}
+          source={{ uri: picUri }}
         />
       )}
 
@@ -82,30 +77,50 @@ function CameraScreen() {
         <MaskedViewIOS
           style={{ flex: 1 }}
           maskElement={
-            <FaceBoundsBox
-              x={faceBounds ? faceBounds.origin.x : 0}
-              y={faceBounds ? faceBounds.origin.y : 0}
-              w={faceBounds ? faceBounds.size.width : WINDOW_WIDTH}
-              h={faceBounds ? faceBounds.size.height : WINDOW_HEIGHT}
-              style={{ borderRadius: faceBounds ? 32 : 0 }}
+            <FaceBoundsMask
+              x={enableMask ? faceBounds.origin.x : 0}
+              y={enableMask ? faceBounds.origin.y : 0}
+              w={enableMask ? faceBounds.size.width : WINDOW_WIDTH}
+              h={enableMask ? faceBounds.size.height : WINDOW_HEIGHT}
+              style={{ borderRadius: enableMask ? 99 : 0 }}
             />
           }
         >
-          <Camera
-            ref={cameraRef}
-            style={StyleSheet.absoluteFillObject}
-            type={Camera.Constants.Type.front}
-            onFacesDetected={handleFaceDetect}
-            faceDetectorSettings={{
-              mode: FaceDetector.Constants.Mode.fast,
-              detectLandmarks: FaceDetector.Constants.Landmarks.none,
-              runClassifications: FaceDetector.Constants.Classifications.none,
-              minDetectionInterval: 50,
-              tracking: true,
-            }}
-          />
+          {!picUri ? (
+            <Camera
+              ref={cameraRef}
+              style={StyleSheet.absoluteFillObject}
+              type={Camera.Constants.Type.front}
+              onFacesDetected={handleFaceDetect}
+              faceDetectorSettings={{
+                mode: FaceDetector.Constants.Mode.fast,
+                detectLandmarks: FaceDetector.Constants.Landmarks.none,
+                runClassifications: FaceDetector.Constants.Classifications.none,
+                minDetectionInterval: 50,
+                tracking: true,
+              }}
+            />
+          ) : (
+            <Image
+              style={{
+                ...StyleSheet.absoluteFillObject,
+                transform: [{ rotateY: '180deg' }],
+              }}
+              source={{ uri: picUri }}
+            />
+          )}
+
+          {!picUri && !!faceBounds && (
+            <FaceBoundsBox
+              x={faceBounds.origin.x}
+              y={faceBounds.origin.y}
+              w={faceBounds.size.width}
+              h={faceBounds.size.height}
+            />
+          )}
         </MaskedViewIOS>
-        {/* {!!faceBounds && <TakePhoto />} */}
+
+        {!!faceBounds && !picUri && <TakePic onPress={takePicture} />}
       </BlurView>
     </Wrapper>
   );
@@ -127,22 +142,31 @@ interface FaceBoundBoxT {
   y: number;
 }
 
-const FaceBoundsBox = styled.View<FaceBoundBoxT>`
+const FaceBoundsBase = styled.View<FaceBoundBoxT>`
   left: ${props => props.x};
   top: ${props => props.y};
   width: ${props => props.w};
   height: ${props => props.h};
+`;
+
+const FaceBoundsBox = styled(FaceBoundsBase)`
+  border: 1px dotted #fff;
+  border-radius: 99px;
+`;
+
+const FaceBoundsMask = styled(FaceBoundsBase)`
   background-color: #000;
 `;
 
-const TakePhoto = styled.TouchableOpacity`
+const TakePic = styled.TouchableOpacity`
   position: absolute;
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: red;
+  background-color: blue;
   padding: 24px;
   border-radius: 99px;
+  margin-bottom: 40px;
 `;
 
 export default CameraScreen;
