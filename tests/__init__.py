@@ -49,23 +49,27 @@ class BMTestCase(unittest.TestCase):
             data = GITHUB_STATS
         github_dal.update(username, data)
 
-    def _add_feed_item(self, user_id: str, **kwargs):
+    def _add_feed_item(self, user_id: str, creator_id: str, **kwargs):
         post_text = kwargs.get("post_text", "This is my first post!")
         parent_id = kwargs.get("parent_id", None)
-        return feeditem_dal.add(post_text, user_id, parent_id=parent_id)
+        return feeditem_dal.add(post_text, user_id, creator_id, parent_id=parent_id)
 
-    def _update_feed_item(self, user_id: str, feed_id: str, **kwargs):
+    def _update_feed_item(self, user_id: str, feed_id: str, creator_id: str, **kwargs):
         for _ in range(kwargs.get("add_comments", 1)):
-            self._add_feed_item(user_id, parent_id=feed_id)
+            self._add_feed_item(user_id, creator_id, parent_id=feed_id)
 
         data = {
-            "parent_id": kwargs.get("parent_id", None),
             "post_text": kwargs.get("post_text", "This is my first post!"),
             "post_image": kwargs.get("post_image", "img/post_image.png"),
             "like_count": kwargs.get("like_count", 2),
         }
 
-        feeditem_dal.update(feed_id, data)
+        feeditem_dal.update(
+            feed_id,
+            kwargs.get("post_text", "This is my first post!"),
+            kwargs.get("post_image", "img/post_image.png"),
+            kwargs.get("like_count", 2),
+        )
 
     def _add_message(self, creator: str, user_id: str, **kwargs):
         content = kwargs.get("content", "Hey, what's up?")
@@ -78,3 +82,24 @@ class BMTestCase(unittest.TestCase):
             for user in user_ids:
                 counter += 1
                 self._add_message(creator, user, content=f"{counter}_{str(uuid4())}")
+
+    def _create_realistic_feed(self, user_id: str) -> None:
+        creator = self._add_user()
+        creator2 = self._add_user()
+
+        # Add first post
+        post_text = "What an event again! Junction is just pure awesomenes!"
+        feed_item = self._add_feed_item(user_id, creator["id"], post_text=post_text)
+
+        post_reply = "That's true, just love this event :)"
+        self._add_feed_item(user_id, user_id, post_text=post_reply, parent_id=feed_item["id"])
+
+        # Add second post
+        post2_text = "Anybody want to play tennis?"
+        feed2_item = self._add_feed_item(user_id, creator2["id"], post_text=post2_text)
+
+        post_final = "Yep, next year again"
+        self._add_feed_item(user_id, creator["id"], post_text=post_final, parent_id=feed_item["id"])
+
+        post2_final = "Not today but maybe next week?"
+        self._add_feed_item(user_id, user_id, post_text=post2_final, parent_id=feed2_item["id"])

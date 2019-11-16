@@ -6,6 +6,7 @@ CREATE TABLE feeditem (
             post_text TEXT,
             post_image TEXT,
             parent_id UUID,
+            creator_id UUID,
             timestamp_ms_created BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000),
             timestamp_ms_updated BIGINT
         );
