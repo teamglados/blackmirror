@@ -28,6 +28,21 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: feeditem; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.feeditem (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    like_count integer DEFAULT 0,
+    post_text text,
+    post_image text,
+    parent_id uuid,
+    timestamp_ms_created bigint DEFAULT (date_part('epoch'::text, now()) * (1000)::double precision) NOT NULL,
+    timestamp_ms_updated bigint
+);
+
+
+--
 -- Name: github_stats; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -69,9 +84,17 @@ CREATE TABLE public.users (
     first_name text,
     last_name text,
     github_user text,
-    image_id text,
+    image text,
     timestamp_ms_created bigint DEFAULT (date_part('epoch'::text, now()) * (1000)::double precision) NOT NULL
 );
+
+
+--
+-- Name: feeditem feeditem_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.feeditem
+    ADD CONSTRAINT feeditem_pkey PRIMARY KEY (id);
 
 
 --
@@ -109,4 +132,5 @@ ALTER TABLE ONLY public.users
 
 INSERT INTO public.schema_migrations (version) VALUES
     ('20191115210043'),
-    ('20191116085243');
+    ('20191116085243'),
+    ('20191116121611');
