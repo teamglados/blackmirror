@@ -17,7 +17,7 @@ const mockData = [
   },
 ];
 
-function Chat() {
+function ChatScreen() {
   const [messages, setMessages] = React.useState([]);
 
   function handleSend(sentMessages = []) {
@@ -51,4 +51,4 @@ const Wrapper = styled.View`
   background-color: #fff;
 `;
 
-export default Chat;
+export default ChatScreen;

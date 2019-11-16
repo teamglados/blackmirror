@@ -12,6 +12,7 @@ import {
 } from '@expo/vector-icons';
 
 import ChatScreen from './Chat';
+import FeedScreen from './Feed';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +30,7 @@ function MainScreen() {
       <Tab.Navigator>
         <Tab.Screen
           name="Feed"
-          component={Noop}
+          component={FeedScreen}
           options={{
             tabBarLabel: null,
             tabBarIcon: ({ color }) => (

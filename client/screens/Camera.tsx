@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, MaskedViewIOS, SafeAreaView } from 'react-native';
+import { Image, StyleSheet, MaskedViewIOS } from 'react-native';
 import styled from 'styled-components/native';
 import * as FaceDetector from 'expo-face-detector';
 import * as Permissions from 'expo-permissions';
