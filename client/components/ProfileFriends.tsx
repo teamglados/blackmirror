@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import { ProfileData } from '../utils/types';
+import { UserDetails } from '../utils/types';
 import Text from './common/Text';
 import Button from './common/Button';
 import theme from '../constants/theme';
 import { WINDOW_WIDTH } from '../constants/display';
 
 interface Props {
-  data: ProfileData;
+  data: UserDetails;
 }
 
 function ProfileFriends({ data }: Props) {
@@ -29,7 +29,7 @@ function ProfileFriends({ data }: Props) {
 
       <FriendPicks>
         {data.friendPicks.map(friend => (
-          <FriendCard key={friend._id}>
+          <FriendCard key={friend.id}>
             <FriendCardImageWrapper>
               <FriendCardImage source={{ uri: friend.avatar }} />
             </FriendCardImageWrapper>

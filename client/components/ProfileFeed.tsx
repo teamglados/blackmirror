@@ -1,19 +1,19 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import { ProfileData, FeedDataItem } from '../utils/types';
+import { Post } from '../utils/types';
 import Text from './common/Text';
 import FeedItem from './FeedItem';
 import Divider from './common/Divider';
 
 interface Props {
-  data: ProfileData;
+  data: Post[];
   navigation: any;
 }
 
 function ProfileFeed({ data, navigation }: Props) {
-  function navigateToComments(feedItem: FeedDataItem) {
-    navigation.navigate('ProfileComments', { data: feedItem });
+  function navigateToComments(post: Post) {
+    navigation.navigate('ProfileComments', { data: post });
   }
 
   return (
@@ -25,14 +25,14 @@ function ProfileFeed({ data, navigation }: Props) {
       </Header>
 
       <Feed>
-        {data.feed.map((feedItem, index) => (
-          <FeedItemWrapper key={feedItem._id}>
+        {data.map((post, index) => (
+          <FeedItemWrapper key={post.id}>
             <FeedItem
-              key={feedItem._id}
-              data={feedItem}
-              onShowComments={() => navigateToComments(feedItem)}
+              key={post.id}
+              data={post}
+              onShowComments={() => navigateToComments(post)}
             />
-            {index < data.feed.length - 1 && <Divider />}
+            {index < data.length - 1 && <Divider />}
           </FeedItemWrapper>
         ))}
       </Feed>

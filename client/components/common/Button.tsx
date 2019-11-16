@@ -5,6 +5,7 @@ import theme from '../../constants/theme';
 
 interface Props {
   variant?: 'primary' | 'secondary';
+  onPress?: any;
 }
 
 const getBg = (props: any) => {
@@ -18,7 +19,6 @@ const getColor = (props: any) => {
 };
 
 const ButtonBase = styled.TouchableOpacity<Props>`
-  width: 100%;
   padding: 12px;
   border-radius: 4px;
   overflow: hidden;

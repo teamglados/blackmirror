@@ -11,28 +11,31 @@ import theme from '../constants/theme';
 interface Props {
   data: Comment;
 }
+
 function CommentItem({ data }: Props) {
   return (
     <Wrapper>
       <Avatar>
-        <AvatarImage source={{ uri: data.user.avatar }} resizeMode="cover" />
+        <AvatarImage source={{ uri: data.user.image }} resizeMode="cover" />
       </Avatar>
 
       <CommentDetails>
         <CommentBubbleWrapper>
           <CommentBubble>
             <Text size={14} weight={500}>
-              {data.user.name}
+              {data.user.firstName} {data.user.lastName}
             </Text>
+
             <Spacing amount={4} vertical />
-            <Text>{data.text}</Text>
+
+            <Text>{data.content.text}</Text>
 
             <LikeCount>
               <LikeIconWrapper>
                 <AntDesign name="like1" size={10} color="#fff" />
               </LikeIconWrapper>
               <Text color={theme.grey.dark2} size={12}>
-                {data.likeCount}
+                {data.content.likeCount}
               </Text>
             </LikeCount>
           </CommentBubble>
@@ -40,7 +43,7 @@ function CommentItem({ data }: Props) {
 
         <CommentDate>
           <Text size={12} color={theme.grey.dark1}>
-            {moment(data.createdAt).fromNow()}
+            {moment(data.content.timestampMsCreated).fromNow()}
           </Text>
         </CommentDate>
       </CommentDetails>

@@ -3,10 +3,10 @@ import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 
-import { ProfileData } from '../utils/types';
+import { UserDetails } from '../utils/types';
 
 interface Props {
-  data: ProfileData;
+  data: UserDetails;
 }
 
 function ProfileBio({ data }: Props) {

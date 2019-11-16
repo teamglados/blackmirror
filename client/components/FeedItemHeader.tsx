@@ -3,22 +3,29 @@ import styled from 'styled-components/native';
 import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
 
-import { FeedDataItem } from '../utils/types';
+import { Post } from '../utils/types';
 
 interface Props {
-  data: FeedDataItem;
+  data: Post;
 }
 
 function FeedItemHeader({ data }: Props) {
   return (
     <Wrapper>
       <Avatar>
-        <AvatarImage source={{ uri: data.user.avatar }} resizeMode="cover" />
+        <AvatarImage
+          source={{ uri: data.post.user.image }}
+          resizeMode="cover"
+        />
       </Avatar>
 
       <HeaderDetails>
-        <UserName>{data.user.name}</UserName>
-        <ItemDate>{moment(data.createdAt).fromNow()}</ItemDate>
+        <UserName>
+          {data.post.user.firstName} {data.post.user.lastName}
+        </UserName>
+        <ItemDate>
+          {moment(data.post.content.timestampMsCreated).fromNow()}
+        </ItemDate>
       </HeaderDetails>
 
       <Feather name="more-horizontal" size={24} color="#666" />

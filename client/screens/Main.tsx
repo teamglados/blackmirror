@@ -16,6 +16,7 @@ import ChatScreen from './Chat';
 import FeedScreen from './Feed';
 import ProfileScreen from './Profile';
 import CommentsScreen from './Comments';
+import SettingsScreen from './Settings';
 
 const Tab = createBottomTabNavigator();
 const FeedStack = createStackNavigator();
@@ -50,7 +51,11 @@ const ProfileStackGroup = () => {
         component={ProfileScreen}
         options={{ headerShown: false }}
       />
-      <ProfileStack.Screen name="ProfileComments" component={CommentsScreen} />
+      <ProfileStack.Screen
+        name="ProfileComments"
+        component={CommentsScreen}
+        options={{ headerTitle: 'Post comments' }}
+      />
     </ProfileStack.Navigator>
   );
 };
@@ -115,7 +120,7 @@ function MainScreen() {
         />
         <Tab.Screen
           name="SettingsTab"
-          component={Noop}
+          component={SettingsScreen}
           options={{
             tabBarLabel: null,
             tabBarIcon: ({ color }) => (

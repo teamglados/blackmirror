@@ -3,17 +3,19 @@ import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { ProfileData } from '../utils/types';
+import { User } from '../utils/types';
 
 interface Props {
-  data: ProfileData;
+  data: User;
 }
 
 function ProfileHeader({ data }: Props) {
   return (
     <Wrapper>
       <HeaderOffset />
-      <HeaderTitle>{data.name}</HeaderTitle>
+      <HeaderTitle>
+        {data.firstName} {data.lastName}
+      </HeaderTitle>
       <MaterialCommunityIcons name="account-edit" size={32} color="#222" />
     </Wrapper>
   );

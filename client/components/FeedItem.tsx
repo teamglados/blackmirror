@@ -9,13 +9,13 @@ import {
   FontAwesome,
 } from '@expo/vector-icons';
 
-import { FeedDataItem } from '../utils/types';
+import { Post } from '../utils/types';
 import { WINDOW_WIDTH } from '../constants/display';
 import theme from '../constants/theme';
 import FeedItemHeader from './FeedItemHeader';
 
 interface Props {
-  data: FeedDataItem;
+  data: Post;
   onShowComments: () => any;
   disableComments?: boolean;
 }
@@ -27,9 +27,9 @@ function FeedItem({ data, onShowComments, disableComments }: Props) {
         <FeedItemHeader data={data} />
       </FeedItemHeaderWrapper>
 
-      <TextContent>{data.text}</TextContent>
+      <TextContent>{data.post.content.text}</TextContent>
 
-      <FeedImage source={{ uri: data.image }} resizeMode="cover" />
+      <FeedImage source={{ uri: data.post.content.image }} resizeMode="cover" />
 
       <Footer>
         <MetaData>
@@ -40,7 +40,7 @@ function FeedItem({ data, onShowComments, disableComments }: Props) {
             <MetaCircle bg="#F4485F" style={{ marginLeft: -4, zIndex: 0 }}>
               <FontAwesome name="heart" size={11} color="#fff" />
             </MetaCircle>
-            <MetaText>{data.likeCount}</MetaText>
+            <MetaText>{data.post.content.likeCount}</MetaText>
           </MetaItem>
 
           {data.comments.length > 0 && !disableComments && (

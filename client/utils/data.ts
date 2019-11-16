@@ -1,3 +1,5 @@
+import { Post, Message, User, UserDetails } from './types';
+
 /* eslint-disable max-len */
 
 export const categories = [
@@ -75,14 +77,31 @@ export const categories = [
   },
 ];
 
-export const user = {
+export const userDetails: UserDetails = {
+  cover: 'https://placeimg.com/500/200/any',
+  currentHometown: 'Helsinki',
+  currentJob: 'Alepa',
+  currentStudy: 'Eira’s Adult University',
+  bio: 'Burn rate partnership lean startup user experience business-to-business business model canvas accelerator equity agile development virality hackathon entrepreneur technology ramen.', // prettier-ignore
+  friendCount: 321,
+  friendPicks: [
+    { id: '1', name: 'Jonne Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
+    { id: '2', name: 'Arttu Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
+    { id: '3', name: 'Kihhu Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
+    { id: '4', name: 'Gugge Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
+    { id: '5', name: 'Hidde Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
+    { id: '6', name: 'Juffe Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
+  ],
+};
+
+export const user: User = {
   id: '1',
   firstName: 'Teemu',
   lastName: 'Taskula',
   image: 'https://placeimg.com/500/300/any',
 };
 
-export const posts = [
+export const posts: Post[] = [
   {
     id: '1',
     post: {
@@ -102,6 +121,7 @@ export const posts = [
     },
     comments: [
       {
+        id: '1',
         user: {
           id: '3',
           firstName: 'Gollle',
@@ -116,12 +136,28 @@ export const posts = [
           likeCount: 12,
         },
       },
+      {
+        id: '2',
+        user: {
+          id: '8',
+          firstName: 'Dudde',
+          lastName: 'Lollo',
+          image: 'https://placeimg.com/500/300/any',
+        },
+        content: {
+          text: 'Emoji test 😄',
+          image: 'https://placeimg.com/500/300/any',
+          timestampMsCreated: Date.now(),
+          likeCount: 1,
+        },
+      },
     ],
   },
 ];
 
-export const messages = [
+export const messages: Message[] = [
   {
+    id: '1',
     user: {
       id: '3',
       firstName: 'Gollle',
@@ -137,6 +173,7 @@ export const messages = [
     },
   },
   {
+    id: '2',
     user: {
       id: '4',
       firstName: 'Dydde',

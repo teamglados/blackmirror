@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 
-import { ProfileData } from '../utils/types';
+import { User, UserDetails } from '../utils/types';
 import Button from './common/Button';
 
 interface Props {
-  data: ProfileData;
+  data: User & UserDetails;
 }
 
 function ProfileDetails({ data }: Props) {
@@ -18,10 +18,12 @@ function ProfileDetails({ data }: Props) {
 
       <AvatarWrapper>
         <Avatar>
-          <AvatarImage source={{ uri: data.avatar }} />
+          <AvatarImage source={{ uri: data.image }} />
         </Avatar>
 
-        <MainTitle>{data.name}</MainTitle>
+        <MainTitle>
+          {data.firstName} {data.lastName}
+        </MainTitle>
       </AvatarWrapper>
 
       <Button>

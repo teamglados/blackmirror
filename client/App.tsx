@@ -1,19 +1,41 @@
 import React from 'react';
 import { NavigationNativeContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ThemeProvider } from 'styled-components/native';
 
-import theme from './constants/theme';
+import api from './utils/api';
+import { useAppDispatch } from './utils/context';
 import StartScreen from './screens/Start';
 import MainScreen from './screens/Main';
+import Providers from './Providers';
 
 const Stack = createStackNavigator();
 
-export default function App() {
+function Root() {
+  const dispatch = useAppDispatch();
+  const [inited, setInited] = React.useState(false);
+  const [initialRoute, setInitialRoute] = React.useState();
+
+  React.useEffect(() => {
+    async function init() {
+      const data = await api.getUserData();
+
+      if (data) {
+        dispatch({ type: 'set-data', payload: data });
+        setInitialRoute('Main');
+      } else {
+        setInitialRoute('Start');
+      }
+
+      setInited(true);
+    }
+
+    init();
+  }, [dispatch]);
+
   return (
-    <ThemeProvider theme={theme}>
-      <NavigationNativeContainer>
-        <Stack.Navigator initialRouteName="Start">
+    <NavigationNativeContainer>
+      {inited && initialRoute && (
+        <Stack.Navigator initialRouteName={initialRoute}>
           <Stack.Screen
             name="Start"
             component={StartScreen}
@@ -25,7 +47,15 @@ export default function App() {
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
-      </NavigationNativeContainer>
-    </ThemeProvider>
+      )}
+    </NavigationNativeContainer>
+  );
+}
+
+export default function App() {
+  return (
+    <Providers>
+      <Root />
+    </Providers>
   );
 }

@@ -9,7 +9,6 @@ import theme from '../constants/theme';
 import Text from '../components/common/Text';
 import Spacing from '../components/common/Spacing';
 import Fade from '../components/common/Fade';
-import { StartData } from '../utils/types';
 
 function KeywordsScreen({ navigation }) {
   const [revealAnim] = React.useState(new Animated.Value(0));
@@ -59,7 +58,7 @@ function KeywordsScreen({ navigation }) {
   }
 
   function handleNext() {
-    const data: StartData = { firstName, lastName, selectedCategories };
+    const data: any = { firstName, lastName, selectedCategories };
     navigation.navigate('Camera', { data });
   }
 

@@ -23,11 +23,11 @@ function CameraScreen({ route }) {
   const [permissionGranted, setPermissionGranted] = React.useState(false);
   const [faceDetectionEnabled, setFaceDetectionEnabled] = React.useState(false);
   const [faceBounds, setFaceBounds] = React.useState<FaceBounds>(null);
-  const [picUri, setPicUri] = React.useState();
+  const [pic, setPic] = React.useState();
   const cameraRef = React.useRef<any>();
 
-  async function save() {
-    await api.saveUser({ ...data, picUri });
+  async function save(picBase64) {
+    await api.saveUser({ ...data, picBase64 });
   }
 
   async function takePicture() {
@@ -35,16 +35,16 @@ function CameraScreen({ route }) {
 
     const pic = await cameraRef.current.takePictureAsync({
       quality: 0.5,
-      base64: false,
+      base64: true,
       exif: false,
     });
 
-    setPicUri(pic.uri);
-    // save();
+    setPic(pic);
+    save(pic.base64);
   }
 
   async function handleFaceDetect({ faces = [] }) {
-    if (!faceDetectionEnabled || picUri || faces.length === 0) return;
+    if (!faceDetectionEnabled || !!pic || faces.length === 0) return;
 
     const face = faces[0];
     setFaceBounds(face.bounds);
@@ -67,18 +67,17 @@ function CameraScreen({ route }) {
     return <PermissionPlaceholder />;
   }
 
-  const enableMask = !!picUri && !!faceBounds;
-  const padd = 20;
+  const enableMask = !!pic && !!faceBounds;
 
   return (
     <Wrapper>
-      {!!picUri && (
+      {!!pic && (
         <Image
           style={{
             ...StyleSheet.absoluteFillObject,
             transform: [{ rotateY: '180deg' }],
           }}
-          source={{ uri: picUri }}
+          source={{ uri: pic.uri }}
         />
       )}
 
@@ -91,15 +90,15 @@ function CameraScreen({ route }) {
           style={{ flex: 1 }}
           maskElement={
             <FaceBoundsMask
-              x={enableMask ? faceBounds.origin.x - padd : 0}
-              y={enableMask ? faceBounds.origin.y - padd : 0}
-              w={enableMask ? faceBounds.size.width + padd : WINDOW_WIDTH}
-              h={enableMask ? faceBounds.size.height + padd : WINDOW_HEIGHT}
+              x={enableMask ? faceBounds.origin.x : 0}
+              y={enableMask ? faceBounds.origin.y : 0}
+              w={enableMask ? faceBounds.size.width : WINDOW_WIDTH}
+              h={enableMask ? faceBounds.size.height : WINDOW_HEIGHT}
               style={{ borderRadius: enableMask ? 99999 : 0 }}
             />
           }
         >
-          {!picUri ? (
+          {!pic ? (
             <Camera
               ref={cameraRef}
               style={StyleSheet.absoluteFillObject}
@@ -119,11 +118,11 @@ function CameraScreen({ route }) {
                 ...StyleSheet.absoluteFillObject,
                 transform: [{ rotateY: '180deg' }],
               }}
-              source={{ uri: picUri }}
+              source={{ uri: pic.uri }}
             />
           )}
 
-          {!picUri && !!faceBounds && (
+          {!pic && !!faceBounds && (
             <FaceBoundsBox
               x={faceBounds.origin.x}
               y={faceBounds.origin.y}
@@ -134,7 +133,7 @@ function CameraScreen({ route }) {
         </MaskedViewIOS>
       </BlurView>
 
-      {!!faceBounds && !picUri && (
+      {!!faceBounds && !pic && (
         <TakePicOverlay onPress={takePicture}>
           <TakePicGuideWrapper>
             <BlurView

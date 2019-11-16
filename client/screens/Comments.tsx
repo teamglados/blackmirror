@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import { FeedDataItem } from '../utils/types';
+import { Post } from '../utils/types';
 import Text from '../components/common/Text';
 import CommentItem from '../components/CommentItem';
 import FeedItem from '../components/FeedItem';
 import { noop } from '../utils';
 
 function CommentsScreen({ route }) {
-  const data: FeedDataItem = route.params.data;
+  const data: Post = route.params.data;
 
   return (
     <Wrapper>
@@ -22,7 +22,7 @@ function CommentsScreen({ route }) {
 
           <Comments>
             {data.comments.map(comment => (
-              <CommentItem key={comment._id} data={comment} />
+              <CommentItem key={comment.id} data={comment} />
             ))}
           </Comments>
         </CommentsWrapper>

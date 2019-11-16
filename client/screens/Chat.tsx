@@ -1,47 +1,59 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { sleep } from '../utils';
+
 import { TAB_BAR_HEIGHT } from '../constants/display';
+import { useAppState } from '../utils/context';
+import { Message } from '../utils/types';
 
-const mockData = [
-  {
-    _id: 1,
-    text: 'Hello developer',
-    createdAt: new Date(),
-    image: 'https://placeimg.com/400/200/any',
+function mangleMessages(messages: Message[]) {
+  return messages.map(m => ({
+    _id: m.id,
+    text: m.content.text,
+    createdAt: new Date(m.content.timestampMsCreated),
     user: {
-      _id: 2,
-      name: 'React Native',
-      avatar: 'https://placeimg.com/140/140/any',
+      _id: m.user.id,
+      name: `${m.user.firstName} ${m.user.lastName}`,
+      avatar: m.user.image,
     },
-  },
-];
+  }));
+}
 
-function ChatScreen() {
-  const [messages, setMessages] = React.useState([]);
+function ChatScreen({ navigation }) {
+  const { messages, user } = useAppState();
+  const [localMessages, setLocalMessages] = React.useState(
+    mangleMessages(messages)
+  );
 
   function handleSend(sentMessages = []) {
-    console.log('> sentMessages', sentMessages);
-    setMessages(prevMessages => GiftedChat.append(prevMessages, sentMessages));
+    setLocalMessages(prevMessages =>
+      GiftedChat.append(prevMessages, sentMessages)
+    );
   }
 
-  React.useEffect(() => {
-    async function loadMessages() {
-      await sleep(1000);
-      setMessages(mockData);
-    }
+  function handleLongPress() {
+    navigation.navigate('ProfileTab');
+  }
 
-    loadMessages();
-  }, []);
+  // Sync messages
+  React.useEffect(() => {
+    if (messages.length > localMessages.length) {
+      setLocalMessages(mangleMessages(messages));
+    }
+  }, [messages, localMessages]);
 
   return (
     <Wrapper>
       <GiftedChat
-        messages={messages}
-        onSend={handleSend}
-        user={{ _id: 1 }}
         bottomOffset={TAB_BAR_HEIGHT}
+        messages={localMessages}
+        onSend={handleSend}
+        onLongPress={handleLongPress}
+        user={{
+          _id: user.id,
+          name: `${user.firstName} ${user.lastName}`,
+          avatar: user.image,
+        }}
       />
     </Wrapper>
   );
