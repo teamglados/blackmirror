@@ -10,9 +10,11 @@ from dal import user_dal
 
 app = Flask(__name__)
 
+
 @app.errorhandler(404)
 def resource_not_found(e):
     return jsonify(error=str(e)), 404
+
 
 @app.route("/api/users/<user_id>", methods=["GET"])
 def get_user_by_id(user_id):
@@ -23,10 +25,13 @@ def get_user_by_id(user_id):
 
     return jsonify(user)
 
+
 @app.route("/api/users", methods=["POST"])
 @use_args(validation.user_args)
 def create_manifest(r_json):
     # TODO store the image
     image_id = None
-    user = user_dal.add(r_json["first_name"], r_json["last_name"], r_json["github_user"], image_id)
+    user = user_dal.add(
+        r_json["first_name"], r_json["last_name"], r_json["github_user"], image_id
+    )
     return jsonify(user), 201

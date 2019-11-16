@@ -2,6 +2,7 @@ from tests import BMTestCase
 from taskqueue import tasks
 from dal import github_dal
 
+
 class BMQueueTest(BMTestCase):
     def test_queueu(self):
         username = "PasiTheGreat"
@@ -18,4 +19,7 @@ class BMQueueTest(BMTestCase):
         tasks.update_github_stats.function(username)
         github_stats = github_dal.get(username)
         # TODO hacky test, but time is limited
-        self.assertNotEqual(old_github_stats["timestamp_ms_updated"], github_stats["timestamp_ms_updated"])
+        self.assertNotEqual(
+            old_github_stats["timestamp_ms_updated"],
+            github_stats["timestamp_ms_updated"],
+        )

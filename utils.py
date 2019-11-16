@@ -15,4 +15,5 @@ def get_logger(name, debug_level=True):
         logger.addHandler(sh)
     return logger
 
+
 flatten = lambda l: [item for sublist in l for item in sublist]

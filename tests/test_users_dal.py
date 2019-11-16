@@ -12,4 +12,3 @@ class UsersDalTest(BMTestCase):
         user = self._add_user()
         fetched_user = user_dal.get(user["id"])
         self.assertEqual(user["first_name"], fetched_user["first_name"])
-
