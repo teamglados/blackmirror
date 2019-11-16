@@ -5,16 +5,15 @@ from error_msgs import NO_ID_RETURNED, NO_VALUE_IN_DB
 
 TABLE_NAME = "users"
 
-ADD = f"INSERT INTO {TABLE_NAME} (first_name, last_name, github_user) VALUES (%s, %s, %s) RETURNING *;"
+ADD = f"INSERT INTO {TABLE_NAME} (first_name, last_name, image, keywords) VALUES (%s, %s, %s, %s) RETURNING *;"
 GET = f"SELECT * FROM {TABLE_NAME} WHERE id=%s;"
-UPDATE_PROFILE_PIC = f"UPDATE {TABLE_NAME} set image = %s WHERE id=%s;"
 
 
 @with_dbc
 def add(
-    first_name: str, last_name: str, github_user: str, dbc=PGInterface()
+    first_name: str, last_name: str, image: str, keywords: Dict[str, str], dbc=PGInterface()
 ) -> Dict[Any, Any]:
-    row = dbc.fetchone(ADD, params=(first_name, last_name, github_user), as_dict=True)
+    row = dbc.fetchone(ADD, params=(first_name, last_name, image, keywords), as_dict=True)
     if row:
         return dict(row)
     raise TypeError(NO_ID_RETURNED)
@@ -26,8 +25,3 @@ def get(user_id: str, dbc=PGInterface()) -> Dict[Any, Any]:
     if row:
         return dict(row)
     raise TypeError(NO_VALUE_IN_DB)
-
-
-@with_dbc
-def update_profile_pic(user_id: str, image: str, dbc=PGInterface()) -> None:
-    dbc.execute(UPDATE_PROFILE_PIC, params=(image, user_id))
