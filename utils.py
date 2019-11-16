@@ -1,4 +1,5 @@
 import os
+import json
 import logging
 
 
@@ -21,3 +22,9 @@ flatten = lambda l: [item for sublist in l for item in sublist]
 
 def get_root_path():
     return os.path.dirname(os.path.abspath(__file__))
+
+def to_dict(row):
+    row_d = dict(row)
+    if "context" in row_d and row_d["context"]:
+        row_d["context"] = json.loads(row_d["context"])
+    return row_d
