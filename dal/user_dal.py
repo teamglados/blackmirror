@@ -1,5 +1,4 @@
-from typing import Optional, Dict, Any
-from psycopg2.extras import DictRow
+from typing import Dict, Any
 from dal.db import PGInterface
 from dal.connection_decorator import with_dbc
 from error_msgs import NO_ID_RETURNED, NO_VALUE_IN_DB

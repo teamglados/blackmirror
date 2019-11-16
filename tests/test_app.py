@@ -20,5 +20,4 @@ class ApiTest(BMTestCase):
             data=json.dumps(user_data),
             content_type="application/json",
         )
-        import pdb; pdb.set_trace()
         self.assertEqual(res.json["first_name"], "Larry")

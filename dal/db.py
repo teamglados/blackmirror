@@ -51,7 +51,6 @@ class PGInterface:
         cursor_factory = psycopg2.extras.DictCursor if as_dict else None
         try:
             cursor = self.conn.cursor(cursor_factory=cursor_factory)
-
             # if multi query execution
             if isinstance(query, list):
                 for idx, q in enumerate(query):
