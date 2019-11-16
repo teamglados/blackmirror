@@ -11,11 +11,36 @@ services:
       - PGDATABASE=blackmirror
       - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
       - SSLMODE=prefer
+      - REDISSOCK=redis
+      - REDIS_SSL=False
     depends_on:
+      - db
+      - redis
+      - bmqueue
+    volumes:
+      - ./:/app
+  bmqueue:
+    build: .
+    command:
+      - bash
+      - bin/run_queue
+    volumes:
+      - ./:/app
+    environment:
+      - APP_SETTINGS=development
+      - PGHOST=db
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGDATABASE=blackmirror
+      - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
+      - SSLMODE=prefer
+      - REDISSOCK=redis
+      - REDIS_SSL=False
+    depends_on:
+      - redis
       - db
     volumes:
       - ./:/app
-
   db:
     image: postgres:11.5
     restart: unless-stopped
@@ -24,12 +49,11 @@ services:
       - PGUSER=postgres
     ports:
       - 5432:5432
-
-  # redis:
-  #   command: redis-server --dbfilename 'redis.rdb'
-  #   restart: unless-stopped
-  #   image: redis:3-alpine
-  #   ports:
-  #     - 6379:6379
-  #   volumes:
-  #     - ./redis/:/data
+  redis:
+    command: redis-server --dbfilename 'redis.rdb'
+    restart: unless-stopped
+    image: redis:3-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/:/data
