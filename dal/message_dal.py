@@ -21,9 +21,11 @@ def add(user_id: str, context: Dict[Any, Any], dbc=PGInterface()) -> Dict[Any, A
 
 
 @with_dbc
-def get_by_user(user_id: str, dbc=PGInterface()) -> List[Dict[Any, Any]]:
-    rows = dbc.fetchall(GET, params=(user_id,), as_dict=True)
-    return [utils.to_dict(row) for row in rows]
+def get_by_user(user_id: str, dbc=PGInterface()) -> Dict[Any, Any]:
+    row = dbc.fetchone(GET, params=(user_id,), as_dict=True)
+    if row:
+        return utils.to_dict(row)
+    raise TypeError(NO_VALUE_IN_DB)
 
 
 @with_dbc

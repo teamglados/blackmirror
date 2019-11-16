@@ -17,14 +17,13 @@ class MessageContext:
     def upsert(self, context):
         message_dict = {}
         for message in context["messages"]:
-            message_dict[message["timestamp_ms_created"]] = message
-
+            message_dict[message["content"]["timestamp_ms_created"]] = message
         if not self.context:
             context_holder = message_dal.add(self.user_id, context)
             self.context = context_holder["context"]
         else:
             for message in self.context["messages"]:
-                message_dict[message["timestamp_ms_created"]] = message
+                message_dict[message["content"]["timestamp_ms_created"]] = message
             self.context["messages"] = list(message_dict.values())
 
         self.context["messages"] = sorted(self.context["messages"], key=lambda x: x["content"]["timestamp_ms_created"])
@@ -33,6 +32,6 @@ class MessageContext:
         for message in self.context["messages"]:
             if not "id" in message:
                 message["id"] = str(uuid4())
-        message_dal.update(self.context["id"], self.context)
+        message_dal.update(self.user_id, self.context)
         return self.context
 
