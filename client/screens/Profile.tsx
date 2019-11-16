@@ -7,6 +7,8 @@ import ProfileDetails from '../components/ProfileDetails';
 import ProfileHeader from '../components/ProfileHeader';
 import ProfileBio from '../components/ProfileBio';
 import ProfileFriends from '../components/ProfileFriends';
+import ProfileFeed from '../components/ProfileFeed';
+import Divider from '../components/common/Divider';
 
 const mockData: ProfileData = {
   _id: 1,
@@ -25,6 +27,21 @@ const mockData: ProfileData = {
     { _id: 4, name: 'Gugge Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
     { _id: 5, name: 'Hidde Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
     { _id: 6, name: 'Juffe Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
+  ],
+  feed: [
+    {
+      _id: 1,
+      createdAt: new Date().toISOString(),
+      image: 'https://placeimg.com/500/300/any',
+      text: 'Vesting period handshake user experience infrastructure startup. Android crowdsource return on investment. Lean startup research & development business-to-consumer success startup low hanging fruit. Business plan success supply chain.', // prettier-ignore
+      likeCount: 123,
+      commentCount: 12,
+      user: {
+        _id: 2,
+        name: 'React Native',
+        avatar: 'https://placeimg.com/140/140/any',
+      },
+    },
   ],
 };
 
@@ -49,6 +66,8 @@ function ProfileScreen() {
         <ProfileDetails data={profileData} />
         <ProfileBio data={profileData} />
         <ProfileFriends data={profileData} />
+        <Divider />
+        <ProfileFeed data={profileData} />
       </Scroller>
     </Wrapper>
   );

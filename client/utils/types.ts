@@ -25,4 +25,5 @@ export interface ProfileData {
   currentHometown: string;
   friendCount: number;
   friendPicks: User[];
+  feed: FeedDataItem[];
 }
