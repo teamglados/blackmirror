@@ -2,6 +2,6 @@
 CREATE TABLE feed (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             user_id UUID,
-            context TEXT,
+            context TEXT
         );
 -- migrate:down
