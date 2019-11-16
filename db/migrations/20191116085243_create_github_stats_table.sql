@@ -13,7 +13,7 @@ CREATE TABLE github_stats (
             stars INTEGER,
             followers INTEGER,
             following INTEGER,
-            image_id TEXT,
+            image TEXT,
             timestamp_ms_created BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000),
             timestamp_ms_updated BIGINT
 );
