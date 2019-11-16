@@ -75,10 +75,10 @@ def ping():
 def get_user_feed(user_id: str):
     feed = feed_dal.get_by_user(user_id)
     feed_sorted = sorted(feed, key=lambda x: x["post"]["content"]["timestamp_ms_created"], reverse=True)
-    return jsonify(feed_sorted), 200
+    return jsonify(feed_sorted["context"]), 200
 
 
 @app.route("/api/messages/<user_id>", methods=["GET"])
 def get_user_messages(user_id: str):
     messages = message_dal.get_by_user(user_id)
-    return jsonify(messages), 200
+    return jsonify(messages["context"]), 200
