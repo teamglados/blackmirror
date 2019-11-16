@@ -71,17 +71,17 @@ class BMTestCase(unittest.TestCase):
             kwargs.get("like_count", 2),
         )
 
-    def _add_message(self, creator: str, user_id: str, **kwargs):
+    def _add_message(self, user_id: str, creator: str, **kwargs):
         content = kwargs.get("content", "Hey, what's up?")
         return message_dal.add(content, user_id, creator)
 
-    def _create_conversation(self, creator: str, user_ids: List[str]):
+    def _create_conversation(self, user_id: str, friend_ids: List[str]):
         counter = 0
-        self._add_message(creator, creator, content=f"{counter}_{str(uuid4())}")
+        self._add_message(user_id, user_id, content=f"{counter}_{str(uuid4())}")
         for _ in range(2):
-            for user in user_ids:
+            for friend in friend_ids:
                 counter += 1
-                self._add_message(creator, user, content=f"{counter}_{str(uuid4())}")
+                self._add_message(user_id, friend, content=f"{counter}_{str(uuid4())}")
 
     def _create_realistic_feed(self, user_id: str) -> None:
         creator = self._add_user()
@@ -103,3 +103,15 @@ class BMTestCase(unittest.TestCase):
 
         post2_final = "Not today but maybe next week?"
         self._add_feed_item(user_id, user_id, post_text=post2_final, parent_id=feed2_item["id"])
+
+    def _create_realistic_chat(self, user_id: str) -> None:
+        friend = self._add_user()["id"]
+
+        message1 = "What's up?"
+        message_dal.add(message1, user_id, friend)
+        message2 = "Not much... watching Netflix"
+        message_dal.add(message2, user_id, user_id)
+        message3 = "Any ideas for the weekend?"
+        message_dal.add(message3, user_id, user_id)
+        message4 = "Not really, I will just stay home and code."
+        message_dal.add(message4, user_id, friend)

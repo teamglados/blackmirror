@@ -26,9 +26,9 @@ def get_feed_for_user(user_id: str) -> Dict[Any, Any]:
     flat_feed = feeditem_dal.get_by_user(user_id)
     feed, user_ids = get_feed_and_users_with_grouped_comments(flat_feed)
 
-    users = []
-    for user_id in user_ids:
-        users.append(user_dal.get(user_id))
+    users = {}
+    for uid in user_ids:
+        users[uid] = user_dal.get(uid)
 
     return {
         "feed": sorted(feed, key=lambda x: x["timestamp_ms_created"], reverse=True),
