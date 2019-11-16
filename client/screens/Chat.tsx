@@ -9,6 +9,7 @@ const mockData = [
     _id: 1,
     text: 'Hello developer',
     createdAt: new Date(),
+    image: 'https://placeimg.com/400/200/any',
     user: {
       _id: 2,
       name: 'React Native',

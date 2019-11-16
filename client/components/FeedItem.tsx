@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
+import moment from 'moment';
 
 import {
   Feather,
@@ -15,9 +16,10 @@ import { WINDOW_WIDTH } from '../constants/display';
 
 interface Props {
   data: FeedDataItem;
+  onShowComments: () => any;
 }
 
-function FeedItem({ data }: Props) {
+function FeedItem({ data, onShowComments }: Props) {
   return (
     <Wrapper>
       <Header>
@@ -27,7 +29,7 @@ function FeedItem({ data }: Props) {
 
         <HeaderDetails>
           <UserName>{data.user.name}</UserName>
-          <ItemDate>{data.createdAt}</ItemDate>
+          <ItemDate>{moment(data.createdAt).fromNow()}</ItemDate>
         </HeaderDetails>
 
         <Feather name="more-horizontal" size={24} color="#666" />
@@ -49,8 +51,8 @@ function FeedItem({ data }: Props) {
             <MetaText>{data.likeCount}</MetaText>
           </MetaItem>
 
-          <MetaItem>
-            <MetaText>{data.commentCount} comments</MetaText>
+          <MetaItem onPress={onShowComments}>
+            <MetaText>{data.comments.length} comments</MetaText>
           </MetaItem>
         </MetaData>
 
@@ -113,14 +115,14 @@ const HeaderDetails = styled.View`
 
 const UserName = styled.Text`
   color: #222;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
 `;
 
 const ItemDate = styled.Text`
   color: #222;
   font-size: 14px;
-  font-weight: 200;
+  font-weight: 300;
 `;
 
 const TextContent = styled.Text`
@@ -166,7 +168,7 @@ const MetaData = styled.View`
   justify-content: space-between;
 `;
 
-const MetaItem = styled.View`
+const MetaItem = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;

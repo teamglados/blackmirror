@@ -10,9 +10,11 @@ export interface FeedDataItem {
   image: string;
   text: string;
   likeCount: number;
-  commentCount: number;
   user: User;
+  comments: Comment[];
 }
+
+export type Comment = Omit<FeedDataItem, 'comments' | 'image'>;
 
 export interface ProfileData {
   _id: number;

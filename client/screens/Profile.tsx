@@ -35,7 +35,7 @@ const mockData: ProfileData = {
       image: 'https://placeimg.com/500/300/any',
       text: 'Vesting period handshake user experience infrastructure startup. Android crowdsource return on investment. Lean startup research & development business-to-consumer success startup low hanging fruit. Business plan success supply chain.', // prettier-ignore
       likeCount: 123,
-      commentCount: 12,
+      comments: [],
       user: {
         _id: 2,
         name: 'React Native',
@@ -45,7 +45,7 @@ const mockData: ProfileData = {
   ],
 };
 
-function ProfileScreen() {
+function ProfileScreen({ navigation }) {
   const [profileData, setProfileData] = React.useState<ProfileData>();
 
   React.useEffect(() => {
@@ -67,7 +67,7 @@ function ProfileScreen() {
         <ProfileBio data={profileData} />
         <ProfileFriends data={profileData} />
         <Divider />
-        <ProfileFeed data={profileData} />
+        <ProfileFeed data={profileData} navigation={navigation} />
       </Scroller>
     </Wrapper>
   );

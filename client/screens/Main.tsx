@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import {
   AntDesign,
@@ -14,8 +15,11 @@ import {
 import ChatScreen from './Chat';
 import FeedScreen from './Feed';
 import ProfileScreen from './Profile';
+import CommentsScreen from './Comments';
 
 const Tab = createBottomTabNavigator();
+const FeedStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 
 const Noop = () => {
   return (
@@ -25,13 +29,35 @@ const Noop = () => {
   );
 };
 
+const FeedStackGroup = () => {
+  return (
+    <FeedStack.Navigator>
+      <FeedStack.Screen name="Feed" component={FeedScreen} />
+      <FeedStack.Screen name="FeedComments" component={CommentsScreen} />
+    </FeedStack.Navigator>
+  );
+};
+
+const ProfileStackGroup = () => {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen name="ProfileComments" component={CommentsScreen} />
+    </ProfileStack.Navigator>
+  );
+};
+
 function MainScreen() {
   return (
     <Wrapper>
-      <Tab.Navigator initialRouteName="Profile">
+      <Tab.Navigator initialRouteName="FeedTab">
         <Tab.Screen
-          name="Feed"
-          component={FeedScreen}
+          name="FeedTab"
+          component={FeedStackGroup}
           options={{
             tabBarLabel: null,
             tabBarIcon: ({ color }) => (
@@ -40,7 +66,7 @@ function MainScreen() {
           }}
         />
         <Tab.Screen
-          name="Friends"
+          name="FriendsTab"
           component={Noop}
           options={{
             tabBarLabel: null,
@@ -50,8 +76,8 @@ function MainScreen() {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
+          name="ProfileTab"
+          component={ProfileStackGroup}
           options={{
             tabBarLabel: null,
             tabBarIcon: ({ color }) => (
@@ -60,7 +86,7 @@ function MainScreen() {
           }}
         />
         <Tab.Screen
-          name="Groups"
+          name="GroupsTab"
           component={Noop}
           options={{
             tabBarLabel: null,
@@ -74,7 +100,7 @@ function MainScreen() {
           }}
         />
         <Tab.Screen
-          name="Notifications"
+          name="NotificationsTab"
           component={ChatScreen}
           options={{
             tabBarLabel: null,
@@ -84,7 +110,7 @@ function MainScreen() {
           }}
         />
         <Tab.Screen
-          name="Settings"
+          name="SettingsTab"
           component={Noop}
           options={{
             tabBarLabel: null,
