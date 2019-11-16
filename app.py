@@ -16,6 +16,7 @@ from webargs.flaskparser import use_args
 import error_msgs
 import validation
 import feed_service
+import message_service
 from dal import user_dal
 from dal import feeditem_dal
 from dal import message_dal
@@ -90,13 +91,12 @@ def ping():
 
 
 @app.route("/api/feed/<user_id>", methods=["GET"])
-def get_user_feed(user_id):
-    # TODO use feed service
+def get_user_feed(user_id: str):
     feed = feed_service.get_feed_for_user(user_id)
     return jsonify(feed), 200
 
 
 @app.route("/api/messages/<user_id>", methods=["GET"])
-def get_user_messages(user_id):
-    # TODO use converstaion service
-    pass
+def get_user_messages(user_id: str):
+    messages = message_service.get_messages(user_id)
+    return jsonify(messages), 200

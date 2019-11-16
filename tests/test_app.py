@@ -29,3 +29,15 @@ class ApiTest(BMTestCase):
         feed_data = res.json
         self.assertEqual(len(feed_data["feed"][0]["comments"]), 1)
         self.assertEqual(len(feed_data["feed"][1]["comments"]), 2)
+
+    def test_get_messages(self):
+        user = self._add_user()
+        self._create_realistic_chat(user["id"])
+
+        res = self.client.get(f"/api/messages/{user['id']}")
+        self.assertEqual(res.status_code, 200)
+
+        message_data = res.json
+        self.assertEqual(len(message_data["messages"]), 4)
+        self.assertEqual(len(message_data["users"]), 2)
+
