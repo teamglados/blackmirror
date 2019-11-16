@@ -15,4 +15,10 @@ class UsersDalTest(BMTestCase):
 
         conversation = message_dal.get_conversation(creator)
         self.assertEqual(len(conversation), 5)
-        self.assertListEqual([0,1,2,3,4], [int(i["content"][0]) for i in sorted(conversation, key=lambda x: x["timestamp_ms_created"])])
+        self.assertListEqual(
+            [0, 1, 2, 3, 4],
+            [
+                int(i["content"][0])
+                for i in sorted(conversation, key=lambda x: x["timestamp_ms_created"])
+            ],
+        )

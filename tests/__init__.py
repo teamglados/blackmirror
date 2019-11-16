@@ -62,7 +62,7 @@ class BMTestCase(unittest.TestCase):
             "parent_id": kwargs.get("parent_id", None),
             "post_text": kwargs.get("post_text", "This is my first post!"),
             "post_image": kwargs.get("post_image", "img/post_image.png"),
-            "like_count": kwargs.get("like_count", 2)
+            "like_count": kwargs.get("like_count", 2),
         }
 
         feeditem_dal.update(feed_id, data)
