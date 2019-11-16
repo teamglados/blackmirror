@@ -7,13 +7,8 @@ from flask import (
     abort,
     request,
     make_response,
-    url_for,
     send_from_directory,
 )
-from werkzeug.utils import secure_filename
-from webargs.flaskparser import parser
-from webargs.core import ValidationError
-from webargs.flaskparser import use_args
 
 import utils
 import error_msgs
@@ -21,7 +16,6 @@ import feed_service
 import message_service
 from taskqueue import tasks
 from dal import user_dal
-from dal import feeditem_dal
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
 
