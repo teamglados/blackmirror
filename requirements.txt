@@ -11,3 +11,4 @@ requests==2.22.0
 nose2==0.9.1
 ipdb==0.12.2
 mypy==0.740
+black
