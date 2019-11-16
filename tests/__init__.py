@@ -49,14 +49,14 @@ class BMTestCase(unittest.TestCase):
             data = GITHUB_STATS
         github_dal.update(username, data)
 
-    def _add_feed_item(self, **kwargs):
+    def _add_feed_item(self, user_id: str, **kwargs):
         post_text = kwargs.get("post_text", "This is my first post!")
         parent_id = kwargs.get("parent_id", None)
-        return feeditem_dal.add(post_text, parent_id)
+        return feeditem_dal.add(post_text, user_id, parent_id=parent_id)
 
-    def _update_feed_item(self, feed_id, **kwargs):
+    def _update_feed_item(self, user_id: str, feed_id: str, **kwargs):
         for _ in range(kwargs.get("add_comments", 1)):
-            self._add_feed_item(parent_id=feed_id)
+            self._add_feed_item(user_id, parent_id=feed_id)
 
         data = {
             "parent_id": kwargs.get("parent_id", None),

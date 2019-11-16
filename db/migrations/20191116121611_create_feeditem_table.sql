@@ -1,6 +1,7 @@
 -- migrate:up
 CREATE TABLE feeditem (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+            user_id UUID,
             like_count INTEGER DEFAULT 0,
             post_text TEXT,
             post_image TEXT,

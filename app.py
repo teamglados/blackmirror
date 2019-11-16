@@ -9,6 +9,7 @@ import error_msgs
 import validation
 from dal import user_dal
 from dal import feeditem_dal
+from dal import message_dal
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
 
@@ -75,3 +76,13 @@ def uploaded_file(filename):
 @app.route('/ping')
 def ping():
     return "pong"
+
+@app.route("/api/feed/<user_id>", methods=["GET"])
+def get_user_feed(user_id):
+    # TODO use feed service
+    pass
+
+@app.route("/api/messages/<user_id>", methods=["GET"])
+def get_user_messages(user_id):
+    # TODO use converstaion service
+    pass
