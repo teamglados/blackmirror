@@ -1,4 +1,6 @@
 import json
+from unittest.mock import patch
+
 import app
 from tests import BMTestCase
 
@@ -8,7 +10,9 @@ class ApiTest(BMTestCase):
         super().setUp()
         self.client = app.app.test_client()
 
-    def test_add_user(self):
+    @patch("taskqueue.tasks.create_feed")
+    @patch("taskqueue.tasks.create_messages")
+    def test_add_user(self, mock_feed, mock_messages):
         user_data = {
             "first_name": "Larry",
             "last_name": "Smith",
@@ -18,6 +22,8 @@ class ApiTest(BMTestCase):
             "/api/users", data=json.dumps(user_data), content_type="application/json",
         )
         self.assertEqual(res.json["first_name"], "Larry")
+        mock_feed.execute.assert_called_once()
+        mock_messages.execute.assert_called_once()
 
     def test_get_feed(self):
         user = self._add_user()
