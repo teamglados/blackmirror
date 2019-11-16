@@ -16,6 +16,7 @@ import feed_service
 import message_service
 from taskqueue import tasks
 from dal import user_dal
+from dal import feed_dal
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
 
@@ -71,8 +72,9 @@ def ping():
 
 @app.route("/api/feed/<user_id>", methods=["GET"])
 def get_user_feed(user_id: str):
-    feed = feed_service.get_feed_for_user(user_id)
-    return jsonify(feed), 200
+    feed = feed_dal.get_by_user(user_id)
+    feed_sorted = sorted(feed, key=lambda x: x["post"]["content"]["timestamp_ms_created"], reverse=True)
+    return jsonify(feed_sorted), 200
 
 
 @app.route("/api/messages/<user_id>", methods=["GET"])
