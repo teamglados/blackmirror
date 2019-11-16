@@ -5,16 +5,16 @@ from error_msgs import NO_ID_RETURNED, NO_VALUE_IN_DB
 
 TABLE_NAME = "users"
 
-ADD = f"INSERT INTO {TABLE_NAME} (first_name, last_name, github_user, image_id) VALUES (%s, %s, %s, %s) RETURNING *;"
+ADD = f"INSERT INTO {TABLE_NAME} (first_name, last_name, github_user, image) VALUES (%s, %s, %s, %s) RETURNING *;"
 GET = f"SELECT * FROM {TABLE_NAME} WHERE id=%s;"
 
 
 @with_dbc
 def add(
-    first_name: str, last_name: str, github_user: str, image_id: str, dbc=PGInterface()
+    first_name: str, last_name: str, github_user: str, image: str, dbc=PGInterface()
 ) -> Dict[Any, Any]:
     row = dbc.fetchone(
-        ADD, params=(first_name, last_name, github_user, image_id), as_dict=True
+        ADD, params=(first_name, last_name, github_user, image), as_dict=True
     )
     if row:
         return dict(row)

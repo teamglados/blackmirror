@@ -6,7 +6,7 @@ CREATE TABLE users (
             first_name TEXT,
             last_name TEXT,
             github_user TEXT,
-            image_id TEXT,
+            image TEXT,
             timestamp_ms_created BIGINT NOT NULL DEFAULT (extract(epoch from now()) * 1000)
             );
 

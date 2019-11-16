@@ -30,8 +30,8 @@ def get_user_by_id(user_id):
 @use_args(validation.user_args)
 def create_manifest(r_json):
     # TODO store the image
-    image_id = None
+    image = None
     user = user_dal.add(
-        r_json["first_name"], r_json["last_name"], r_json["github_user"], image_id
+        r_json["first_name"], r_json["last_name"], r_json["github_user"], image
     )
     return jsonify(user), 201
