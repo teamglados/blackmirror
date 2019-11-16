@@ -12,7 +12,7 @@ GET = f"SELECT * FROM {TABLE_NAME} WHERE id=%s;"
 
 def to_dict(row):
     row_d = dict(row)
-    if "keywords" in row_d:
+    if "keywords" in row_d and row_d["keywords"]:
         row_d["keywords"] = json.loads(row_d["keywords"])
     return row_d
 
