@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import KeywordsScreen from './Keywords';

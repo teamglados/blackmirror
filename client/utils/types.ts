@@ -29,3 +29,9 @@ export interface ProfileData {
   friendPicks: User[];
   feed: FeedDataItem[];
 }
+
+export interface StartData {
+  firstName: string;
+  lastName: string;
+  selectedCategories: { [category: string]: string[] };
+}

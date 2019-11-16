@@ -13,7 +13,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavigationNativeContainer>
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator initialRouteName="Start">
           <Stack.Screen
             name="Start"
             component={StartScreen}

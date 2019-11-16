@@ -5,14 +5,20 @@ import * as FaceDetector from 'expo-face-detector';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BlurView } from 'expo-blur';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../constants/display';
+import { StartData } from '../utils/types';
+import Text from '../components/common/Text';
+import Spacing from '../components/common/Spacing';
 
 interface FaceBounds {
   origin: { x: number; y: number };
   size: { height: number; width: number };
 }
 
-function CameraScreen() {
+function CameraScreen({ route }) {
+  const data: StartData = route.params.data;
   const [permissionGranted, setPermissionGranted] = React.useState(false);
   const [faceDetectionEnabled, setFaceDetectionEnabled] = React.useState(false);
   const [faceBounds, setFaceBounds] = React.useState<FaceBounds>(null);
@@ -82,7 +88,7 @@ function CameraScreen() {
               y={enableMask ? faceBounds.origin.y : 0}
               w={enableMask ? faceBounds.size.width : WINDOW_WIDTH}
               h={enableMask ? faceBounds.size.height : WINDOW_HEIGHT}
-              style={{ borderRadius: enableMask ? 99 : 0 }}
+              style={{ borderRadius: enableMask ? 99999 : 0 }}
             />
           }
         >
@@ -119,9 +125,31 @@ function CameraScreen() {
             />
           )}
         </MaskedViewIOS>
-
-        {!!faceBounds && !picUri && <TakePic onPress={takePicture} />}
       </BlurView>
+
+      {!!faceBounds && !picUri && (
+        <TakePicOverlay onPress={takePicture}>
+          <TakePicGuideWrapper>
+            <BlurView
+              tint="dark"
+              intensity={100}
+              style={StyleSheet.absoluteFillObject}
+            >
+              <TakePicGuide>
+                <MaterialCommunityIcons
+                  name="camera-party-mode"
+                  color="#fff"
+                  size={24}
+                />
+                <Spacing amount={8} />
+                <Text color="#fff" weight={500}>
+                  Tap the screen to take your photo
+                </Text>
+              </TakePicGuide>
+            </BlurView>
+          </TakePicGuideWrapper>
+        </TakePicOverlay>
+      )}
     </Wrapper>
   );
 }
@@ -151,22 +179,35 @@ const FaceBoundsBase = styled.View<FaceBoundBoxT>`
 
 const FaceBoundsBox = styled(FaceBoundsBase)`
   border: 1px dotted #fff;
-  border-radius: 99px;
+  border-radius: 8px;
 `;
 
 const FaceBoundsMask = styled(FaceBoundsBase)`
   background-color: #000;
 `;
 
-const TakePic = styled.TouchableOpacity`
+const TakePicOverlay = styled.TouchableOpacity`
   position: absolute;
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: blue;
-  padding: 24px;
+  top: 0;
+  justify-content: flex-end;
+  padding: 80px 32px;
+  z-index: 1;
+`;
+
+const TakePicGuideWrapper = styled.View`
   border-radius: 99px;
-  margin-bottom: 40px;
+  height: 60px;
+  overflow: hidden;
+`;
+
+const TakePicGuide = styled.View`
+  height: 60px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default CameraScreen;
