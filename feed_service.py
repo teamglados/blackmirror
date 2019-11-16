@@ -17,7 +17,9 @@ def create_mock_feed(user_id: str):
     post2 = "Today I managed to catch a huge fish. I feel so lucky!"
     feed_item = feeditem_dal.add(post2, user_id, andreas)
 
-    post3 = "Joker movie was good, but I still like Huge Ledger more. Maybe I'm just weird?"
+    post3 = (
+        "Joker movie was good, but I still like Huge Ledger more. Maybe I'm just weird?"
+    )
     feed_item = feeditem_dal.add(post3, user_id, andreas)
 
     post4 = "Too much candy is too much. Next more wine!"

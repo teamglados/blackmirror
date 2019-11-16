@@ -46,4 +46,3 @@ class ApiTest(BMTestCase):
         message_data = res.json
         self.assertEqual(len(message_data["messages"]), 4)
         self.assertEqual(len(message_data["users"]), 2)
-
