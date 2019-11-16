@@ -2,7 +2,10 @@ from typing import List, Dict, Any, Set, Tuple
 from dal import feeditem_dal
 from dal import user_dal
 
-def get_feed_and_users_with_grouped_comments(feed: List[Dict[Any, Any]]) -> Tuple[List[Dict[Any, Any]], Set[str]]:
+
+def get_feed_and_users_with_grouped_comments(
+    feed: List[Dict[Any, Any]]
+) -> Tuple[List[Dict[Any, Any]], Set[str]]:
     posts = {}
     user_ids: List[str] = []
     for item in feed:
@@ -32,5 +35,5 @@ def get_feed_for_user(user_id: str) -> Dict[Any, Any]:
 
     return {
         "feed": sorted(feed, key=lambda x: x["timestamp_ms_created"], reverse=True),
-        "users": users
+        "users": users,
     }

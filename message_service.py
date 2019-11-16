@@ -15,6 +15,8 @@ def get_messages(user_id: str) -> Dict[Any, Any]:
         users[uid] = user_dal.get(uid)
 
     return {
-        "messages": sorted(messages, key=lambda x: x["timestamp_ms_created"], reverse=False),
-        "users": users
+        "messages": sorted(
+            messages, key=lambda x: x["timestamp_ms_created"], reverse=False
+        ),
+        "users": users,
     }

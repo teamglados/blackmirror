@@ -1,6 +1,7 @@
 from tests import BMTestCase
 from feed_service import get_feed_for_user
 
+
 class FeedServiceTest(BMTestCase):
     def setUp(self):
         super().setUp()
