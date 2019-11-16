@@ -9,6 +9,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../constants/display';
 import { StartData } from '../utils/types';
+import api from '../utils/api';
 import Text from '../components/common/Text';
 import Spacing from '../components/common/Spacing';
 
@@ -25,16 +26,21 @@ function CameraScreen({ route }) {
   const [picUri, setPicUri] = React.useState();
   const cameraRef = React.useRef<any>();
 
+  async function save() {
+    await api.saveUser({ ...data, picUri });
+  }
+
   async function takePicture() {
     if (!cameraRef.current) return;
 
     const pic = await cameraRef.current.takePictureAsync({
       quality: 0.5,
-      base64: true,
+      base64: false,
       exif: false,
     });
 
     setPicUri(pic.uri);
+    // save();
   }
 
   async function handleFaceDetect({ faces = [] }) {
@@ -62,6 +68,7 @@ function CameraScreen({ route }) {
   }
 
   const enableMask = !!picUri && !!faceBounds;
+  const padd = 20;
 
   return (
     <Wrapper>
@@ -84,10 +91,10 @@ function CameraScreen({ route }) {
           style={{ flex: 1 }}
           maskElement={
             <FaceBoundsMask
-              x={enableMask ? faceBounds.origin.x : 0}
-              y={enableMask ? faceBounds.origin.y : 0}
-              w={enableMask ? faceBounds.size.width : WINDOW_WIDTH}
-              h={enableMask ? faceBounds.size.height : WINDOW_HEIGHT}
+              x={enableMask ? faceBounds.origin.x - padd : 0}
+              y={enableMask ? faceBounds.origin.y - padd : 0}
+              w={enableMask ? faceBounds.size.width + padd : WINDOW_WIDTH}
+              h={enableMask ? faceBounds.size.height + padd : WINDOW_HEIGHT}
               style={{ borderRadius: enableMask ? 99999 : 0 }}
             />
           }

@@ -34,4 +34,5 @@ export interface StartData {
   firstName: string;
   lastName: string;
   selectedCategories: { [category: string]: string[] };
+  picUri: string;
 }

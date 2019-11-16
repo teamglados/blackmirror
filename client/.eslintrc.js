@@ -29,6 +29,7 @@ module.exports = {
   globals: {
     __DEV__: true,
     fetch: false,
+    FormData: true,
   },
 
   rules: {
