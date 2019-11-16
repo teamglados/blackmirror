@@ -7,6 +7,7 @@ from unittest import mock
 from uuid import uuid4
 from typing import Dict, Any, Optional, List
 
+import utils
 from dal import user_dal
 from dal import github_dal
 from dal import feeditem_dal
@@ -35,9 +36,13 @@ class BMTestCase(unittest.TestCase):
     def _add_user(self, **kwargs) -> Dict[Any, Any]:
         first_name = kwargs.get("first_name", "Mike")
         last_name = kwargs.get("last_name", "Smith")
-        github_user = kwargs.get("github_user", "Villux")
+        image = kwargs.get("image", f"{utils.get_root_path()}/uploads/ville.jpeg")
+        keywords = kwargs.get("keywords", {
+            "movies": ["Terminator"],
+            "hobbies": ["Football"]
+        })
 
-        return user_dal.add(first_name, last_name, github_user)
+        return user_dal.add(first_name, last_name, image, keywords)
 
     def _add_github_user(self, username: str = "Villux") -> None:
         github_dal.add(username)

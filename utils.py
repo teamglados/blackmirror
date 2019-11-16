@@ -1,3 +1,4 @@
+import os
 import logging
 
 
@@ -17,3 +18,6 @@ def get_logger(name, debug_level=True):
 
 
 flatten = lambda l: [item for sublist in l for item in sublist]
+
+def get_root_path():
+    return os.path.dirname(os.path.abspath(__file__))
