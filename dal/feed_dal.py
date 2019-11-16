@@ -5,7 +5,7 @@ from dal.db import PGInterface
 from dal.connection_decorator import with_dbc
 from error_msgs import NO_ID_RETURNED, NO_VALUE_IN_DB
 
-TABLE_NAME = "feeditem"
+TABLE_NAME = "feed"
 
 ADD = f"INSERT INTO {TABLE_NAME} (user_id, context) VALUES (%s, %s) RETURNING *;"
 ADD_EMPTY = f"INSERT INTO {TABLE_NAME} (user_id) VALUES (%s) RETURNING *;"

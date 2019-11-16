@@ -82,4 +82,5 @@ def get_user_feed(user_id: str):
 @app.route("/api/messages/<user_id>", methods=["GET"])
 def get_user_messages(user_id: str):
     messages = message_dal.get_by_user(user_id)
-    return jsonify(messages["context"]), 200
+    return jsonify(messages["context"]["messages"]), 200
+

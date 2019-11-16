@@ -41,13 +41,12 @@ class ApiTest(BMTestCase):
 
         self.assertTrue(len(res.json), 1)
 
-    # def test_get_messages(self):
-    #     user = self._add_user()
-    #     self._create_realistic_chat(user["id"])
+    def test_get_feed(self):
+        user = self._add_user()
+        self._add_feed_context(user)
 
-    #     res = self.client.get(f"/api/messages/{user['id']}")
-    #     self.assertEqual(res.status_code, 200)
+        res = self.client.get(f"/api/feed/{user['id']}")
+        self.assertEqual(res.status_code, 200)
 
-    #     message_data = res.json
-    #     self.assertEqual(len(message_data["messages"]), 4)
-    #     self.assertEqual(len(message_data["users"]), 2)
+        data = res.json
+        self.assertTrue(len(data))
