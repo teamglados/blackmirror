@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import FeedItem from '../components/FeedItem';
 import { Post } from '../utils/types';
 import { useAppState } from '../utils/context';
+import Divider from '../components/common/Divider';
 
 function FeedScreen({ navigation }) {
   const { posts } = useAppState();
@@ -14,13 +15,17 @@ function FeedScreen({ navigation }) {
 
   return (
     <Wrapper>
-      {posts.map(post => (
-        <FeedItem
-          key={post.id}
-          data={post}
-          onShowComments={() => navigateToComments(post)}
-        />
-      ))}
+      <Scroller>
+        {posts.map((post, index) => (
+          <FeedItemWrapper key={post.id}>
+            <FeedItem
+              data={post}
+              onShowComments={() => navigateToComments(post)}
+            />
+            {index < posts.length - 1 && <Divider />}
+          </FeedItemWrapper>
+        ))}
+      </Scroller>
     </Wrapper>
   );
 }
@@ -28,5 +33,11 @@ function FeedScreen({ navigation }) {
 const Wrapper = styled.SafeAreaView`
   flex: 1;
 `;
+
+const Scroller = styled.ScrollView`
+  flex: 1;
+`;
+
+const FeedItemWrapper = styled.View``;
 
 export default FeedScreen;

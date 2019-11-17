@@ -92,8 +92,8 @@ const CommentDate = styled.View`
 
 const LikeCount = styled.View`
   position: absolute;
-  right: -6px;
-  bottom: -10px;
+  right: -10px;
+  bottom: -4px;
   background-color: #fff;
   border-radius: 99px;
   flex-direction: row;

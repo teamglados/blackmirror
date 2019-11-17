@@ -107,8 +107,8 @@ export const posts: Post[] = [
     post: {
       user: {
         id: '2',
-        firstName: 'Volle',
-        lastName: 'Fulleea',
+        firstName: 'Teemu',
+        lastName: 'Taskula',
         image: 'https://placeimg.com/500/300/any',
       },
       content: {
@@ -124,8 +124,8 @@ export const posts: Post[] = [
         id: '1',
         user: {
           id: '3',
-          firstName: 'Gollle',
-          lastName: 'Fuffffuu',
+          firstName: 'Andreas',
+          lastName: 'Urbanski',
           image: 'https://placeimg.com/500/300/any',
         },
         content: {
@@ -140,12 +140,63 @@ export const posts: Post[] = [
         id: '2',
         user: {
           id: '8',
-          firstName: 'Dudde',
-          lastName: 'Lollo',
+          firstName: 'Ville',
+          lastName: 'Toiviainen',
           image: 'https://placeimg.com/500/300/any',
         },
         content: {
           text: 'Emoji test 😄',
+          image: 'https://placeimg.com/500/300/any',
+          timestampMsCreated: Date.now(),
+          likeCount: 1,
+        },
+      },
+    ],
+  },
+  {
+    id: '2',
+    post: {
+      user: {
+        id: '2',
+        firstName: 'Ville',
+        lastName: 'Toiviainen',
+        image: 'https://placeimg.com/500/300/any',
+      },
+      content: {
+        text:
+          'Bandwidth client business-to-business channels holy grail customer supply chain startup product management strategy stock business plan. ',
+        image: 'https://placeimg.com/500/300/any',
+        timestampMsCreated: Date.now(),
+        likeCount: 12,
+      },
+    },
+    comments: [
+      {
+        id: '1',
+        user: {
+          id: '3',
+          firstName: 'Teemu',
+          lastName: 'Taskula',
+          image: 'https://placeimg.com/500/300/any',
+        },
+        content: {
+          text:
+            'Long tail prototype network effects partner network. MVP network effects holy grail market monetization strategy hypotheses seed round burn rate influencer sales. Release niche market ecosystem startup research & development infographic responsive web design',
+          image: 'https://placeimg.com/500/300/any',
+          timestampMsCreated: Date.now(),
+          likeCount: 12,
+        },
+      },
+      {
+        id: '2',
+        user: {
+          id: '8',
+          firstName: 'Andreas',
+          lastName: 'Urbanski',
+          image: 'https://placeimg.com/500/300/any',
+        },
+        content: {
+          text: 'What a weird comment 😄',
           image: 'https://placeimg.com/500/300/any',
           timestampMsCreated: Date.now(),
           likeCount: 1,
