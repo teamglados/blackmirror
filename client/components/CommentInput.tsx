@@ -1,6 +1,7 @@
 import React from 'react';
 import { InputAccessoryView } from 'react-native';
 import styled from 'styled-components/native';
+
 import theme from '../constants/theme';
 import Text from './common/Text';
 
@@ -41,7 +42,7 @@ function CommentInput({ onAdd }: Props) {
             ref={inputRef}
             value={value}
             onChangeText={v => setValue(v)}
-            placeholder="Type a comment"
+            placeholder="Type a comment.."
             placeholderTextColor={theme.grey.dark1}
             onBlur={handleBlur}
           />
@@ -59,7 +60,7 @@ function CommentInput({ onAdd }: Props) {
       {!isFocused && (
         <FakeInput onPress={handleFocus}>
           <FakeInputWrapper>
-            <Text color={theme.grey.dark1}>Type a comment</Text>
+            <Text color={theme.grey.dark1}>Type a comment...</Text>
           </FakeInputWrapper>
         </FakeInput>
       )}

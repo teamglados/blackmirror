@@ -28,6 +28,7 @@ async function getUserData() {
     user: mockData.user,
     messages: mockData.messages,
     posts: mockData.posts,
+    hasNotifications: false,
   };
 
   // await sleep(2000);

@@ -66,4 +66,5 @@ export interface AppState {
   user: User;
   posts: Post[];
   messages: Message[];
+  hasNotifications: boolean;
 }

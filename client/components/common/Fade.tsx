@@ -4,9 +4,10 @@ import { Animated } from 'react-native';
 interface Props {
   isVisible: boolean;
   children: any;
+  style?: any;
 }
 
-function Fade({ isVisible, children }: Props) {
+function Fade({ isVisible, children, style }: Props) {
   const [isVisibleLocal, setVisible] = React.useState(false);
   const [visibility] = React.useState(new Animated.Value(0));
 
@@ -33,8 +34,10 @@ function Fade({ isVisible, children }: Props) {
     }),
   };
 
+  const combinedStyle = [containerStyle, style];
+
   return (
-    <Animated.View style={containerStyle}>
+    <Animated.View style={isVisibleLocal ? combinedStyle : containerStyle}>
       {isVisibleLocal ? children : null}
     </Animated.View>
   );

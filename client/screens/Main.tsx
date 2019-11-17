@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -17,17 +17,15 @@ import FeedScreen from './Feed';
 import ProfileScreen from './Profile';
 import CommentsScreen from './Comments';
 import SettingsScreen from './Settings';
+import { useAppState } from '../utils/context';
+import Fade from '../components/common/Fade';
 
 const Tab = createBottomTabNavigator();
 const FeedStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 
 const Noop = () => {
-  return (
-    <View>
-      <Text>Placeholder</Text>
-    </View>
-  );
+  return <View />;
 };
 
 const FeedStackGroup = () => {
@@ -59,6 +57,32 @@ const ProfileStackGroup = () => {
     </ProfileStack.Navigator>
   );
 };
+
+function NotificationsTabIcon({ color }) {
+  const { hasNotifications } = useAppState();
+  return (
+    <NotificationsTabIconWrapper>
+      <MaterialIcons name="notifications" color={color} size={26} />
+      <Fade
+        isVisible={hasNotifications}
+        style={{ position: 'absolute', top: 0, right: 0 }}
+      >
+        <NotificationsDot />
+      </Fade>
+    </NotificationsTabIconWrapper>
+  );
+}
+
+const NotificationsTabIconWrapper = styled.View`
+  position: relative;
+`;
+
+const NotificationsDot = styled.View`
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: red;
+`;
 
 function MainScreen() {
   return (
@@ -113,9 +137,7 @@ function MainScreen() {
           component={ChatScreen}
           options={{
             tabBarLabel: null,
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="notifications" color={color} size={26} />
-            ),
+            tabBarIcon: NotificationsTabIcon,
           }}
         />
         <Tab.Screen

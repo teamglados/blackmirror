@@ -7,7 +7,11 @@ const DispatchContext = React.createContext<any>(undefined);
 function reducer(state, action) {
   switch (action.type) {
     case 'set-data':
-      return action.payload;
+      return { ...state, ...action.payload };
+    case 'set-notifications':
+      return { ...state, hasNotifications: true };
+    case 'clear-notifications':
+      return { ...state, hasNotifications: false };
     case 'clear-data':
       return null;
     default:
