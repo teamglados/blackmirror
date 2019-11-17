@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 
 import { User, UserDetails } from '../utils/types';
+import { API_BASE_URL } from '../utils/api';
 import Button from './common/Button';
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 function ProfileDetails({ data }: Props) {
+  console.log(data.image);
   return (
     <Wrapper>
       <Cover>
@@ -18,7 +20,7 @@ function ProfileDetails({ data }: Props) {
 
       <AvatarWrapper>
         <Avatar>
-          <AvatarImage source={{ uri: data.image }} />
+          <AvatarImage source={{ uri: `${API_BASE_URL}${data.image}` }} />
         </Avatar>
 
         <MainTitle>
@@ -68,6 +70,7 @@ const Avatar = styled.View`
 const AvatarImage = styled.Image`
   height: 160px;
   width: 160px;
+  background-color: ${props => props.theme.grey.light3};
 `;
 
 const MainTitle = styled.Text`
