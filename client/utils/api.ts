@@ -30,7 +30,7 @@ async function getUserData() {
     posts: mockData.posts,
   };
 
-  await sleep(2000);
+  // await sleep(2000);
 
   return data;
 }

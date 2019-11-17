@@ -30,14 +30,16 @@ function CommentItem({ data }: Props) {
 
             <Text>{data.content.text}</Text>
 
-            <LikeCount>
-              <LikeIconWrapper>
-                <AntDesign name="like1" size={10} color="#fff" />
-              </LikeIconWrapper>
-              <Text color={theme.grey.dark2} size={12}>
-                {data.content.likeCount}
-              </Text>
-            </LikeCount>
+            {data.content.likeCount > 0 && (
+              <LikeCount>
+                <LikeIconWrapper>
+                  <AntDesign name="like1" size={10} color="#fff" />
+                </LikeIconWrapper>
+                <Text color={theme.grey.dark2} size={12}>
+                  {data.content.likeCount}
+                </Text>
+              </LikeCount>
+            )}
           </CommentBubble>
         </CommentBubbleWrapper>
 
