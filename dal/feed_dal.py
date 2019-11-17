@@ -9,7 +9,7 @@ TABLE_NAME = "feed"
 
 ADD = f"INSERT INTO {TABLE_NAME} (user_id, context) VALUES (%s, %s) RETURNING *;"
 ADD_EMPTY = f"INSERT INTO {TABLE_NAME} (user_id) VALUES (%s) RETURNING *;"
-GET = f"SELECT * FROM {TABLE_NAME} WHERE user_id=%s;"
+GET = f"SELECT * FROM {TABLE_NAME} WHERE id=%s;"
 GET_BY_USER = f"SELECT * FROM {TABLE_NAME} WHERE user_id=%s;"
 UPDATE = f"UPDATE {TABLE_NAME} SET context = %s WHERE id=%s"
 
