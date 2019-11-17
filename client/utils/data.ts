@@ -79,19 +79,19 @@ export const categories = [
 ];
 
 export const userDetails: UserDetails = {
-  cover: 'https://placeimg.com/500/200/any',
+  cover: 'https://placeimg.com/500/200/tech',
   currentHometown: 'Helsinki',
   currentJob: 'Alepa',
   currentStudy: 'Eira’s Adult University',
   bio: 'Burn rate partnership lean startup user experience business-to-business business model canvas accelerator equity agile development virality hackathon entrepreneur technology ramen.', // prettier-ignore
   friendCount: 321,
   friendPicks: [
-    { id: '1', name: 'Jonne Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
-    { id: '2', name: 'Arttu Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
-    { id: '3', name: 'Kihhu Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
-    { id: '4', name: 'Gugge Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
-    { id: '5', name: 'Hidde Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
-    { id: '6', name: 'Juffe Foobar', avatar: 'https://placeimg.com/200/200/any' }, // prettier-ignore
+    { id: '1', name: 'Jonne Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
+    { id: '2', name: 'Arttu Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
+    { id: '3', name: 'Kihhu Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
+    { id: '4', name: 'Gugge Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
+    { id: '5', name: 'Hidde Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
+    { id: '6', name: 'Juffe Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
   ],
 };
 
@@ -99,7 +99,7 @@ export const user: User = {
   id: '1',
   firstName: 'Teemu',
   lastName: 'Taskula',
-  image: 'https://placeimg.com/500/300/any',
+  image: 'https://placeimg.com/500/300/tech',
 };
 
 export const posts: Post[] = [
@@ -110,11 +110,11 @@ export const posts: Post[] = [
         id: '2',
         firstName: 'Eric',
         lastName: 'Ericsson',
-        image: 'https://placeimg.com/500/300/any',
+        image: 'https://randomuser.me/api/portraits/men/29.jpg',
       },
       content: {
-        text: 'Have you guys seen this amazing thing!',
-        image: 'https://placeimg.com/500/300/any',
+        text: 'Happy to see technology advance at a great pace. Just attended a conference earlier which sparked some inspiring thoughts!',
+        image: 'https://placeimg.com/500/300/tech',
         timestampMsCreated: Date.now(),
         likeCount: 12,
       },
@@ -123,15 +123,15 @@ export const posts: Post[] = [
       {
         id: '1',
         user: {
-          id: '3',
-          firstName: 'Andreas',
-          lastName: 'Urbanski',
-          image: 'https://placeimg.com/500/300/any',
+          id: '2',
+          firstName: 'Junc',
+          lastName: 'Tioning',
+          image: 'https://randomuser.me/api/portraits/men/3.jpg',
         },
         content: {
           text:
-            'Long tail prototype network effects partner network. MVP network effects holy grail market monetization strategy hypotheses seed round burn rate influencer sales. Release niche market ecosystem startup research & development infographic responsive web design',
-          image: 'https://placeimg.com/500/300/any',
+            'Sounds cool Eric! Care to elaborate what you found?',
+          image: 'https://placeimg.com/500/300/tech',
           timestampMsCreated: Date.now(),
           likeCount: 45,
         },
@@ -140,13 +140,13 @@ export const posts: Post[] = [
         id: '2',
         user: {
           id: '8',
-          firstName: 'Ville',
-          lastName: 'Toiviainen',
-          image: 'https://placeimg.com/500/300/any',
+          firstName: 'Mike',
+          lastName: 'Densington',
+          image: 'https://randomuser.me/api/portraits/men/12.jpg',
         },
         content: {
           text: 'Who likes Emojis 😄💆‍♂️👻💩?',
-          image: 'https://placeimg.com/500/300/any',
+          image: 'https://placeimg.com/500/300/tech',
           timestampMsCreated: Date.now(),
           likeCount: 1,
         },
@@ -160,11 +160,11 @@ export const posts: Post[] = [
         id: '2',
         firstName: 'Junc',
         lastName: 'Tioning',
-        image: 'https://placeimg.com/500/300/any',
+        image: 'https://randomuser.me/api/portraits/men/3.jpg',
       },
       content: {
         text: 'It was such a hard thing to hack two days straight 😭😴',
-        image: 'https://placeimg.com/500/300/any',
+        image: 'https://placeimg.com/500/300/people',
         timestampMsCreated: Date.now(),
         likeCount: 4,
       },
@@ -176,12 +176,12 @@ export const posts: Post[] = [
           id: '3',
           firstName: 'John',
           lastName: 'Doe',
-          image: 'https://placeimg.com/500/300/any',
+          image: 'https://randomuser.me/api/portraits/men/20.jpg',
         },
         content: {
           text:
             'Long tail prototype network effects partner network. MVP network effects holy grail market monetization strategy hypotheses seed round burn rate influencer sales. Release niche market ecosystem startup research & development infographic responsive web design',
-          image: 'https://placeimg.com/500/300/any',
+          image: 'https://placeimg.com/500/300/tech',
           timestampMsCreated: Date.now(),
           likeCount: 16,
         },
@@ -190,13 +190,13 @@ export const posts: Post[] = [
         id: '2',
         user: {
           id: '8',
-          firstName: 'Andreas',
-          lastName: 'Urbanski',
-          image: 'https://placeimg.com/500/300/any',
+          firstName: 'Mike',
+          lastName: 'Densington',
+          image: 'https://randomuser.me/api/portraits/men/12.jpg',
         },
         content: {
           text: 'What a weird comment 😄',
-          image: 'https://placeimg.com/500/300/any',
+          image: 'https://placeimg.com/500/300/tech',
           timestampMsCreated: Date.now(),
           likeCount: 1,
         },
@@ -208,15 +208,15 @@ export const posts: Post[] = [
     post: {
       user: {
         id: '2',
-        firstName: 'Ville',
-        lastName: 'Toiviainen',
-        image: 'https://placeimg.com/500/300/any',
+        firstName: 'Sarah',
+        lastName: 'Jefferson',
+        image: 'https://randomuser.me/api/portraits/women/19.jpg',
       },
       content: {
-        text: 'I like turtles 🐢',
-        image: 'https://placeimg.com/500/300/any',
+        text: 'Today I was feeling amused but it quickly faded when I discovered a parking ticket on my car. Oh well, guess it is my problem',
+        image: 'https://placeimg.com/500/300/arch',
         timestampMsCreated: Date.now(),
-        likeCount: 281,
+        likeCount: 3,
       },
     },
     comments: [],
@@ -227,7 +227,7 @@ const chatPartner = {
   id: '3',
   firstName: 'Markus',
   lastName: 'Mean',
-  image: 'https://placeimg.com/500/300/any',
+  image: 'https://randomuser.me/api/portraits/men/47.jpg',
 };
 
 const chatMessages = [
@@ -253,7 +253,10 @@ export const messages: Message[] = chatMessages.map((message, i) => ({
   user: chatPartner,
   content: {
     text: message,
-    image: i === 2 ? 'https://placeimg.com/500/300/any' : null,
+    image:
+      i === 2
+        ? 'https://live.staticflickr.com/8095/8595562397_740156c034_b.jpg'
+        : null,
     timestampMsCreated: Date.now(),
     likeCount: getRandomNumberBetween(0, 30),
   },

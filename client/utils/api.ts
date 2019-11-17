@@ -9,7 +9,7 @@ import {
   getPersistedMemes,
 } from './storage';
 import * as mockData from './data';
-import { guid } from '.';
+import { guid, getRandomNumberBetween } from '.';
 
 export const API_BASE_URL =
   'http://ec2-63-35-251-51.eu-west-1.compute.amazonaws.com:5000';
@@ -55,7 +55,7 @@ async function saveUser(data: StartData) {
         id: guid(),
         firstName: 'Max',
         lastName: 'Johnny',
-        image: 'https://placeimg.com/500/300/any',
+        image: 'https://randomuser.me/api/portraits/men/34.jpg',
       },
     },
   };
@@ -66,15 +66,15 @@ async function saveUser(data: StartData) {
     post: {
       content: {
         image: res2.data.url,
-        likeCount: 127,
-        text: 'Look at this moron! 😛',
+        likeCount: 18,
+        text: 'Another idiot face XD',
         timestampMsCreated: Date.now(),
       },
       user: {
         id: guid(),
-        firstName: 'Max',
-        lastName: 'Johnny',
-        image: 'https://placeimg.com/500/300/any',
+        firstName: 'Adrian',
+        lastName: 'Bender',
+        image: 'https://randomuser.me/api/portraits/men/31.jpg',
       },
     },
   };
@@ -106,11 +106,67 @@ async function getAppData() {
   if (!user) return null;
 
   const memePosts = await getPersistedMemes();
-  console.log('> memePosts', memePosts);
 
   return {
     user,
-    posts: [...mockData.posts, ...memePosts],
+    posts: [
+      {
+        id: guid(),
+        post: {
+          user: {
+            id: guid(),
+            firstName: 'Michaela',
+            lastName: 'Gunner',
+            image: 'https://randomuser.me/api/portraits/women/29.jpg',
+          },
+          content: {
+            text: 'It pretty good weather today 🌞 think I am gonna go outside and take a nice long walk', // prettier-ignore
+            image: 'https://placeimg.com/500/300/nature',
+            timestampMsCreated: Date.now(),
+            likeCount: getRandomNumberBetween(12, 45),
+          },
+        },
+        comments: [],
+      },
+      {
+        id: guid(),
+        post: {
+          user: {
+            id: '2',
+            firstName: 'Eric',
+            lastName: 'Ericsson',
+            image: 'https://randomuser.me/api/portraits/men/29.jpg',
+          },
+          content: {
+            text: `Hey ${user.firstName}! Heard you're a jackass. Wanna comment on it?`, // prettier-ignore
+            image: null,
+            timestampMsCreated: Date.now(),
+            likeCount: getRandomNumberBetween(12, 45),
+          },
+        },
+        comments: [],
+      },
+      ...mockData.posts,
+      {
+        id: guid(),
+        post: {
+          user: {
+            id: '2',
+            firstName: 'Hans',
+            lastName: 'Gustavson',
+            image: 'https://randomuser.me/api/portraits/men/19.jpg',
+          },
+          content: {
+            text: `Lol yeah. Just found out something...I have some information about ${user.firstName} ${user.lastName} 😏 will announce soon so stay tuned!`, // prettier-ignore
+            image: null,
+            timestampMsCreated: Date.now(),
+            likeCount: getRandomNumberBetween(3, 15),
+          },
+        },
+        comments: [],
+      },
+      ...memePosts,
+    ],
     messages: mockData.messages,
     hasNotifications: false,
   } as AppState;
