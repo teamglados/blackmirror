@@ -3,6 +3,7 @@
 /output
 /vendor
 /cache
+/uploads
 *_cache
 __pycache__
 .pytest_cache/
