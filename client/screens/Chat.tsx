@@ -48,7 +48,7 @@ function ChatScreen({ navigation }) {
     coordinateResponse(nextIndex);
   }
 
-  function handleLongPress() {
+  function handleSecretLink() {
     navigation.navigate('Profile', {
       posts: getMeanPosts(user),
       user: getMeanUser(user),
@@ -79,7 +79,7 @@ function ChatScreen({ navigation }) {
           {
             pattern: /<(\w+)>/,
             style: { fontWeight: '700' },
-            onPress: handleLongPress,
+            onPress: handleSecretLink,
           },
         ]}
         user={{

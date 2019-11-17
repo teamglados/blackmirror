@@ -19,7 +19,7 @@ function FeedScreen({ navigation }) {
   function handleScroll({ nativeEvent: { contentOffset } }) {
     if (notificationTriggered) return;
 
-    if (contentOffset.y > WINDOW_HEIGHT) {
+    if (contentOffset.y > WINDOW_HEIGHT * 1.5) {
       dispatch({ type: 'set-notifications' });
       setNotificationTriggered(true);
     }
