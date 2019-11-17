@@ -1,5 +1,9 @@
+/data
 /build
 /output
+/vendor
+/cache
+*_cache
 __pycache__
 .pytest_cache/
 .ipynb*
