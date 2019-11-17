@@ -2,16 +2,7 @@
 version: '3.3'  # 3.3 needed for build/contexts, 'targets' not included
 services:
   blackmirror:
-    build: .
-    environment:
-      - APP_SETTINGS=development
-      - PGHOST=pg-35c52044-villej-eec9.aivencloud.com
-      - PGPORT=12819
-      - PGUSER=avnadmin
-      - PGDATABASE=defaultdb
-      - PGSSLMODE=require
-      - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
-      - REDISPORT=12820
+    image: blackmirror:latest
     depends_on:
       - bmqueue
     volumes:
@@ -19,76 +10,7 @@ services:
     ports:
       - 5000:5000
   bmqueue:
-    build: .
+    image: blackmirror:latest
     command:
       - bash
       - bin/run_queue
-    volumes:
-      - ./:/app
-    environment:
-      - APP_SETTINGS=development
-      - PGHOST=pg-35c52044-villej-eec9.aivencloud.com
-      - PGPORT=12819
-      - PGUSER=avnadmin
-      - PGDATABASE=defaultdb
-      - PGSSLMODE=require
-      - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
-      - REDISPORT=12820
-    volumes:
-      - ./:/app
-  db:
-    image: postgres:11.5
-    restart: unless-stopped
-    command: postgres -c max_connections=500
-    environment:
-      - PGUSER=postgres
-    ports:
-      - 5432:5432
-  redis:
-    command: redis-server --dbfilename 'redis.rdb'
-    restart: unless-stopped
-    image: redis:3-alpine
-    ports:
-      - 6379:6379
-    volumes:
-      - ./redis/:/data
-
-  blackmirror_test:
-    build: .
-    environment:
-      - APP_SETTINGS=development
-      - PGHOST=db
-      - PGPORT=5432
-      - PGUSER=postgres
-      - PGDATABASE=blackmirror
-      - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
-      - PGSSLMODE=prefer
-      - REDIS_SSL=false
-    depends_on:
-      - db
-      - redis
-      - bmqueue_test
-    volumes:
-      - ./:/app
-  bmqueue_test:
-    build: .
-    command:
-      - bash
-      - bin/run_queue
-    volumes:
-      - ./:/app
-    environment:
-      - APP_SETTINGS=development
-      - PGHOST=db
-      - PGPORT=5432
-      - PGUSER=postgres
-      - PGDATABASE=blackmirror
-      - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
-      - PGSSLMODE=prefer
-      - REDISSOCK=redis
-      - REDIS_SSL=false
-    depends_on:
-      - redis
-      - db
-    volumes:
-      - ./:/app
