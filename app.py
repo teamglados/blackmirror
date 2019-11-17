@@ -16,6 +16,7 @@ from taskqueue import tasks
 from dal import user_dal
 from dal import feed_dal
 from dal import message_dal
+from feed_context import FeedContext
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
 
@@ -87,3 +88,10 @@ def get_user_feed(user_id: str):
 def get_user_messages(user_id: str):
     messages = message_dal.get_by_user(user_id)
     return jsonify(messages["context"]["messages"]), 200
+
+@app.route("/api/post/<post_id>/comment", methods=["POST"])
+def add_comment(post_id):
+    payload = request.json
+    user_id = payload["user"]["id"]
+    fc = FeedContext(user_id, context_id=post_id)
+    return jsonify({"comment_id": fc.add_comment(payload)}), 200

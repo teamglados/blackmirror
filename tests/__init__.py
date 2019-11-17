@@ -34,11 +34,11 @@ class BMTestCase(unittest.TestCase):
         return {"user": user, "messages": [BMTestCase._create_message(user)]}
 
     @staticmethod
-    def _create_content(user):
+    def _create_content(user, text="test message"):
         return {
             "user": user,
             "content": {
-                "text": "test message",
+                "text": text,
                 "image": "/path/to/img",
                 "like_count": 1,
                 "timestamp_ms_created": int(round(time.time() * 1000)),

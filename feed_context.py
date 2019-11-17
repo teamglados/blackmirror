@@ -40,3 +40,10 @@ class FeedContext:
         )
         feed_dal.update(self.context["id"], self.context)
         return self.context
+
+    def add_comment(self, comment):
+        comment["id"] = str(uuid4())
+        self.context["comments"].append(comment)
+        feed_dal.update(self.context["id"], self.context)
+        return comment["id"]
+
