@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import api from './utils/api';
 import { useAppDispatch } from './utils/context';
 import StartScreen from './screens/Start';
+import EndScreen from './screens/End';
 import MainScreen from './screens/Main';
 import Providers from './Providers';
 
@@ -39,6 +40,11 @@ function Root() {
           <Stack.Screen
             name="Start"
             component={StartScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="End"
+            component={EndScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

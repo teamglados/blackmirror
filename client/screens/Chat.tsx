@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { GiftedChat } from 'react-native-gifted-chat';
 
 import { TAB_BAR_HEIGHT } from '../constants/display';
-import { useAppState } from '../utils/context';
+import { useAppState, useAppDispatch } from '../utils/context';
 import { Message } from '../utils/types';
 import { getMeanPosts, getMeanUser } from '../utils/data';
 
@@ -22,6 +22,7 @@ function mangleMessages(messages: Message[]) {
 
 function ChatScreen({ navigation }) {
   const { messages, user } = useAppState();
+  const dispatch = useAppDispatch();
   const [localMessages, setLocalMessages] = React.useState(
     mangleMessages(messages)
   );
@@ -45,6 +46,11 @@ function ChatScreen({ navigation }) {
       setLocalMessages(mangleMessages(messages));
     }
   }, [messages, localMessages]);
+
+  // Clear notifications on mount
+  React.useEffect(() => {
+    dispatch({ type: 'clear-notifications' });
+  }, [dispatch]);
 
   return (
     <Wrapper>
