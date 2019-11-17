@@ -1,0 +1,16 @@
+#!/bin/bash
+set -exu
+
+cd "$(dirname "$0")"/..
+
+default_lint=$(find . -type f -name '*.py')
+
+LINT=${1-${default_lint:-""}}
+
+mypy --follow-imports skip --ignore-missing-imports ${LINT}
+
+if [ -z ${CI+x} ]
+	then black ${LINT}
+else
+	black --check ${LINT}
+fi
