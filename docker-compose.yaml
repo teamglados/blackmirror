@@ -16,6 +16,8 @@ services:
       - bmqueue
     volumes:
       - ./:/app
+    ports:
+      - 5000:5000
   bmqueue:
     build: .
     command:
