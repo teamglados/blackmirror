@@ -32,7 +32,7 @@ def create_personas(count=1, p_malicious=0.25):
             fields[key] = value
         personality = personality.splitlines()
 
-        image = sample_random_path(images_male_path if item.Gender == 'male' else images_female_path)
+        image = sample_random_path(images_male_path if row.Gender == 'male' else images_female_path)
         is_malicious = np.random.uniform(0, 1) < p_malicious
         if is_malicious:
             personality = personality + MALICIOUS_PERSONAS
