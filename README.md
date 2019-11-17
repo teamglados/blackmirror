@@ -14,8 +14,7 @@ Black Mirror is a project where your favorite social media platform turns agains
 Our code is separeted to own branches.
 
 - UI: client
-- Backend: vito
-- Models: models and models2
+- Rest: master
 
 ![UI](https://raw.githubusercontent.com/nardeas/blackmirror/master/media/ui1.png)
 ![UI](https://raw.githubusercontent.com/nardeas/blackmirror/master/media/ui2.png)
