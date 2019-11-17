@@ -21,8 +21,7 @@ async function saveUser(data: StartData) {
 }
 
 async function getUserData() {
-  const user = getPersistUser();
-
+  const user = await getPersistUser();
   if (!user) return null;
 
   const data: AppState = {

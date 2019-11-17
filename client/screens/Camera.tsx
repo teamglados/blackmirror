@@ -1,15 +1,17 @@
 import React from 'react';
-import { Image, StyleSheet, MaskedViewIOS } from 'react-native';
+import { Image, StyleSheet, MaskedViewIOS, Animated } from 'react-native';
 import styled from 'styled-components/native';
 import * as FaceDetector from 'expo-face-detector';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BlurView } from 'expo-blur';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native';
 
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../constants/display';
-import { StartData } from '../utils/types';
 import api from '../utils/api';
+import { StartData } from '../utils/types';
+import { useAppDispatch } from '../utils/context';
+import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../constants/display';
 import Text from '../components/common/Text';
 import Spacing from '../components/common/Spacing';
 
@@ -18,16 +20,35 @@ interface FaceBounds {
   size: { height: number; width: number };
 }
 
-function CameraScreen({ route }) {
-  const data: StartData = route.params.data;
+function CameraScreen({ route, navigation }) {
+  const startData: StartData = route.params.data;
+  const dispatch = useAppDispatch();
   const [permissionGranted, setPermissionGranted] = React.useState(false);
   const [faceDetectionEnabled, setFaceDetectionEnabled] = React.useState(false);
   const [faceBounds, setFaceBounds] = React.useState<FaceBounds>(null);
   const [pic, setPic] = React.useState();
+  const [isSaving, setSaving] = React.useState(false);
+  const [savingAnim] = React.useState(new Animated.Value(0));
   const cameraRef = React.useRef<any>();
+  const lottieRef = React.useRef<any>();
 
   async function save(picBase64) {
-    await api.saveUser({ ...data, picBase64 });
+    setSaving(true);
+
+    Animated.timing(savingAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      duration: 200,
+    }).start(() => {
+      lottieRef.current.play();
+    });
+
+    await api.saveUser({ ...startData, picBase64 });
+
+    // Get app data
+    const data = await api.getUserData();
+    dispatch({ type: 'set-data', payload: data });
+    navigation.navigate('Main');
   }
 
   async function takePicture() {
@@ -40,7 +61,7 @@ function CameraScreen({ route }) {
     });
 
     setPic(pic);
-    save(pic.base64);
+    setTimeout(() => save(pic.base64), 1000);
   }
 
   async function handleFaceDetect({ faces = [] }) {
@@ -156,6 +177,25 @@ function CameraScreen({ route }) {
           </TakePicGuideWrapper>
         </TakePicOverlay>
       )}
+
+      <SavingOverlay
+        style={{ opacity: savingAnim }}
+        pointerEvents={isSaving ? 'auto' : 'none'}
+      >
+        <LottieView
+          loop
+          style={{ width: WINDOW_WIDTH * 0.8, height: WINDOW_WIDTH * 0.8 }}
+          source={require('../assets/preloader.json')}
+          ref={r => {
+            lottieRef.current = r;
+          }}
+        />
+        <SavingText>
+          <Text size={24} weight={700} color="#fff">
+            Generating profile...
+          </Text>
+        </SavingText>
+      </SavingOverlay>
     </Wrapper>
   );
 }
@@ -214,6 +254,28 @@ const TakePicGuide = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+`;
+
+const SavingOverlay = Animated.createAnimatedComponent(styled.View`
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+`);
+
+const SavingText = styled.View`
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 80;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
 `;
 
 export default CameraScreen;
