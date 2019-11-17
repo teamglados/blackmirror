@@ -13,6 +13,7 @@ import { Post } from '../utils/types';
 import { WINDOW_WIDTH } from '../constants/display';
 import theme from '../constants/theme';
 import FeedItemHeader from './FeedItemHeader';
+import { getImageUri } from '../utils/api';
 
 interface Props {
   data: Post;
@@ -29,9 +30,9 @@ function FeedItem({ data, onShowComments, disableComments }: Props) {
 
       <TextContent>{data.post.content.text}</TextContent>
 
-      {data.post.content.image && (
+      {!!data.post.content.image && (
         <FeedImage
-          source={{ uri: data.post.content.image }}
+          source={{ uri: getImageUri(data.post.content.image) }}
           resizeMode="cover"
         />
       )}

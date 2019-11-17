@@ -7,11 +7,13 @@ import { TAB_BAR_HEIGHT } from '../constants/display';
 import { useAppState, useAppDispatch } from '../utils/context';
 import { Message } from '../utils/types';
 import { getMeanPosts, getMeanUser } from '../utils/data';
+import { sleep } from '../utils';
 
 function mangleMessages(messages: Message[]) {
   return messages.map(m => ({
     _id: m.id,
     text: m.content.text,
+    image: m.content.image,
     createdAt: new Date(m.content.timestampMsCreated),
     user: {
       _id: m.user.id,
@@ -24,14 +26,27 @@ function mangleMessages(messages: Message[]) {
 function ChatScreen({ navigation }) {
   const { messages, user } = useAppState();
   const dispatch = useAppDispatch();
+  const [messageIndex, setMessageIndex] = React.useState(0);
   const [localMessages, setLocalMessages] = React.useState(
-    mangleMessages(messages)
+    mangleMessages([messages[0]])
   );
+
+  async function coordinateResponse(i) {
+    await sleep(1000);
+    const response = messages[i];
+    console.log('> res', response);
+    setLocalMessages(prevMessages =>
+      GiftedChat.append(prevMessages, mangleMessages([response]))
+    );
+  }
 
   function handleSend(sentMessages = []) {
     setLocalMessages(prevMessages =>
       GiftedChat.append(prevMessages, sentMessages)
     );
+    const nextIndex = messageIndex + 1;
+    setMessageIndex(nextIndex);
+    coordinateResponse(nextIndex);
   }
 
   function handleLongPress() {
@@ -42,11 +57,11 @@ function ChatScreen({ navigation }) {
   }
 
   // Sync messages
-  React.useEffect(() => {
-    if (messages.length > localMessages.length) {
-      setLocalMessages(mangleMessages(messages));
-    }
-  }, [messages, localMessages]);
+  // React.useEffect(() => {
+  //   if (messages.length > localMessages.length) {
+  //     setLocalMessages(mangleMessages(messages));
+  //   }
+  // }, [messages, localMessages]);
 
   // Clear notifications on mount
   useFocusEffect(

@@ -3,8 +3,8 @@ import styled from 'styled-components/native';
 import { Entypo } from '@expo/vector-icons';
 
 import { User, UserDetails } from '../utils/types';
-import { API_BASE_URL } from '../utils/api';
 import Button from './common/Button';
+import { getImageUri } from '../utils/api';
 
 interface Props {
   data: User & UserDetails;
@@ -19,7 +19,7 @@ function ProfileDetails({ data }: Props) {
 
       <AvatarWrapper>
         <Avatar>
-          <AvatarImage source={{ uri: `${API_BASE_URL}${data.image}` }} />
+          <AvatarImage source={{ uri: getImageUri(data.image) }} />
         </Avatar>
 
         <MainTitle>

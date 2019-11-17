@@ -36,7 +36,7 @@ function Root() {
   return (
     <NavigationNativeContainer>
       {inited && initialRoute && (
-        <Stack.Navigator initialRouteName="End">
+        <Stack.Navigator initialRouteName={initialRoute}>
           <Stack.Screen
             name="Start"
             component={StartScreen}
