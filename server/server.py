@@ -41,7 +41,7 @@ async def upload(request):
 
     payload = request.json
 
-    meme_path = os.path.join(SOURCE_MEME_PATH, random.choice(os.listdir(SOURCE_MEME_PATH)))
+    meme_path = os.path.join(SOURCE_MEME_PATH, random.choice(list(filter(lambda x: 'jpg' in x, os.listdir(SOURCE_MEME_PATH)))))
     image_path = store_base64_image(payload['image'])
     target_path = create_filename()
 
