@@ -17,7 +17,7 @@ from dal import user_dal
 from dal import feed_dal
 from dal import message_dal
 from feed_context import FeedContext
-from feed_service import init_feed, get_reply
+from feed_service import init_feed
 from message_service import init_messages
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
@@ -59,16 +59,7 @@ def create_user():
         payload["first_name"], payload["last_name"], image, payload["keywords"]
     )
 
-    try:
-        init_feed(user["id"])
-    except:
-        logger.error("Failed to init feed")
-
-    try:
-        init_messages(user["id"])
-    except:
-        logger.error("Failed to init messages")
-
+    init_feed(user["id"])
     return jsonify(user), 200
 
 
@@ -105,8 +96,5 @@ def add_comment(post_id):
     user_id = payload["user"]["id"]
     fc = FeedContext(user_id, context_id=post_id)
     comment_id = fc.add_comment(payload)
-
-    # Generate reply
-    get_reply(post_id, user_id)
 
     return jsonify({"comment_id": comment_id}), 200
