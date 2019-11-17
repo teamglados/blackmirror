@@ -15,7 +15,7 @@ PGSSLMODE = os.getenv("PGSSLMODE", "require")
 PGPASSWORD = os.getenv("PGPASSWORD", None)
 
 TCP = ThreadedConnectionPool(
-    1, 30, host=PGHOST, port=PGPORT, user=PGUSER, dbname=PGDBNAME, sslmode=PGSSLMODE,
+    10, 30, host=PGHOST, port=PGPORT, user=PGUSER, dbname=PGDBNAME, sslmode=PGSSLMODE,
     password=PGPASSWORD
 )
 
