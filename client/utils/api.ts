@@ -8,6 +8,10 @@ import * as mockData from './data';
 export const API_BASE_URL = 'http://6ed88a54.eu.ngrok.io';
 export const API_URL = `${API_BASE_URL}/api`;
 
+export function getImageUri(uri: string) {
+  return uri.includes('/upload') ? `${API_BASE_URL}${uri}` : uri;
+}
+
 const api = axios.create({ baseURL: API_URL });
 
 /* eslint-disable @typescript-eslint/camelcase */

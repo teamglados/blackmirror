@@ -4,14 +4,10 @@ import moment from 'moment';
 import { Feather } from '@expo/vector-icons';
 
 import { Post } from '../utils/types';
-import { API_BASE_URL } from '../utils/api';
+import { getImageUri } from '../utils/api';
 
 interface Props {
   data: Post;
-}
-
-function getImageUri(uri: string) {
-  return uri.includes('/upload') ? `${API_BASE_URL}${uri}` : uri;
 }
 
 function FeedItemHeader({ data }: Props) {
@@ -54,6 +50,7 @@ const Avatar = styled.View`
 const AvatarImage = styled.Image`
   width: 40px;
   height: 40px;
+  background-color: ${props => props.theme.grey.light3};
 `;
 
 const HeaderDetails = styled.View`

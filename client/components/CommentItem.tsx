@@ -7,6 +7,7 @@ import { Comment } from '../utils/types';
 import Text from './common/Text';
 import Spacing from './common/Spacing';
 import theme from '../constants/theme';
+import { getImageUri } from '../utils/api';
 
 interface Props {
   data: Comment;
@@ -16,7 +17,10 @@ function CommentItem({ data }: Props) {
   return (
     <Wrapper>
       <Avatar>
-        <AvatarImage source={{ uri: data.user.image }} resizeMode="cover" />
+        <AvatarImage
+          source={{ uri: getImageUri(data.user.image) }}
+          resizeMode="cover"
+        />
       </Avatar>
 
       <CommentDetails>
@@ -69,6 +73,7 @@ const Avatar = styled.View`
 const AvatarImage = styled.Image`
   width: 40px;
   height: 40px;
+  background-color: ${props => props.theme.grey.light3};
 `;
 
 const CommentBubbleWrapper = styled.View`
