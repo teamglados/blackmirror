@@ -5,14 +5,13 @@ services:
     build: .
     environment:
       - APP_SETTINGS=development
-      - PGHOST=db
-      - PGPORT=5432
-      - PGUSER=postgres
-      - PGDATABASE=blackmirror
-      - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
-      - SSLMODE=prefer
-      - REDISSOCK=redis
-      - REDIS_SSL=False
+      - PGHOST=pg-35c52044-villej-eec9.aivencloud.com
+      - PGPORT=12819
+      - PGUSER=avnadmin
+      - PGDATABASE=defaultdb
+      - SSLMODE=require
+      - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
+      - REDISPORT=12820
     depends_on:
       - db
       - redis
@@ -28,14 +27,13 @@ services:
       - ./:/app
     environment:
       - APP_SETTINGS=development
-      - PGHOST=db
-      - PGPORT=5432
-      - PGUSER=postgres
-      - PGDATABASE=blackmirror
-      - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
-      - SSLMODE=prefer
-      - REDISSOCK=redis
-      - REDIS_SSL=False
+      - PGHOST=pg-35c52044-villej-eec9.aivencloud.com
+      - PGPORT=12819
+      - PGUSER=avnadmin
+      - PGDATABASE=defaultdb
+      - SSLMODE=require
+      - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
+      - REDISPORT=12820
     depends_on:
       - redis
       - db
