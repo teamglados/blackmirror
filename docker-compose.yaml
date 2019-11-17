@@ -9,7 +9,7 @@ services:
       - PGPORT=12819
       - PGUSER=avnadmin
       - PGDATABASE=blackmirror
-      - SSLMODE=require
+      - PGSSLMODE=require
       - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
       - REDISPORT=12820
     depends_on:
@@ -28,8 +28,8 @@ services:
       - PGHOST=pg-35c52044-villej-eec9.aivencloud.com
       - PGPORT=12819
       - PGUSER=avnadmin
-      - PGDATABASE=blackmirror
-      - SSLMODE=require
+      - PGDATABASE=defaultdb
+      - PGSSLMODE=require
       - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
       - REDISPORT=12820
     volumes:
@@ -60,7 +60,7 @@ services:
       - PGUSER=postgres
       - PGDATABASE=blackmirror
       - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
-      - SSLMODE=prefer
+      - PGSSLMODE=prefer
       - REDIS_SSL=false
     depends_on:
       - db
@@ -82,7 +82,7 @@ services:
       - PGUSER=postgres
       - PGDATABASE=blackmirror
       - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
-      - SSLMODE=prefer
+      - PGSSLMODE=prefer
       - REDISSOCK=redis
       - REDIS_SSL=false
     depends_on:
