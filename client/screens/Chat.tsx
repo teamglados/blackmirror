@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { useFocusEffect } from '@react-navigation/core';
 
 import { TAB_BAR_HEIGHT } from '../constants/display';
 import { useAppState, useAppDispatch } from '../utils/context';
@@ -48,9 +49,11 @@ function ChatScreen({ navigation }) {
   }, [messages, localMessages]);
 
   // Clear notifications on mount
-  React.useEffect(() => {
-    dispatch({ type: 'clear-notifications' });
-  }, [dispatch]);
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch({ type: 'clear-notifications' });
+    }, [dispatch])
+  );
 
   return (
     <Wrapper>
