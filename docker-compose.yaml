@@ -7,10 +7,4 @@ services:
       - ./:/app
     ports:
       - "5000:5000"
-    depends_on:
-      - bmqueue
-  bmqueue:
-    image: blackmirror:latest
-    command:
-      - bash
-      - bin/run_queue
+

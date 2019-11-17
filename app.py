@@ -17,6 +17,7 @@ from dal import user_dal
 from dal import feed_dal
 from dal import message_dal
 from feed_context import FeedContext
+from feed_service import init_feed
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
 
@@ -56,7 +57,7 @@ def create_user():
     )
 
     # generate feed for user as bg task
-    tasks.create_feed.execute(user["id"])
+    init_feed(user["id"])
     # generate messages for user as bg task
     tasks.create_messages.execute(user["id"])
     return jsonify(user), 200
