@@ -205,6 +205,25 @@ export const posts: Post[] = [
       },
     ],
   },
+  {
+    id: '3',
+    post: {
+      user: {
+        id: '2',
+        firstName: 'Ville',
+        lastName: 'Toiviainen',
+        image: 'https://placeimg.com/500/300/any',
+      },
+      content: {
+        text:
+          'Bandwidth client business-to-business channels holy grail customer supply chain startup product management strategy stock business plan. ',
+        image: 'https://placeimg.com/500/300/any',
+        timestampMsCreated: Date.now(),
+        likeCount: 12,
+      },
+    },
+    comments: [],
+  },
 ];
 
 export const messages: Message[] = [

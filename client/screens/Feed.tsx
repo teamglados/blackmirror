@@ -5,8 +5,10 @@ import FeedItem from '../components/FeedItem';
 import { Post } from '../utils/types';
 import { useAppState, useAppDispatch } from '../utils/context';
 import Divider from '../components/common/Divider';
+import { WINDOW_HEIGHT } from '../constants/display';
 
 function FeedScreen({ navigation }) {
+  const [notificationTriggered, setNotificationTriggered] = React.useState(false); // prettier-ignore
   const { posts } = useAppState();
   const dispatch = useAppDispatch();
 
@@ -14,15 +16,18 @@ function FeedScreen({ navigation }) {
     navigation.navigate('FeedComments', { data: post });
   }
 
-  // React.useEffect(() => {
-  //   setTimeout(() => {
-  //     dispatch({ type: 'set-notifications' });
-  //   }, 2000);
-  // }, [dispatch]);
+  function handleScroll({ nativeEvent: { contentOffset } }) {
+    if (notificationTriggered) return;
+
+    if (contentOffset.y > WINDOW_HEIGHT) {
+      dispatch({ type: 'set-notifications' });
+      setNotificationTriggered(true);
+    }
+  }
 
   return (
     <Wrapper>
-      <Scroller>
+      <Scroller onScroll={handleScroll} scrollEventThrottle={200}>
         {posts.map((post, index) => (
           <FeedItemWrapper key={post.id}>
             <FeedItem
