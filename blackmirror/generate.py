@@ -135,7 +135,7 @@ def generate_targeted_post(user_context):
         post_context = create_post_context(
             user_context,
             persona=persona,
-            text=generate_malicious_topic(user_context, topic_idx=idx)
+            text=generate_malicious_topic(user_context, topic_idx=idx, keyword=keyword)
         )
         comment_texts = [ generate_targeted_comment(user_context, topic_idx=idx, keyword=keyword) for i in range(random.randint(1, 3)) ]
 
@@ -164,17 +164,11 @@ def generate_reply(post_context):
 def generate_generic_posts(user_context, count=1):
     results = []
     while len(results) < count:
-        try:
-            results.append(generate_generic_post(copy.deepcopy(user_context)))
-        except:
-            continue
+        results.append(generate_generic_post(copy.deepcopy(user_context)))
     return results
 
 def generate_targeted_posts(user_context, count=1):
     results = []
     while len(results) < count:
-        try:
-            results.append(generate_targeted_post(copy.deepcopy(user_context)))
-        except:
-            continue
+        results.append(generate_targeted_post(copy.deepcopy(user_context)))
     return results
