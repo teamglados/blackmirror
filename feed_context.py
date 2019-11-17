@@ -6,7 +6,7 @@ from dal import feed_dal
 
 
 class FeedContext:
-    def __init__(self, user_id: str, context_id: Optional[str]=None):
+    def __init__(self, user_id: str, context_id: Optional[str] = None):
         self.user_id = user_id
         if context_id:
             try:
@@ -35,7 +35,8 @@ class FeedContext:
                 comment_dict[comment["id"]] = comment
             self.context["comments"] = list(comment_dict.values())
 
-        self.context["comments"] = sorted(self.context["comments"], key=lambda x: x["content"]["timestamp_ms_created"])
+        self.context["comments"] = sorted(
+            self.context["comments"], key=lambda x: x["content"]["timestamp_ms_created"]
+        )
         feed_dal.update(self.context["id"], self.context)
         return self.context
-

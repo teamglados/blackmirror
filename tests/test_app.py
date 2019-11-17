@@ -17,13 +17,7 @@ class ApiTest(BMTestCase):
             "first_name": "Larry",
             "last_name": "Smith",
             "image": "iVBORw0KGgoAAAANSUhEUgAAAAoAAAABCAYAAADn9T9+AAAAEElEQVR42mP8z/C/noEIAABgXwJ/paAXpgAAAABJRU5ErkJggg==",
-            "keywords": {
-                "name": 'hobby',
-                "options": [
-                    'Cooking',
-                    'Cosplaying',
-                ],
-            }
+            "keywords": {"name": "hobby", "options": ["Cooking", "Cosplaying",],},
         }
         res = self.client.post(
             "/api/users", data=json.dumps(user_data), content_type="application/json",
