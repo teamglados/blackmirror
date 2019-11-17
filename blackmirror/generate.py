@@ -91,7 +91,7 @@ def generate_generic_post(user_context):
     source = open(GENERATED_GENERIC_PATH).read().splitlines()
     source_comment = open(GENERATED_GENERIC_COMMENTS_PATH).read().splitlines()
     persona = random.choice(PERSONAS_STATIC)
-    idx = random.randint(0, len(source))
+    idx = random.randint(0, len(source)-1)
 
     post_context = create_post_context(
         user_context,
@@ -109,7 +109,7 @@ def generate_generic_post(user_context):
 def generate_targeted_post(user_context):
     source = open(GENERATED_MALICIOUS_PATH).read().splitlines()
     persona = random.choice(PERSONAS_ACTIVE)
-    idx = random.randint(0, len(source))
+    idx = random.randint(0, len(source)-1)
 
     # TODO: Select keyword
     keyword = 'TEST KEYWORD'
@@ -148,7 +148,7 @@ def generate_targeted_post(user_context):
 
 def generate_reply(post_context):
     history = [ comment['content']['text'] for comment in post_context['comments'] ]
-    persona_idx = random.randint(0, len(PERSONAS_ACTIVE))
+    persona_idx = random.randint(0, len(PERSONAS_ACTIVE)-1)
     persona = PERSONAS_ACTIVE[persona_idx]
 
     # Simple taunt

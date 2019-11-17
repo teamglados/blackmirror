@@ -35,6 +35,6 @@ def create_personas(count=1, p_malicious=0.25):
         image = sample_random_path(images_male_path if row.Gender == 'male' else images_female_path)
         is_malicious = np.random.uniform(0, 1) < p_malicious
         if is_malicious:
-            personality = personality + MALICIOUS_PERSONAS
+            personality = MALICIOUS_PERSONAS
         personas.append((personality, image, is_malicious, fields))
     return personas
