@@ -14,6 +14,7 @@ class FeedContext:
                 self.context = context_holder["context"]
             except TypeError:
                 self.context = None
+                self.context_id = None
         else:
             self.context = None
 
@@ -28,6 +29,7 @@ class FeedContext:
             context_holder = feed_dal.add(self.user_id, context)
             self.context = context_holder["context"]
             self.context["id"] = context_holder["id"]
+            self.context_id = context_holder["id"]
         else:
             for comment in self.context["comments"]:
                 comment_dict[comment["id"]] = comment

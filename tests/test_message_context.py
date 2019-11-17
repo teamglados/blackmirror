@@ -35,10 +35,3 @@ class MessageContextTest(BMTestCase):
 
         messages = message_dal.get_by_user(user["id"])
         self.assertEqual(len(messages["context"]["messages"]), 3)
-
-
-
-
-
-
-
