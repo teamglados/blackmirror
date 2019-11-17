@@ -31,8 +31,6 @@ def add(
         return to_dict(row)
     raise TypeError(NO_ID_RETURNED)
 
-
-@with_dbc
 def get(user_id: str) -> Dict[Any, Any]:
     with PGInterface() as dbc:
         row = dbc.fetchone(GET, params=(user_id,), as_dict=True)
