@@ -18,7 +18,7 @@ function Root() {
 
   React.useEffect(() => {
     async function init() {
-      const data = await api.getUserData();
+      const data = await api.getAppData();
 
       if (data) {
         dispatch({ type: 'set-data', payload: data });

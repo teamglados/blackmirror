@@ -34,7 +34,6 @@ function ChatScreen({ navigation }) {
   async function coordinateResponse(i) {
     await sleep(1000);
     const response = messages[i];
-    console.log('> res', response);
     setLocalMessages(prevMessages =>
       GiftedChat.append(prevMessages, mangleMessages([response]))
     );
@@ -76,7 +75,13 @@ function ChatScreen({ navigation }) {
         bottomOffset={TAB_BAR_HEIGHT}
         messages={localMessages}
         onSend={handleSend}
-        onLongPress={handleLongPress}
+        parsePatterns={() => [
+          {
+            pattern: /<(\w+)>/,
+            style: { fontWeight: '700' },
+            onPress: handleLongPress,
+          },
+        ]}
         user={{
           _id: user.id,
           name: `${user.firstName} ${user.lastName}`,

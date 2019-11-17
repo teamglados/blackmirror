@@ -46,7 +46,7 @@ function CameraScreen({ route, navigation }) {
     await api.saveUser({ ...startData, picBase64 });
 
     // Get app data
-    const data = await api.getUserData();
+    const data = await api.getAppData();
     dispatch({ type: 'set-data', payload: data });
     navigation.navigate('Main');
   }

@@ -2,7 +2,12 @@ import axios from 'axios';
 import toCamelCase from 'camelcase-keys';
 
 import { StartData, AppState, Post } from './types';
-import { persistUser, getPersistUser } from './storage';
+import {
+  persistUser,
+  getPersistedUser,
+  persistMemes,
+  getPersistedMemes,
+} from './storage';
 import * as mockData from './data';
 import { guid } from '.';
 
@@ -28,6 +33,54 @@ async function saveUser(data: StartData) {
     image: data.picBase64,
   });
 
+  const res1: any = await api.post(`/meme`, {
+    image: data.picBase64,
+  });
+
+  const res2: any = await api.post(`/meme`, {
+    image: data.picBase64,
+  });
+
+  const meme1Post: Post = {
+    comments: [],
+    id: guid(),
+    post: {
+      content: {
+        image: res1.data.url,
+        likeCount: 127,
+        text: 'Look at this moron! 😛',
+        timestampMsCreated: Date.now(),
+      },
+      user: {
+        id: guid(),
+        firstName: 'Max',
+        lastName: 'Johnny',
+        image: 'https://placeimg.com/500/300/any',
+      },
+    },
+  };
+
+  const meme2Post: Post = {
+    comments: [],
+    id: guid(),
+    post: {
+      content: {
+        image: res2.data.url,
+        likeCount: 127,
+        text: 'Look at this moron! 😛',
+        timestampMsCreated: Date.now(),
+      },
+      user: {
+        id: guid(),
+        firstName: 'Max',
+        lastName: 'Johnny',
+        image: 'https://placeimg.com/500/300/any',
+      },
+    },
+  };
+
+  await persistMemes([meme1Post, meme2Post]);
+
   // const response: any = await api.post(`/api/users`, {image });
   // const payload = {
   //   first_name: data.firstName,
@@ -48,38 +101,16 @@ async function saveUser(data: StartData) {
   // await persistUser(user);
 }
 
-async function getUserData() {
-  const user = await getPersistUser();
+async function getAppData() {
+  const user = await getPersistedUser();
   if (!user) return null;
 
-  const response: any = await api.post(`/meme`, {
-    image: user.image,
-  });
-
-  console.log(response.data);
-
-  const memePost: Post = {
-    comments: [],
-    id: guid(),
-    post: {
-      content: {
-        image: response.data.url,
-        likeCount: 127,
-        text: 'Look at this moron! 😛',
-        timestampMsCreated: Date.now(),
-      },
-      user: {
-        id: guid(),
-        firstName: 'Max',
-        lastName: 'Johnny',
-        image: 'https://placeimg.com/500/300/any',
-      },
-    },
-  };
+  const memePosts = await getPersistedMemes();
+  console.log('> memePosts', memePosts);
 
   return {
     user,
-    posts: [...mockData.posts, memePost],
+    posts: [...mockData.posts, ...memePosts],
     messages: mockData.messages,
     hasNotifications: false,
   } as AppState;
@@ -108,5 +139,5 @@ async function getUserData() {
 
 export default {
   saveUser,
-  getUserData,
+  getAppData,
 };

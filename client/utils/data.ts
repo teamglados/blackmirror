@@ -232,11 +232,20 @@ const chatPartner = {
 
 const chatMessages = [
   'Howdy mate!',
-  'I don’t care... You are a moron!',
-  'Who do you think you are??? Come on!!',
+  'LOL I don’t care... You are a moron!',
   'You should go cry in the a dark corner 😢',
+  'Hey, look it’s you <some douchebag> 🤣',
   'Shut up‼',
-  'Hey, look it’s you https://placeimg.com/500/300/any 🤣',
+  'Shut up‼',
+  'Shut up‼',
+  'Shut up‼',
+  'Shut up‼',
+  'Shut up‼',
+  'Shut up‼',
+  'Shut up‼',
+  'Shut up‼',
+  'Shut up‼',
+  'Shut up‼',
 ];
 
 export const messages: Message[] = chatMessages.map((message, i) => ({
@@ -244,7 +253,7 @@ export const messages: Message[] = chatMessages.map((message, i) => ({
   user: chatPartner,
   content: {
     text: message,
-    image: i === 3 ? 'https://placeimg.com/500/300/any' : null,
+    image: i === 2 ? 'https://placeimg.com/500/300/any' : null,
     timestampMsCreated: Date.now(),
     likeCount: getRandomNumberBetween(0, 30),
   },
