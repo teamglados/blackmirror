@@ -1,20 +1,28 @@
 import os
 import redis
 
-REDISSOCK: str = os.getenv("REDISSOCK", "redis")
-LOCAL_SOCKET_CONNECT_TIMEOUT: float = float(
+REDISHOST = os.getenv("REDISHOST", "redis")
+REDISPORT = int(os.getenv("REDISPORT", 6379))
+REDISDB = int(os.getenv("REDISDB", "0"))
+REDISPW = os.getenv("REDISPW")
+KEEP_ALIVE = "true" in os.getenv("SOCKET_KEEPALIVE", "true").lower()
+RETRY_ON_TIMEOUT = "true" in os.getenv("SOCKET_RETRY", "true").lower()
+
+SOCKET_CONNECT_TIMEOUT: float = float(
     os.getenv("LOCAL_SOCKET_CONNECT_TIMEOUT", "30")
 )
-LOCAL_SOCKET_TIMEOUT: float = float(os.getenv("LOCAL_SOCKET_CONNECT_TIMEOUT", "30"))
+SOCKET_TIMEOUT: float = float(os.getenv("LOCAL_SOCKET_CONNECT_TIMEOUT", "30"))
 
-if REDISSOCK == "redis":
-    LOCAL_REDIS: redis.StrictRedis = redis.StrictRedis(host=REDISSOCK)
-else:
-    LOCAL_REDIS = redis.StrictRedis(
-        unix_socket_path=REDISSOCK,
-        socket_connect_timeout=LOCAL_SOCKET_CONNECT_TIMEOUT,
-        socket_timeout=LOCAL_SOCKET_TIMEOUT,
-    )
+LOCAL_REDIS = redis.StrictRedis(
+    host=REDISHOST,
+    port=REDISPORT,
+    password=REDISPW,
+    ssl=True,
+    socket_connect_timeout=SOCKET_CONNECT_TIMEOUT,
+    socket_timeout=SOCKET_TIMEOUT,
+    socket_keepalive=KEEP_ALIVE,
+    retry_on_timeout=RETRY_ON_TIMEOUT,
+)
 
 
 def get_ephemeral():
