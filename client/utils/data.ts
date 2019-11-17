@@ -234,7 +234,7 @@ const chatMessages = [
   'Howdy mate!',
   'LOL I don’t care... You are a moron!',
   'You should go cry in the a dark corner 😢',
-  'Hey, look it’s you <some douchebag> 🤣',
+  'Hey, look it’s you <Douchebag> 🤣',
   'Shut up‼',
   'Shut up‼',
   'Shut up‼',

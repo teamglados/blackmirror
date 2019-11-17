@@ -21,7 +21,7 @@ function ProfileScreen({ navigation, route }) {
   function handleScroll({ nativeEvent: { contentOffset } }) {
     if (endTriggered) return;
 
-    if (contentOffset.y > WINDOW_HEIGHT * 1.5) {
+    if (contentOffset.y > WINDOW_HEIGHT * 2) {
       setEndTriggered(true);
       navigation.navigate('End');
     }
