@@ -11,8 +11,6 @@ import utils
 from message_context import MessageContext
 from feed_context import FeedContext
 from dal import user_dal
-from dal import github_dal
-from dal import feeditem_dal
 from dal import message_dal
 
 class BMTestCase(unittest.TestCase):

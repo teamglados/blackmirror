@@ -28,19 +28,13 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: feeditem; Type: TABLE; Schema: public; Owner: -
+-- Name: feed; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.feeditem (
+CREATE TABLE public.feed (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
     user_id uuid,
-    like_count integer DEFAULT 0,
-    post_text text,
-    post_image text,
-    parent_id uuid,
-    creator_id uuid,
-    timestamp_ms_created bigint DEFAULT (date_part('epoch'::text, now()) * (1000)::double precision) NOT NULL,
-    timestamp_ms_updated bigint
+    context text
 );
 
 
@@ -74,11 +68,8 @@ CREATE TABLE public.github_stats (
 
 CREATE TABLE public.messages (
     id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
-    content text,
     user_id uuid,
-    image text,
-    creator_id uuid,
-    timestamp_ms_created bigint DEFAULT (date_part('epoch'::text, now()) * (1000)::double precision) NOT NULL
+    context text
 );
 
 
@@ -106,11 +97,11 @@ CREATE TABLE public.users (
 
 
 --
--- Name: feeditem feeditem_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: feed feed_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.feeditem
-    ADD CONSTRAINT feeditem_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.feed
+    ADD CONSTRAINT feed_pkey PRIMARY KEY (id);
 
 
 --

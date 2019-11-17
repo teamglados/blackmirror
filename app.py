@@ -12,8 +12,6 @@ from flask import (
 
 import utils
 import error_msgs
-import feed_service
-import message_service
 from taskqueue import tasks
 from dal import user_dal
 from dal import feed_dal
