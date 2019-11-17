@@ -13,8 +13,6 @@ services:
       - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
       - REDISPORT=12820
     depends_on:
-      - db
-      - redis
       - bmqueue
     volumes:
       - ./:/app
@@ -34,9 +32,6 @@ services:
       - SSLMODE=require
       - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
       - REDISPORT=12820
-    depends_on:
-      - redis
-      - db
     volumes:
       - ./:/app
   db:
