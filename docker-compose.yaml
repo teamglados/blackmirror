@@ -3,12 +3,12 @@ version: '3.3'  # 3.3 needed for build/contexts, 'targets' not included
 services:
   blackmirror:
     image: blackmirror:latest
-    depends_on:
-      - bmqueue
     volumes:
       - ./:/app
     ports:
-      - 5000:5000
+      - "5000:5000"
+    depends_on:
+      - bmqueue
   bmqueue:
     image: blackmirror:latest
     command:
