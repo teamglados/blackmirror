@@ -3,5 +3,5 @@ set -exu
 
 cd $(dirname $0)/..
 docker-compose build
-docker-compose run blackmirror bash ./bin/init
-docker-compose run blackmirror bash
+docker-compose run blackmirror_test bash ./bin/init
+docker-compose run blackmirror_test bash
