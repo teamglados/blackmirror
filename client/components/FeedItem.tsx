@@ -29,7 +29,12 @@ function FeedItem({ data, onShowComments, disableComments }: Props) {
 
       <TextContent>{data.post.content.text}</TextContent>
 
-      <FeedImage source={{ uri: data.post.content.image }} resizeMode="cover" />
+      {data.post.content.image && (
+        <FeedImage
+          source={{ uri: data.post.content.image }}
+          resizeMode="cover"
+        />
+      )}
 
       <Footer>
         <MetaData>

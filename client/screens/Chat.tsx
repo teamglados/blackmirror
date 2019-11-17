@@ -5,6 +5,7 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { TAB_BAR_HEIGHT } from '../constants/display';
 import { useAppState } from '../utils/context';
 import { Message } from '../utils/types';
+import { getMeanPosts, getMeanUser } from '../utils/data';
 
 function mangleMessages(messages: Message[]) {
   return messages.map(m => ({
@@ -32,7 +33,10 @@ function ChatScreen({ navigation }) {
   }
 
   function handleLongPress() {
-    navigation.navigate('ProfileTab');
+    navigation.navigate('Profile', {
+      posts: getMeanPosts(user),
+      user: getMeanUser(user),
+    });
   }
 
   // Sync messages

@@ -11,7 +11,6 @@ interface Props {
 }
 
 function ProfileDetails({ data }: Props) {
-  console.log(data.image);
   return (
     <Wrapper>
       <Cover>

@@ -23,6 +23,7 @@ import Fade from '../components/common/Fade';
 const Tab = createBottomTabNavigator();
 const FeedStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const ChatStack = createStackNavigator();
 
 const Noop = () => {
   return <View />;
@@ -55,6 +56,23 @@ const ProfileStackGroup = () => {
         options={{ headerTitle: 'Post comments' }}
       />
     </ProfileStack.Navigator>
+  );
+};
+
+const ChatStackGroup = () => {
+  return (
+    <ChatStack.Navigator>
+      <ChatStack.Screen
+        name="Chat"
+        component={ChatScreen}
+        options={{ headerShown: false }}
+      />
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ headerBackTitle: 'Back' }}
+      />
+    </ChatStack.Navigator>
   );
 };
 
@@ -134,7 +152,7 @@ function MainScreen() {
         />
         <Tab.Screen
           name="NotificationsTab"
-          component={ChatScreen}
+          component={ChatStackGroup}
           options={{
             tabBarLabel: null,
             tabBarIcon: NotificationsTabIcon,

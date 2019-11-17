@@ -1,4 +1,5 @@
 import { Post, Message, User, UserDetails } from './types';
+import { getRandomNumberBetween } from '.';
 
 /* eslint-disable max-len */
 
@@ -240,3 +241,39 @@ export const messages: Message[] = [
     },
   },
 ];
+
+export const getMeanUser = (user: User) => {
+  return {
+    ...user,
+    lastName: `"Douche" ${user.lastName}`,
+  };
+};
+
+export const getMeanPosts = (user: User) => {
+  const texts = [
+    'you said you loved me, i sneezed and said sorry, im allergic to bullshit',
+    'Im Not Racist I Just Dont Like You !',
+    'stupidity is an idiots defence to life',
+    "hey here's a condom , wouldn't want you making the same mistake your mom did!",
+    'I was always told "If you have nothing NICE to say don\'t say anything at all." People wonder why I\'m so quiet. I HAVE NOTHING NICE TO SAY!',
+    "My momma told me I don't have to be nice to stupid people.",
+    'If stupid were a seed, this place would be an orchard',
+    "Life's a Bitch. But so am I so its all good :)",
+    'when people put you down, get back up and push them down, kick dirt in there face and run away laughing... ha ha ha ha ha',
+    'Is it funny or mean to stop at a hitch hiker, ask if they wants a ride, then if they says yes, tell them : HOPE YA FIND ONE SOON, as you speed off.?',
+  ];
+
+  return texts.map((text, index) => ({
+    id: `${index}`,
+    post: {
+      user: getMeanUser(user),
+      content: {
+        text,
+        image: null,
+        timestampMsCreated: Date.now(),
+        likeCount: getRandomNumberBetween(0, 53),
+      },
+    },
+    comments: [],
+  }));
+};

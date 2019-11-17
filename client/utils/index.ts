@@ -12,3 +12,6 @@ export const guid = () => {
 
   return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
 };
+
+export const getRandomNumberBetween = (min, max) =>
+  Math.floor(Math.random() * max) + min;
