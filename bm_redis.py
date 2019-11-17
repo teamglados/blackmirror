@@ -4,6 +4,7 @@ import redis
 REDISHOST = os.getenv("REDISHOST", "redis")
 REDISPORT = int(os.getenv("REDISPORT", 6379))
 REDISDB = int(os.getenv("REDISDB", "0"))
+REDIS_SSL = os.getenv("REDIS_SSL", "true") == "true"
 REDISPW = os.getenv("REDISPW")
 KEEP_ALIVE = "true" in os.getenv("SOCKET_KEEPALIVE", "true").lower()
 RETRY_ON_TIMEOUT = "true" in os.getenv("SOCKET_RETRY", "true").lower()
@@ -17,7 +18,7 @@ LOCAL_REDIS = redis.StrictRedis(
     host=REDISHOST,
     port=REDISPORT,
     password=REDISPW,
-    ssl=True,
+    ssl=REDIS_SSL,
     socket_connect_timeout=SOCKET_CONNECT_TIMEOUT,
     socket_timeout=SOCKET_TIMEOUT,
     socket_keepalive=KEEP_ALIVE,
