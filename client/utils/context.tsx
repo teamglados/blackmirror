@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppState } from './types';
+import { clearUser } from './storage';
 
 const StateContext = React.createContext<AppState | undefined>(undefined);
 const DispatchContext = React.createContext<any>(undefined);
@@ -45,4 +46,33 @@ export function useAppState() {
     throw new Error('useState must be used within a StateProvider');
   }
   return state;
+}
+
+// ---------- RESET PROVIDER ----------
+
+const ResetContext = React.createContext<any>(undefined);
+
+export const ResetProvider: React.FC<{ navigation: any }> = ({
+  children,
+  navigation,
+}) => {
+  const reset = React.useCallback(async () => {
+    await clearUser();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Start' }],
+    });
+  }, [navigation]);
+
+  return (
+    <ResetContext.Provider value={reset}>{children}</ResetContext.Provider>
+  );
+};
+
+export function useAppReset() {
+  const reset = React.useContext(ResetContext);
+  if (reset === undefined) {
+    throw new Error('useAppReset must be used within a ResetProvider');
+  }
+  return reset;
 }

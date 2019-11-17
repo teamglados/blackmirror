@@ -17,7 +17,7 @@ import FeedScreen from './Feed';
 import ProfileScreen from './Profile';
 import CommentsScreen from './Comments';
 import SettingsScreen from './Settings';
-import { useAppState } from '../utils/context';
+import { useAppState, ResetProvider } from '../utils/context';
 import Fade from '../components/common/Fade';
 
 const Tab = createBottomTabNavigator();
@@ -102,74 +102,76 @@ const NotificationsDot = styled.View`
   background-color: red;
 `;
 
-function MainScreen() {
+function MainScreen({ navigation }) {
   return (
-    <Wrapper>
-      <Tab.Navigator initialRouteName="FeedTab">
-        <Tab.Screen
-          name="FeedTab"
-          component={FeedStackGroup}
-          options={{
-            tabBarLabel: null,
-            tabBarIcon: ({ color }) => (
-              <AntDesign name="home" color={color} size={24} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="FriendsTab"
-          component={Noop}
-          options={{
-            tabBarLabel: null,
-            tabBarIcon: ({ color }) => (
-              <MaterialIcons name="group" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="ProfileTab"
-          component={ProfileStackGroup}
-          options={{
-            tabBarLabel: null,
-            tabBarIcon: ({ color }) => (
-              <EvilIcons name="user" color={color} size={32} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="GroupsTab"
-          component={Noop}
-          options={{
-            tabBarLabel: null,
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="account-group"
-                color={color}
-                size={28}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="NotificationsTab"
-          component={ChatStackGroup}
-          options={{
-            tabBarLabel: null,
-            tabBarIcon: NotificationsTabIcon,
-          }}
-        />
-        <Tab.Screen
-          name="SettingsTab"
-          component={SettingsScreen}
-          options={{
-            tabBarLabel: null,
-            tabBarIcon: ({ color }) => (
-              <Feather name="menu" color={color} size={26} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </Wrapper>
+    <ResetProvider navigation={navigation}>
+      <Wrapper>
+        <Tab.Navigator initialRouteName="FeedTab">
+          <Tab.Screen
+            name="FeedTab"
+            component={FeedStackGroup}
+            options={{
+              tabBarLabel: null,
+              tabBarIcon: ({ color }) => (
+                <AntDesign name="home" color={color} size={24} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="FriendsTab"
+            component={Noop}
+            options={{
+              tabBarLabel: null,
+              tabBarIcon: ({ color }) => (
+                <MaterialIcons name="group" color={color} size={26} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="ProfileTab"
+            component={ProfileStackGroup}
+            options={{
+              tabBarLabel: null,
+              tabBarIcon: ({ color }) => (
+                <EvilIcons name="user" color={color} size={32} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="GroupsTab"
+            component={Noop}
+            options={{
+              tabBarLabel: null,
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons
+                  name="account-group"
+                  color={color}
+                  size={28}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="NotificationsTab"
+            component={ChatStackGroup}
+            options={{
+              tabBarLabel: null,
+              tabBarIcon: NotificationsTabIcon,
+            }}
+          />
+          <Tab.Screen
+            name="SettingsTab"
+            component={SettingsScreen}
+            options={{
+              tabBarLabel: null,
+              tabBarIcon: ({ color }) => (
+                <Feather name="menu" color={color} size={26} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </Wrapper>
+    </ResetProvider>
   );
 }
 

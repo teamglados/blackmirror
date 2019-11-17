@@ -4,27 +4,31 @@ import styled from 'styled-components/native';
 import { range } from 'lodash';
 
 import Text from '../components/common/Text';
+import Button from '../components/common/Button';
 import { clearUser } from '../utils/storage';
-// import Button from '../components/common/Button';
-// import Spacing from '../components/common/Spacing';
+import { WINDOW_WIDTH } from '../constants/display';
 
 const texts = [
   'How did that experience make you feel?',
   'Some people experience that every day.',
   'Mirroring these feelings can help you understand what other’s are going through.',
   'For a world without bullying.',
-  'Black Mirror',
 ];
 
 function EndScreen({ navigation }) {
-  const [animations] = React.useState(
-    range(texts.length).map(() => new Animated.Value(0))
-  );
+  const [animations] = React.useState([
+    ...range(texts.length).map(() => new Animated.Value(0)),
+    new Animated.Value(0),
+    new Animated.Value(0),
+  ]);
 
-  // async function handleStartOver() {
-  //   await clearUser();
-  //   navigation.replace('Start');
-  // }
+  async function reset() {
+    await clearUser();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Start' }],
+    });
+  }
 
   React.useEffect(() => {
     Animated.sequence([
@@ -76,7 +80,17 @@ function EndScreen({ navigation }) {
         useNativeDriver: true,
       }),
 
+      // Logo
       Animated.timing(animations[4], {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+
+      Animated.delay(2000),
+
+      // Button
+      Animated.timing(animations[5], {
         toValue: 1,
         duration: 1000,
         useNativeDriver: true,
@@ -107,26 +121,42 @@ function EndScreen({ navigation }) {
           <Text color="#fff" size={32} weight={700}>
             {text}
           </Text>
-
-          {/* {index === texts.length - 1 && (
-            <>
-              <Spacing vertical amount={24} />
-              <Animated.View
-                style={{
-                  opacity: animations[animations.length - 1].interpolate({
-                    inputRange: [0, 1, 2],
-                    outputRange: [0, 1, 0],
-                  }),
-                }}
-              >
-                <Button variant="secondary" onPress={handleStartOver}>
-                  Start over
-                </Button>
-              </Animated.View>
-            </>
-          )} */}
         </Overlay>
       ))}
+
+      <Overlay
+        style={{
+          opacity: animations[animations.length - 2].interpolate({
+            inputRange: [0, 1, 2],
+            outputRange: [0, 1, 0],
+          }),
+          transform: [
+            {
+              translateY: animations[animations.length - 2].interpolate({
+                inputRange: [0, 1, 2],
+                outputRange: [30, 0, -40],
+              }),
+            },
+          ],
+        }}
+      >
+        <LogoImage
+          source={require('../assets/logo_white.png')}
+          resizeMode="contain"
+        />
+        <Animated.View
+          style={{
+            opacity: animations[animations.length - 1].interpolate({
+              inputRange: [0, 1, 2],
+              outputRange: [0, 1, 0],
+            }),
+          }}
+        >
+          <Button variant="secondary" onPress={reset}>
+            Start over
+          </Button>
+        </Animated.View>
+      </Overlay>
     </Wrapper>
   );
 }
@@ -146,5 +176,10 @@ const Overlay = Animated.createAnimatedComponent(styled.View`
   align-items: center;
   padding: 24px;
 `);
+
+const LogoImage = styled.Image`
+  width: ${WINDOW_WIDTH * 0.6};
+  height: 120px;
+`;
 
 export default EndScreen;

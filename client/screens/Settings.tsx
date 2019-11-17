@@ -1,19 +1,16 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Button from '../components/common/Button';
-import { clearUser } from '../utils/storage';
+import { useAppReset } from '../utils/context';
 
 function SettingsScreen({ navigation }) {
-  async function clear() {
-    await clearUser();
-    navigation.navigate('Start');
-  }
+  const reset = useAppReset();
 
   return (
     <Wrapper>
       <ButtonWrapper>
-        <Button variant="secondary" onPress={clear}>
-          Clear user
+        <Button variant="secondary" onPress={reset}>
+          Reset
         </Button>
       </ButtonWrapper>
     </Wrapper>

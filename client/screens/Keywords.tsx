@@ -9,6 +9,7 @@ import theme from '../constants/theme';
 import Text from '../components/common/Text';
 import Spacing from '../components/common/Spacing';
 import Fade from '../components/common/Fade';
+import { WINDOW_WIDTH } from '../constants/display';
 
 function KeywordsScreen({ navigation }) {
   const [revealAnim] = React.useState(new Animated.Value(0));
@@ -178,9 +179,13 @@ function KeywordsScreen({ navigation }) {
           ],
         }}
       >
-        <Text color="#fff" size={32} weight={700}>
+        <LogoImage
+          source={require('../assets/logo_white.png')}
+          resizeMode="contain"
+        />
+        {/* <Text color="#fff" size={32} weight={700}>
           Black Mirror
-        </Text>
+        </Text> */}
       </Overlay>
     </Wrapper>
   );
@@ -343,6 +348,11 @@ const NextButton = styled.TouchableOpacity`
   border-radius: 99px;
   justify-content: center;
   align-items: center;
+`;
+
+const LogoImage = styled.Image`
+  width: ${WINDOW_WIDTH * 0.6};
+  height: 200px;
 `;
 
 export default KeywordsScreen;
