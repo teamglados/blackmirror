@@ -16,11 +16,18 @@ def to_dict(row):
         row_d["keywords"] = json.loads(row_d["keywords"])
     return row_d
 
+
 @with_dbc
 def add(
-    first_name: str, last_name: str, image: str, keywords: Dict[str, str], dbc=PGInterface()
+    first_name: str,
+    last_name: str,
+    image: str,
+    keywords: Dict[str, str],
+    dbc=PGInterface(),
 ) -> Dict[Any, Any]:
-    row = dbc.fetchone(ADD, params=(first_name, last_name, image, json.dumps(keywords)), as_dict=True)
+    row = dbc.fetchone(
+        ADD, params=(first_name, last_name, image, json.dumps(keywords)), as_dict=True
+    )
     if row:
         return to_dict(row)
     raise TypeError(NO_ID_RETURNED)

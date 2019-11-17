@@ -32,4 +32,3 @@ def get_by_user(user_id: str, dbc=PGInterface()) -> Dict[Any, Any]:
 def update(user_id: str, context: Dict[Any, Any], dbc=PGInterface()) -> None:
     params = (json.dumps(context), user_id)
     dbc.execute(UPDATE, params=params)
-

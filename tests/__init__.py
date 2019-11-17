@@ -13,6 +13,7 @@ from feed_context import FeedContext
 from dal import user_dal
 from dal import message_dal
 
+
 class BMTestCase(unittest.TestCase):
     def setUp(self):
         pass
@@ -25,15 +26,12 @@ class BMTestCase(unittest.TestCase):
                 "text": "test message",
                 "image": "/path/to/img",
                 "timestamp_ms_created": int(round(time.time() * 1000)),
-            }
+            },
         }
 
     @staticmethod
     def _create_message_context(user):
-        return {
-            "user": user,
-            "messages": [BMTestCase._create_message(user)]
-        }
+        return {"user": user, "messages": [BMTestCase._create_message(user)]}
 
     @staticmethod
     def _create_content(user):
@@ -44,7 +42,7 @@ class BMTestCase(unittest.TestCase):
                 "image": "/path/to/img",
                 "like_count": 1,
                 "timestamp_ms_created": int(round(time.time() * 1000)),
-            }
+            },
         }
 
     def _add_user(self, **kwargs) -> Dict[Any, Any]:
@@ -52,11 +50,8 @@ class BMTestCase(unittest.TestCase):
         last_name = kwargs.get("last_name", "Smith")
         image = kwargs.get("image", f"{utils.get_root_path()}/uploads/ville.jpeg")
         keywords = {
-            "name": 'hobby',
-            "options": [
-                'Cooking',
-                'Cosplaying',
-            ],
+            "name": "hobby",
+            "options": ["Cooking", "Cosplaying",],
         }
 
         return user_dal.add(first_name, last_name, image, keywords)
@@ -70,9 +65,7 @@ class BMTestCase(unittest.TestCase):
         return {
             "user": user,
             "post": self._create_content(user),
-            "comments": [
-                self._create_content(user)
-            ]
+            "comments": [self._create_content(user)],
         }
 
     def _add_feed_context(self, user):

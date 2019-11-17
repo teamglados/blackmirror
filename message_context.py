@@ -26,7 +26,9 @@ class MessageContext:
                 message_dict[message["content"]["timestamp_ms_created"]] = message
             self.context["messages"] = list(message_dict.values())
 
-        self.context["messages"] = sorted(self.context["messages"], key=lambda x: x["content"]["timestamp_ms_created"])
+        self.context["messages"] = sorted(
+            self.context["messages"], key=lambda x: x["content"]["timestamp_ms_created"]
+        )
 
         # add id for teemu
         for message in self.context["messages"]:
@@ -34,4 +36,3 @@ class MessageContext:
                 message["id"] = str(uuid4())
         message_dal.update(self.user_id, self.context)
         return self.context
-

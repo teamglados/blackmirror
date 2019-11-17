@@ -37,12 +37,14 @@ def get_user_by_id(user_id):
 
     return jsonify(user), 200
 
+
 def store_base64_image(img_str: str) -> str:
     imgdata = base64.b64decode(img_str)
-    filename = f'{utils.get_root_path()}/{UPLOAD_FOLDER}/{str(uuid4())}.jpg'
-    with open(filename, 'wb') as f:
+    filename = f"{utils.get_root_path()}/{UPLOAD_FOLDER}/{str(uuid4())}.jpg"
+    with open(filename, "wb") as f:
         f.write(imgdata)
     return filename
+
 
 @app.route("/api/users", methods=["POST"])
 def create_user():
@@ -73,7 +75,11 @@ def ping():
 def get_user_feed(user_id: str):
     feed = feed_dal.get_by_user(user_id)
     feed_context = [f["context"] for f in feed]
-    feed_sorted = sorted(feed_context, key=lambda x: x["post"]["content"]["timestamp_ms_created"], reverse=True)
+    feed_sorted = sorted(
+        feed_context,
+        key=lambda x: x["post"]["content"]["timestamp_ms_created"],
+        reverse=True,
+    )
     return jsonify(feed_sorted), 200
 
 
@@ -81,4 +87,3 @@ def get_user_feed(user_id: str):
 def get_user_messages(user_id: str):
     messages = message_dal.get_by_user(user_id)
     return jsonify(messages["context"]["messages"]), 200
-

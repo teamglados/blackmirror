@@ -4,6 +4,7 @@ from tests import BMTestCase
 from feed_context import FeedContext
 from dal import feed_dal
 
+
 class FeedContextTest(BMTestCase):
     def test_update_empty(self):
         user = self._add_user()
