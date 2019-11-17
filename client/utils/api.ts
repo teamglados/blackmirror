@@ -33,53 +33,55 @@ async function saveUser(data: StartData) {
     image: data.picBase64,
   });
 
-  const res1: any = await api.post(`/meme`, {
-    image: data.picBase64,
-  });
+  try {
+    const res1: any = await api.post(`/meme`, {
+      image: data.picBase64,
+    });
 
-  const res2: any = await api.post(`/meme`, {
-    image: data.picBase64,
-  });
+    const res2: any = await api.post(`/meme`, {
+      image: data.picBase64,
+    });
 
-  const meme1Post: Post = {
-    comments: [],
-    id: guid(),
-    post: {
-      content: {
-        image: res1.data.url,
-        likeCount: 127,
-        text: 'Look at this moron! 😛',
-        timestampMsCreated: Date.now(),
+    const meme1Post: Post = {
+      comments: [],
+      id: guid(),
+      post: {
+        content: {
+          image: res1.data.url,
+          likeCount: 127,
+          text: 'Look at this moron! 😛',
+          timestampMsCreated: Date.now(),
+        },
+        user: {
+          id: guid(),
+          firstName: 'Max',
+          lastName: 'Johnny',
+          image: 'https://randomuser.me/api/portraits/men/34.jpg',
+        },
       },
-      user: {
-        id: guid(),
-        firstName: 'Max',
-        lastName: 'Johnny',
-        image: 'https://randomuser.me/api/portraits/men/34.jpg',
-      },
-    },
-  };
+    };
 
-  const meme2Post: Post = {
-    comments: [],
-    id: guid(),
-    post: {
-      content: {
-        image: res2.data.url,
-        likeCount: 18,
-        text: 'Another idiot face XD',
-        timestampMsCreated: Date.now(),
+    const meme2Post: Post = {
+      comments: [],
+      id: guid(),
+      post: {
+        content: {
+          image: res2.data.url,
+          likeCount: 18,
+          text: 'Another idiot face XD',
+          timestampMsCreated: Date.now(),
+        },
+        user: {
+          id: guid(),
+          firstName: 'Adrian',
+          lastName: 'Bender',
+          image: 'https://randomuser.me/api/portraits/men/31.jpg',
+        },
       },
-      user: {
-        id: guid(),
-        firstName: 'Adrian',
-        lastName: 'Bender',
-        image: 'https://randomuser.me/api/portraits/men/31.jpg',
-      },
-    },
-  };
+    };
 
-  await persistMemes([meme1Post, meme2Post]);
+    await persistMemes([meme1Post, meme2Post]);
+  } catch (error) {}
 
   // const response: any = await api.post(`/api/users`, {image });
   // const payload = {
