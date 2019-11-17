@@ -10,7 +10,7 @@ from blackmirror.models.FaceSwap.main import swap_face
 from blackmirror.templates import *
 from blackmirror.mocks import *
 
-UPLOAD_PATH = os.environ.get('UPLOAD_PATH')
+UPLOAD_PATH = os.environ.get('UPLOAD_PATH', '/temp')
 SOURCE_TAUNTS_PATH = search_path('**/template_cache/source_text/taunts.txt')
 SOURCE_INSULTS_PATH = search_path('**/template_cache/source_text/insults.txt')
 SOURCE_KEYWORD_PATH = search_path('**/template_cache/source_text/keywords.txt')
@@ -29,7 +29,7 @@ categories = ast.literal_eval(open(SOURCE_KEYWORD_PATH).read().strip())
 def create_timestamp():
     return int(time.time() * 1000.)
 
-def create_comment_context(persona, text, image=''):
+def create_comment_context(persona, text, image='', tdiff=0):
     return {
         'user': {
             'first_name': persona[-1]['GivenName'],
@@ -40,7 +40,7 @@ def create_comment_context(persona, text, image=''):
             'text:': text,
             'image': image,
             'like_count': random.randint(0, 10),
-            'timestamp_ms_created': create_timestamp(),
+            'timestamp_ms_created': create_timestamp() - tdiff,
         }
     }
 
@@ -63,23 +63,45 @@ def create_post_context(user_context, persona, text, image=''):
         'comments': []
     }
 
-def source_random(path, count=1):
-    source = open(PATH).read().splitlines()
-    return [ random.choice(source) for i in range(count) ]
+def generate_malicious_topic(user_context):
+    pass
 
-def generate_source_comment(user_context):
-    #source_random(SOURCE_TAUNTS_PATH, count)
-    #source_random(SOURCE_INSULTS_PATH, count)
+def generate_targeted_comment(user_context, topic_idx=None):
+    # TODO: This can be taunt
+    # TODO: This can be insult
+    # TODO: This can be comment on malicious topic
+    comment = None
+
+    if topic_idx is not None:
+        pass
     pass
 
 def generate_generic_post(user_context, count=1):
+
+    source = open(GENERATED_GENERIC_PATH).read().splitlines()
+    source_comment = open(GENERATED_GENERIC_COMMENTS_PATH).read().splitlines()
+    persona = random.choice(PERSONAS_ACTIVE)
+    idx = random.randint(0, len(source))
+
     post_context = create_post_context(
         user_context,
-        text=source_random(GENERATED_GENERIC_PATH)[0],
+        persona,
+        text=source[idx],
     )
+    post_context['comments'] = [ create_comment_context(
+        random.choice(PERSONAS_STATIC),
+        text=text,
+        tdiff=i*30000
+        ) for i, text in enumerate(source_comment[idx].split(';'))
+    ][::-1]
     return post_context
 
 def generate_targeted_posts(user_context, count=1):
+
+    source = open(GENERATED_MALICIOUS_PATH).read().splitlines()
+    source_comment = open(GENERATED_MALICIOUS_COMMENTS_PATH).read().splitlines()
+    persona = random.choice(PERSONAS_ACTIVE)
+    idx = random.randint(0, len(source))
 
     # Create meme post with 25% chance
     if np.random.uniform(0, 1) < 0.25:
@@ -91,7 +113,7 @@ def generate_targeted_posts(user_context, count=1):
         )
         post_context = create_post_context(
             user_context,
-            text=generate_source_comment(user_context)[0],
+            text=generate_malicious_topic(),
             image=filepath
         )
         comment_texts = [ generate_source_comment(user_context) for i in range(1, random.randint(1, 10)) ]
@@ -100,7 +122,7 @@ def generate_targeted_posts(user_context, count=1):
     else:
         post_context = create_post_context(
             user_context,
-            text=generate_insults(user_context)[0],
+            text=generate_insults(user_context),
         )
         comment_texts = [ generate_source_comment(user_context) for i in range(1, random.randint(1, 10)) ]
 
@@ -113,12 +135,11 @@ def generate_targeted_posts(user_context, count=1):
     return post_context
 
 def generate_replies(post_context, count=1, p_malicious=0.5, p_mock=0.5, p_taunt=0.5):
+    history = [ comment['content']['text'] for comment in post_context['comments'] ]
+
     if np.random.uniform(0, 1) < p_mock:
         pass
     elif np.random.uniform(0, 1) < p_taunt:
         pass
     if np.random.uniform(0, 1) < p_malicious:
         pass
-
-def generate_chat_reply(user_context):
-    pass
