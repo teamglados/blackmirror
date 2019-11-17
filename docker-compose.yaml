@@ -8,7 +8,7 @@ services:
       - PGHOST=pg-35c52044-villej-eec9.aivencloud.com
       - PGPORT=12819
       - PGUSER=avnadmin
-      - PGDATABASE=defaultdb
+      - PGDATABASE=blackmirror
       - SSLMODE=require
       - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
       - REDISPORT=12820
@@ -28,7 +28,7 @@ services:
       - PGHOST=pg-35c52044-villej-eec9.aivencloud.com
       - PGPORT=12819
       - PGUSER=avnadmin
-      - PGDATABASE=defaultdb
+      - PGDATABASE=blackmirror
       - SSLMODE=require
       - REDISHOST=redis-16c88dcf-villej-eec9.aivencloud.com
       - REDISPORT=12820
