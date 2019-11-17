@@ -12,17 +12,20 @@ from flask import (
 
 import utils
 import error_msgs
-from taskqueue import tasks
+from utils import get_logger
 from dal import user_dal
 from dal import feed_dal
 from dal import message_dal
 from feed_context import FeedContext
-from feed_service import init_feed
+from feed_service import init_feed, get_reply
+from message_service import init_messages
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+logger = get_logger("api")
 
 
 @app.errorhandler(404)
@@ -56,10 +59,16 @@ def create_user():
         payload["first_name"], payload["last_name"], image, payload["keywords"]
     )
 
-    # generate feed for user as bg task
-    init_feed(user["id"])
-    # generate messages for user as bg task
-    tasks.create_messages.execute(user["id"])
+    try:
+        init_feed(user["id"])
+    except:
+        logger.error("Failed to init feed")
+
+    try:
+        init_messages(user["id"])
+    except:
+        logger.error("Failed to init messages")
+
     return jsonify(user), 200
 
 
@@ -95,4 +104,9 @@ def add_comment(post_id):
     payload = request.json
     user_id = payload["user"]["id"]
     fc = FeedContext(user_id, context_id=post_id)
-    return jsonify({"comment_id": fc.add_comment(payload)}), 200
+    comment_id = fc.add_comment(payload)
+
+    # Generate reply
+    get_reply(post_id, user_id)
+
+    return jsonify({"comment_id": comment_id}), 200

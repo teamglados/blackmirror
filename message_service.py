@@ -1,7 +1,7 @@
-from typing import Dict, Any
-from dal import message_dal
-from dal import user_dal
+from message_context import MessageContext
+from utils import get_logger
 
+logger = get_logger("messageservice")
 
-def create_messages(user_id: str) -> None:
+def init_messages(user_id):
     pass
