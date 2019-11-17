@@ -44,3 +44,18 @@ class ApiTest(BMTestCase):
 
         data = res.json
         self.assertTrue(len(data))
+
+    def test_add_comment(self):
+        user = self._add_user()
+        self._add_feed_context(user)
+        res = self.client.get(f"/api/feed/{user['id']}")
+        data = res.json
+        post_id = data[0]["id"]
+
+        payload = self._create_content(user, text="last comment")
+        self.client.post(f"/api/post/{post_id}/comment", json=payload)
+
+        res = self.client.get(f"/api/feed/{user['id']}")
+        import pdb; pdb.set_trace()
+        self.assertEqual(res.json[0]["comments"][-1]["content"]["text"], "last comment")
+
