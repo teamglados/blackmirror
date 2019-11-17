@@ -55,3 +55,43 @@ services:
       - 6379:6379
     volumes:
       - ./redis/:/data
+
+  blackmirror_test:
+    build: .
+    environment:
+      - APP_SETTINGS=development
+      - PGHOST=db
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGDATABASE=blackmirror
+      - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
+      - SSLMODE=prefer
+      - REDIS_SSL=false
+    depends_on:
+      - db
+      - redis
+      - bmqueue_test
+    volumes:
+      - ./:/app
+  bmqueue_test:
+    build: .
+    command:
+      - bash
+      - bin/run_queue
+    volumes:
+      - ./:/app
+    environment:
+      - APP_SETTINGS=development
+      - PGHOST=db
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGDATABASE=blackmirror
+      - DATABASE_URL=postgres://db:5432/blackmirror?sslmode=disable
+      - SSLMODE=prefer
+      - REDISSOCK=redis
+      - REDIS_SSL=false
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - ./:/app
