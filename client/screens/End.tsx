@@ -1,31 +1,30 @@
 import React from 'react';
 import { Animated } from 'react-native';
 import styled from 'styled-components/native';
+import { range } from 'lodash';
+
 import Text from '../components/common/Text';
-import Button from '../components/common/Button';
 import { clearUser } from '../utils/storage';
-import Spacing from '../components/common/Spacing';
+// import Button from '../components/common/Button';
+// import Spacing from '../components/common/Spacing';
 
 const texts = [
   'How did that experience make you feel?',
-  'For some people that is their everyday life.',
-  'Something something something.',
+  'Some people experience that every day.',
+  'Mirroring these feelings can help you understand what other’s are going through.',
+  'For a world without bullying.',
   'Black Mirror',
 ];
 
 function EndScreen({ navigation }) {
-  const [animations] = React.useState([
-    new Animated.Value(0),
-    new Animated.Value(0),
-    new Animated.Value(0),
-    new Animated.Value(0),
-    new Animated.Value(0),
-  ]);
+  const [animations] = React.useState(
+    range(texts.length).map(() => new Animated.Value(0))
+  );
 
-  async function handleStartOver() {
-    await clearUser();
-    navigation.replace('Start');
-  }
+  // async function handleStartOver() {
+  //   await clearUser();
+  //   navigation.replace('Start');
+  // }
 
   React.useEffect(() => {
     Animated.sequence([
@@ -58,7 +57,7 @@ function EndScreen({ navigation }) {
         duration: 1000,
         useNativeDriver: true,
       }),
-      Animated.delay(2000),
+      Animated.delay(3000),
       Animated.timing(animations[2], {
         toValue: 2,
         duration: 1000,
@@ -70,7 +69,13 @@ function EndScreen({ navigation }) {
         duration: 1000,
         useNativeDriver: true,
       }),
-      Animated.delay(1000),
+      Animated.delay(2000),
+      Animated.timing(animations[3], {
+        toValue: 2,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+
       Animated.timing(animations[4], {
         toValue: 1,
         duration: 1000,
@@ -103,7 +108,7 @@ function EndScreen({ navigation }) {
             {text}
           </Text>
 
-          {index === texts.length - 1 && (
+          {/* {index === texts.length - 1 && (
             <>
               <Spacing vertical amount={24} />
               <Animated.View
@@ -119,7 +124,7 @@ function EndScreen({ navigation }) {
                 </Button>
               </Animated.View>
             </>
-          )}
+          )} */}
         </Overlay>
       ))}
     </Wrapper>
