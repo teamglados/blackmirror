@@ -9,3 +9,6 @@ __pycache__
 *.o
 *.so
 NOTES.md
+.mypy_cache/
+.vscode
+uploads/
