@@ -1,8 +1,8 @@
 import os
 import redis
 
-REDISHOST = os.getenv("REDISHOST", "redis")
-REDISPORT = int(os.getenv("REDISPORT", 6379))
+REDISHOST = os.getenv("REDISHOST")
+REDISPORT = int(os.getenv("REDISPORT"))
 REDISDB = int(os.getenv("REDISDB", "0"))
 REDIS_SSL = os.getenv("REDIS_SSL", "true") == "true"
 REDISPW = os.getenv("REDISPW")
