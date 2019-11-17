@@ -12,3 +12,4 @@ NOTES.md
 .mypy_cache/
 .vscode
 uploads/
+init_secrets.sh
