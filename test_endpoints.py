@@ -1,13 +1,27 @@
 import requests
 
-ENDPOINT = "http://localhost:5000"
+ENDPOINT = "http://ec2-63-35-251-51.eu-west-1.compute.amazonaws.com:5000"
 
 
 def create_user():
-    data = {"first_name": "Ville", "last_name": "Toiviainen", "github_user": "Villux"}
-    res = requests.post(f"{ENDPOINT}/api/users", json=data)
+    payload = {
+        "first_name": "Mike",
+        "last_name": "Smith",
+        "image": "asdsadasdasd",
+        "keywords": {
+            "name": "hobby",
+            "options": ["Cooking", "Cosplaying",],
+        }
+    }
+    res = requests.post(f"{ENDPOINT}/api/users", json=payload)
     res.raise_for_status()
     return res.json()
+
+def get_feed(user_id):
+    res = requests.get(f"{ENDPOINT}/api/feed/{user_id}")
+    res.raise_for_status()
+    return res.json()
+
 
 
 def _upload_profile_pic(user_id):

@@ -56,6 +56,5 @@ class ApiTest(BMTestCase):
         self.client.post(f"/api/post/{post_id}/comment", json=payload)
 
         res = self.client.get(f"/api/feed/{user['id']}")
-        import pdb; pdb.set_trace()
         self.assertEqual(res.json[0]["comments"][-1]["content"]["text"], "last comment")
 
