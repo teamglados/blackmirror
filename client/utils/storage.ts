@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
-import { StartData } from './types';
+import { User } from './types';
 
-export async function persistUser(data: StartData) {
+export async function persistUser(data: User) {
   try {
     const dataStr = JSON.stringify(data);
     await AsyncStorage.setItem('user', dataStr);
@@ -13,7 +13,7 @@ export async function persistUser(data: StartData) {
 export async function getPersistUser() {
   try {
     const userStr = await AsyncStorage.getItem('user');
-    return JSON.parse(userStr) as StartData;
+    return JSON.parse(userStr) as User;
   } catch (error) {
     console.log('> Failed to get persisted user', error);
     return null;

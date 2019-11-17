@@ -1,10 +1,13 @@
 import axios from 'axios';
-import { StartData, User, AppState } from './types';
+import toCamelCase from 'camelcase-keys';
+
+import { StartData, AppState } from './types';
 import { persistUser, getPersistUser } from './storage';
 import * as mockData from './data';
-import { sleep } from '.';
 
-const api = axios.create({ baseURL: '' });
+export const API_URL = 'http://6ed88a54.eu.ngrok.io/api';
+
+const api = axios.create({ baseURL: API_URL });
 
 /* eslint-disable @typescript-eslint/camelcase */
 
@@ -16,27 +19,30 @@ async function saveUser(data: StartData) {
     image: data.picBase64,
   };
 
-  await persistUser(data);
-  // await axios.post(`/user`, payload);
+  const response: any = await api.post(`/users`, payload);
+  const user: any = toCamelCase({
+    ...response.data,
+    image: response.data.image.replace('/app', ''),
+  });
+
+  await persistUser(user);
 }
 
-async function getUserData() {
+async function fetchUserData() {
   const user = await getPersistUser();
   if (!user) return null;
 
   const data: AppState = {
-    user: mockData.user,
+    user,
     messages: mockData.messages,
     posts: mockData.posts,
     hasNotifications: false,
   };
-
-  // await sleep(2000);
 
   return data;
 }
 
 export default {
   saveUser,
-  getUserData,
+  getUserData: fetchUserData,
 };

@@ -9,6 +9,7 @@ RUN pip --no-cache-dir install -r requirements.txt
 # Install migration tool
 RUN curl -fsSL -o /usr/local/bin/dbmate https://github.com/amacneil/dbmate/releases/download/v1.7.0/dbmate-linux-amd64
 RUN chmod +x /usr/local/bin/dbmate
+RUN mkdir uploads
 
 COPY . /app
 

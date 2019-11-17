@@ -16,12 +16,15 @@
     "@react-navigation/stack": "5.0.0-alpha.36",
     "@types/styled-components": "4.4.0",
     "axios": "0.19.0",
+    "camelcase-keys": "6.1.1",
     "expo": "^35.0.0",
     "expo-blur": "~7.0.0",
     "expo-camera": "~7.0.0",
     "expo-face-detector": "~7.0.0",
+    "expo-file-system": "~7.0.0",
     "expo-permissions": "~7.0.0",
     "lodash": "4.17.15",
+    "lottie-react-native": "~2.6.1",
     "moment": "2.24.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
@@ -32,9 +35,7 @@
     "react-native-safe-area-context": "~0.3.6",
     "react-native-screens": "~1.0.0-alpha.23",
     "react-native-web": "^0.11.7",
-    "styled-components": "4.4.1",
-    "expo-file-system": "~7.0.0",
-    "lottie-react-native": "~2.6.1"
+    "styled-components": "4.4.1"
   },
   "devDependencies": {
     "@types/react": "^16.8.23",

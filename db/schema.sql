@@ -39,30 +39,6 @@ CREATE TABLE public.feed (
 
 
 --
--- Name: github_stats; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.github_stats (
-    username text NOT NULL,
-    first_name text,
-    last_name text,
-    bio text,
-    country text,
-    is_pro_user boolean,
-    organizations text[],
-    profile_picture_url text,
-    repositories text[],
-    used_languages text[],
-    stars integer,
-    followers integer,
-    following integer,
-    image text,
-    timestamp_ms_created bigint DEFAULT (date_part('epoch'::text, now()) * (1000)::double precision) NOT NULL,
-    timestamp_ms_updated bigint
-);
-
-
---
 -- Name: messages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -105,14 +81,6 @@ ALTER TABLE ONLY public.feed
 
 
 --
--- Name: github_stats github_stats_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.github_stats
-    ADD CONSTRAINT github_stats_pkey PRIMARY KEY (username);
-
-
---
 -- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -147,6 +115,5 @@ ALTER TABLE ONLY public.users
 
 INSERT INTO public.schema_migrations (version) VALUES
     ('20191115210043'),
-    ('20191116085243'),
     ('20191116121611'),
     ('20191116144224');
