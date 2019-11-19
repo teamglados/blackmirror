@@ -5,7 +5,7 @@ import { range } from 'lodash';
 
 import Text from '../components/common/Text';
 import Button from '../components/common/Button';
-import { clearUser } from '../utils/storage';
+import { clear } from '../utils/storage';
 import { WINDOW_WIDTH } from '../constants/display';
 
 const texts = [
@@ -23,7 +23,7 @@ function EndScreen({ navigation }) {
   ]);
 
   async function reset() {
-    await clearUser();
+    await clear();
     navigation.reset({
       index: 0,
       routes: [{ name: 'Start' }],

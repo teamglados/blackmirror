@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppState } from './types';
-import { clearUser } from './storage';
+import { clear } from './storage';
 
 const StateContext = React.createContext<AppState | undefined>(undefined);
 const DispatchContext = React.createContext<any>(undefined);
@@ -57,7 +57,7 @@ export const ResetProvider: React.FC<{ navigation: any }> = ({
   navigation,
 }) => {
   const reset = React.useCallback(async () => {
-    await clearUser();
+    await clear();
     navigation.reset({
       index: 0,
       routes: [{ name: 'Start' }],

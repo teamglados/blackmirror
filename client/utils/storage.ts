@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { User, Post } from './types';
+import { User, Post, StartData } from './types';
 
 export async function persistUser(data: User) {
   try {
@@ -20,10 +20,6 @@ export async function getPersistedUser() {
   }
 }
 
-export async function clearUser() {
-  await AsyncStorage.removeItem('user');
-}
-
 export async function persistMemes(data: Post[]) {
   try {
     const dataStr = JSON.stringify(data);
@@ -41,4 +37,31 @@ export async function getPersistedMemes() {
     console.log('> Failed to get persisted user', error);
     return [];
   }
+}
+
+export async function persistCategories(data: StartData['selectedCategories']) {
+  try {
+    const dataStr = JSON.stringify(data);
+    await AsyncStorage.setItem('categories', dataStr);
+  } catch (error) {
+    console.log('> Failed to persist categories', error);
+  }
+}
+
+export async function getPersistedCategories() {
+  try {
+    const categoriesStr = await AsyncStorage.getItem('categories');
+    return categoriesStr
+      ? (JSON.parse(categoriesStr) as StartData['selectedCategories'])
+      : null;
+  } catch (error) {
+    console.log('> Failed to get persisted categories', error);
+    return null;
+  }
+}
+
+export async function clear() {
+  await AsyncStorage.removeItem('user');
+  await AsyncStorage.removeItem('meme');
+  await AsyncStorage.removeItem('categories');
 }

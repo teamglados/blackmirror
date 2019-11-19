@@ -1,18 +1,12 @@
 import axios from 'axios';
-import toCamelCase from 'camelcase-keys';
 
 import { StartData, AppState, Post } from './types';
-import {
-  persistUser,
-  getPersistedUser,
-  persistMemes,
-  getPersistedMemes,
-} from './storage';
+import * as storage from './storage';
 import * as mockData from './data';
 import { guid, getRandomNumberBetween } from '.';
 
 export const API_BASE_URL =
-  'http://ec2-63-35-251-51.eu-west-1.compute.amazonaws.com:5000';
+  'http://ec2-52-49-167-129.eu-west-1.compute.amazonaws.com:5000';
 export const API_URL = `${API_BASE_URL}/api`;
 
 export function getImageUri(uri: string) {
@@ -26,7 +20,7 @@ const api = axios.create({ baseURL: API_BASE_URL });
 /* eslint-disable @typescript-eslint/camelcase */
 
 async function saveUser(data: StartData) {
-  await persistUser({
+  await storage.persistUser({
     id: guid(),
     firstName: data.firstName,
     lastName: data.lastName,
@@ -34,11 +28,15 @@ async function saveUser(data: StartData) {
   });
 
   try {
-    const res1: any = await api.post(`/meme`, {
+    await storage.persistCategories(data.selectedCategories);
+  } catch (error) {}
+
+  try {
+    const res1: any = await api.post(`/meme/1`, {
       image: data.picBase64,
     });
 
-    const res2: any = await api.post(`/meme`, {
+    const res2: any = await api.post(`/meme/2`, {
       image: data.picBase64,
     });
 
@@ -80,7 +78,7 @@ async function saveUser(data: StartData) {
       },
     };
 
-    await persistMemes([meme1Post, meme2Post]);
+    await storage.persistMemes([meme1Post, meme2Post]);
   } catch (error) {}
 
   // const response: any = await api.post(`/api/users`, {image });
@@ -104,13 +102,15 @@ async function saveUser(data: StartData) {
 }
 
 async function getAppData() {
-  const user = await getPersistedUser();
+  const user = await storage.getPersistedUser();
   if (!user) return null;
 
-  const memePosts = await getPersistedMemes();
+  const memePosts = await storage.getPersistedMemes();
+  const categories = await storage.getPersistedCategories();
 
   return {
     user,
+    categories,
     posts: [
       {
         id: guid(),
@@ -134,19 +134,69 @@ async function getAppData() {
         id: guid(),
         post: {
           user: {
-            id: '2',
-            firstName: 'Eric',
-            lastName: 'Ericsson',
-            image: 'https://randomuser.me/api/portraits/men/29.jpg',
+            id: guid(),
+            firstName: 'Henry',
+            lastName: 'Hollington',
+            image: 'https://randomuser.me/api/portraits/men/11.jpg',
           },
           content: {
-            text: `Hey ${user.firstName}! Heard you're a jackass. Wanna comment on it?`, // prettier-ignore
+            text: `Hey ${user.firstName.trim()} I heard that your favorite movie type is ${categories.movie[0].toLocaleLowerCase()}... and you listen to ${categories.music[0].toLocaleLowerCase()} music?? Really? 😂🤣`, // prettier-ignore
             image: null,
             timestampMsCreated: Date.now(),
             likeCount: getRandomNumberBetween(12, 45),
           },
         },
         comments: [],
+      },
+      {
+        id: guid(),
+        post: {
+          user: {
+            id: '2',
+            firstName: 'Eric',
+            lastName: 'Ericsson',
+            image: 'https://randomuser.me/api/portraits/men/29.jpg',
+          },
+          content: {
+            text: `LOL great job ${user.firstName.trim()}, your presentation at Slush was awesome... NOT‼️ Maybe skip next year? 🚫`, // prettier-ignore
+            image: null,
+            timestampMsCreated: Date.now(),
+            likeCount: getRandomNumberBetween(12, 45),
+          },
+        },
+        comments: [
+          {
+            id: '1',
+            user: {
+              id: '2',
+              firstName: 'Junc',
+              lastName: 'Tioning',
+              image: 'https://randomuser.me/api/portraits/men/3.jpg',
+            },
+            content: {
+              text: 'Yeah it was sooo boring... Who let them speak at Slush?!?',
+              image: null,
+              timestampMsCreated: Date.now(),
+              likeCount: 1,
+            },
+          },
+          {
+            id: '2',
+            user: {
+              id: '8',
+              firstName: 'Mike',
+              lastName: 'Densington',
+              image: 'https://randomuser.me/api/portraits/men/12.jpg',
+            },
+            content: {
+              text:
+                'I usually dont say this online but now I gotta say that it was the worst presentation I have ever seen 🙅‍♂️',
+              image: null,
+              timestampMsCreated: Date.now(),
+              likeCount: 3,
+            },
+          },
+        ],
       },
       ...mockData.posts,
       {
@@ -165,7 +215,23 @@ async function getAppData() {
             likeCount: getRandomNumberBetween(3, 15),
           },
         },
-        comments: [],
+        comments: [
+          {
+            id: guid(),
+            user: {
+              id: '2',
+              firstName: 'Jessica',
+              lastName: 'Almander',
+              image: 'https://randomuser.me/api/portraits/women/32.jpg',
+            },
+            content: {
+              text: 'Please tell me!!!',
+              image: null,
+              timestampMsCreated: Date.now(),
+              likeCount: 5,
+            },
+          },
+        ],
       },
       ...memePosts,
     ],

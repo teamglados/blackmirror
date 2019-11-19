@@ -183,9 +183,6 @@ function KeywordsScreen({ navigation }) {
           source={require('../assets/logo_white.png')}
           resizeMode="contain"
         />
-        {/* <Text color="#fff" size={32} weight={700}>
-          Black Mirror
-        </Text> */}
       </Overlay>
     </Wrapper>
   );

@@ -67,4 +67,5 @@ export interface AppState {
   posts: Post[];
   messages: Message[];
   hasNotifications: boolean;
+  categories: { [category: string]: string[] };
 }

@@ -79,19 +79,19 @@ export const categories = [
 ];
 
 export const userDetails: UserDetails = {
-  cover: 'https://placeimg.com/500/200/tech',
+  cover: 'https://placeimg.com/500/200/animals',
   currentHometown: 'Helsinki',
   currentJob: 'Alepa',
   currentStudy: 'Eira’s Adult University',
-  bio: 'Burn rate partnership lean startup user experience business-to-business business model canvas accelerator equity agile development virality hackathon entrepreneur technology ramen.', // prettier-ignore
+  bio: 'Meatlover 🍖🥩 - vegetables are for wimps 👶🏻 Liberals are ruining our country by letting criminals in. They can go back to where they came from 👺', // prettier-ignore
   friendCount: 321,
   friendPicks: [
-    { id: '1', name: 'Jonne Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
-    { id: '2', name: 'Arttu Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
-    { id: '3', name: 'Kihhu Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
-    { id: '4', name: 'Gugge Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
-    { id: '5', name: 'Hidde Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
-    { id: '6', name: 'Juffe Foobar', avatar: 'https://placeimg.com/200/200/tech' }, // prettier-ignore
+    { id: '1', name: 'Samuel Kirch', avatar: 'https://randomuser.me/api/portraits/men/2.jpg' }, // prettier-ignore
+    { id: '2', name: 'Jonah Gunther', avatar: 'https://randomuser.me/api/portraits/men/12.jpg' }, // prettier-ignore
+    { id: '3', name: 'Hannah Florence', avatar: 'https://randomuser.me/api/portraits/women/10.jpg' }, // prettier-ignore
+    { id: '4', name: 'Fiona Jackson', avatar: 'https://randomuser.me/api/portraits/women/22.jpg' }, // prettier-ignore
+    { id: '5', name: 'Arthur Ruth', avatar: 'https://randomuser.me/api/portraits/men/37.jpg' }, // prettier-ignore
+    { id: '6', name: 'Daniel Grec', avatar: 'https://randomuser.me/api/portraits/men/34.jpg' }, // prettier-ignore
   ],
 };
 
@@ -108,12 +108,13 @@ export const posts: Post[] = [
     post: {
       user: {
         id: '2',
-        firstName: 'Eric',
-        lastName: 'Ericsson',
-        image: 'https://randomuser.me/api/portraits/men/29.jpg',
+        firstName: 'Sven',
+        lastName: 'Johansson',
+        image: 'https://randomuser.me/api/portraits/men/14.jpg',
       },
       content: {
-        text: 'Happy to see technology advance at a great pace. Just attended a conference earlier which sparked some inspiring thoughts!',
+        text:
+          'Happy to see technology advance at a great pace. Just attended a conference earlier which sparked some inspiring thoughts!',
         image: 'https://placeimg.com/500/300/tech',
         timestampMsCreated: Date.now(),
         likeCount: 12,
@@ -129,11 +130,10 @@ export const posts: Post[] = [
           image: 'https://randomuser.me/api/portraits/men/3.jpg',
         },
         content: {
-          text:
-            'Sounds cool Eric! Care to elaborate what you found?',
+          text: 'Sounds cool Eric! Care to elaborate what you found?',
           image: 'https://placeimg.com/500/300/tech',
           timestampMsCreated: Date.now(),
-          likeCount: 45,
+          likeCount: 4,
         },
       },
       {
@@ -154,56 +154,6 @@ export const posts: Post[] = [
     ],
   },
   {
-    id: '2',
-    post: {
-      user: {
-        id: '2',
-        firstName: 'Junc',
-        lastName: 'Tioning',
-        image: 'https://randomuser.me/api/portraits/men/3.jpg',
-      },
-      content: {
-        text: 'It was such a hard thing to hack two days straight 😭😴',
-        image: 'https://placeimg.com/500/300/people',
-        timestampMsCreated: Date.now(),
-        likeCount: 4,
-      },
-    },
-    comments: [
-      {
-        id: '1',
-        user: {
-          id: '3',
-          firstName: 'John',
-          lastName: 'Doe',
-          image: 'https://randomuser.me/api/portraits/men/20.jpg',
-        },
-        content: {
-          text:
-            'Long tail prototype network effects partner network. MVP network effects holy grail market monetization strategy hypotheses seed round burn rate influencer sales. Release niche market ecosystem startup research & development infographic responsive web design',
-          image: 'https://placeimg.com/500/300/tech',
-          timestampMsCreated: Date.now(),
-          likeCount: 16,
-        },
-      },
-      {
-        id: '2',
-        user: {
-          id: '8',
-          firstName: 'Mike',
-          lastName: 'Densington',
-          image: 'https://randomuser.me/api/portraits/men/12.jpg',
-        },
-        content: {
-          text: 'What a weird comment 😄',
-          image: 'https://placeimg.com/500/300/tech',
-          timestampMsCreated: Date.now(),
-          likeCount: 1,
-        },
-      },
-    ],
-  },
-  {
     id: '3',
     post: {
       user: {
@@ -213,7 +163,8 @@ export const posts: Post[] = [
         image: 'https://randomuser.me/api/portraits/women/19.jpg',
       },
       content: {
-        text: 'Today I was feeling amused but it quickly faded when I discovered a parking ticket on my car. Oh well, guess it is my problem',
+        text:
+          'Today I was feeling amused but it quickly faded when I discovered a parking ticket on my car. Oh well, guess it is my problem',
         image: 'https://placeimg.com/500/300/arch',
         timestampMsCreated: Date.now(),
         likeCount: 3,
